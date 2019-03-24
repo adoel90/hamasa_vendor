@@ -1,0 +1,26 @@
+.row.pd-bottom-30
+  .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+    .form-group(ng-repeat="leftField in listFieldsInTheLeft" ng-hide="leftField.hide")
+      label.form-label {{ leftField.name }}
+      input.form-input(type="text", ng-if="leftField.type == 'text'", ng-model="leftField.value", placeholder="{{ leftField.name }}", readonly)
+      textarea.form-input(rows="3", ng-if="leftField.type == 'textarea'", ng-model="leftField.value", placeholder=" {{ leftField.name }}", readonly)
+        
+  .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-15
+    .form-group(ng-repeat="rightField in listFieldsInTheRight" ng-hide="rightField.hide")
+      label.form-label {{ rightField.name }}
+      input.form-input(type="text", ng-if="rightField.type == 'text'", ng-model="rightField.value", placeholder="{{ rightField.name }}" readonly)
+      textarea(rows="3", ng-if="rightField.type == 'textarea'", ng-model="rightField.value", placeholder=" {{ rightField.name }}", readonly)
+        
+//- .row.pd-bottom-30(ng-show="listFieldsInTheLeft2 || listFieldsInTheRight2")
+//-   .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+//-     .form-group(ng-repeat="leftField2 in listFieldsInTheLeft2")
+//-       label.form-label {{ leftField2.name }}
+//-       input.form-input(type="text", ng-if="leftField2.type == 'text'", ng-model="leftField2.value", placeholder="{{ leftField2.name }}" readonly)
+//-   .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-15
+//-     .form-group(ng-repeat="rightField2 in listFieldsInTheRight2")
+//-       label.form-label {{ rightField2.name }}
+//-       input.form-input(type="text", ng-if="rightField2.type == 'text'", ng-model="rightField2.value", placeholder="{{ rightField2.name }}" readonly)
+      
+      
+    
+  

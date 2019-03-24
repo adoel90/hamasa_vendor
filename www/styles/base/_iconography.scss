@@ -1,0 +1,237 @@
+$icomoon-font-path: "../fonts/hsc" !default;
+
+$hsc-adjustmentstock: "\e900";
+$hsc-barang: "\e901";
+$hsc-btbtipo: "\e902";
+$hsc-buatfaktur: "\e903";
+$hsc-customer: "\e904";
+$hsc-dashboard: "\e905";
+$hsc-dotipo: "\e906";
+$hsc-efaktur: "\e907";
+$hsc-finance: "\e908";
+$hsc-gudang: "\e909";
+$hsc-hargabarang: "\e90a";
+$hsc-hargapengiriman: "\e90b";
+$hsc-inventorigudang: "\e90c";
+$hsc-kaskeluar: "\e90d";
+$hsc-keluarbarang: "\e90e";
+$hsc-koil: "\e90f";
+$hsc-kontrakpembelian: "\e910";
+$hsc-kontrakpenjualan: "\e911";
+$hsc-konversi: "\e912";
+$hsc-mutasi: "\e913";
+$hsc-otorisasi: "\e914";
+$hsc-pembayaran: "\e915";
+$hsc-pembelian: "\e916";
+$hsc-penagihan: "\e917";
+$hsc-penawaran: "\e918";
+$hsc-pencairan: "\e919";
+$hsc-pengiriman: "\e91a";
+$hsc-penjualan: "\e91b";
+$hsc-po: "\e91c";
+$hsc-report: "\e91d";
+$hsc-seripajak: "\e91e";
+$hsc-spk: "\e91f";
+$hsc-supplier: "\e920";
+$hsc-terimabarang: "\e921";
+
+
+
+@font-face {
+  font-family: 'hsc';
+  src:  url('#{$icomoon-font-path}/hsc.eot?j8l6lw');
+  src:  url('#{$icomoon-font-path}/hsc.eot?j8l6lw#iefix') format('embedded-opentype'),
+    url('#{$icomoon-font-path}/hsc.ttf?j8l6lw') format('truetype'),
+    url('#{$icomoon-font-path}/hsc.woff?j8l6lw') format('woff'),
+    url('#{$icomoon-font-path}/hsc.svg?j8l6lw#hsc') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.hsc,
+[class^="hsc-"], [class*=" hsc-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'hsc' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.hsc-adjustmentstock {
+  &:before {
+    content: $hsc-adjustmentstock;
+  }
+}
+.hsc-barang {
+  &:before {
+    content: $hsc-barang;
+  }
+}
+.hsc-btbtipo {
+  &:before {
+    content: $hsc-btbtipo;
+  }
+}
+.hsc-buatfaktur {
+  &:before {
+    content: $hsc-buatfaktur;
+  }
+}
+.hsc-customer {
+  &:before {
+    content: $hsc-customer;
+  }
+}
+.hsc-dashboard {
+  &:before {
+    content: $hsc-dashboard;
+  }
+}
+.hsc-dotipo {
+  &:before {
+    content: $hsc-dotipo;
+  }
+}
+.hsc-efaktur {
+  &:before {
+    content: $hsc-efaktur;
+  }
+}
+.hsc-finance {
+  &:before {
+    content: $hsc-finance;
+  }
+}
+.hsc-gudang {
+  &:before {
+    content: $hsc-gudang;
+  }
+}
+.hsc-hargabarang {
+  &:before {
+    content: $hsc-hargabarang;
+  }
+}
+.hsc-hargapengiriman {
+  &:before {
+    content: $hsc-hargapengiriman;
+  }
+}
+.hsc-inventorigudang {
+  &:before {
+    content: $hsc-inventorigudang;
+  }
+}
+.hsc-kaskeluar {
+  &:before {
+    content: $hsc-kaskeluar;
+  }
+}
+.hsc-keluarbarang {
+  &:before {
+    content: $hsc-keluarbarang;
+  }
+}
+.hsc-koil {
+  &:before {
+    content: $hsc-koil;
+  }
+}
+.hsc-kontrakpembelian {
+  &:before {
+    content: $hsc-kontrakpembelian;
+  }
+}
+.hsc-kontrakpenjualan {
+  &:before {
+    content: $hsc-kontrakpenjualan;
+  }
+}
+.hsc-konversi {
+  &:before {
+    content: $hsc-konversi;
+  }
+}
+.hsc-mutasi {
+  &:before {
+    content: $hsc-mutasi;
+  }
+}
+.hsc-otorisasi {
+  &:before {
+    content: $hsc-otorisasi;
+  }
+}
+.hsc-pembayaran {
+  &:before {
+    content: $hsc-pembayaran;
+  }
+}
+.hsc-pembelian {
+  &:before {
+    content: $hsc-pembelian;
+  }
+}
+.hsc-penagihan {
+  &:before {
+    content: $hsc-penagihan;
+  }
+}
+.hsc-penawaran {
+  &:before {
+    content: $hsc-penawaran;
+  }
+}
+.hsc-pencairan {
+  &:before {
+    content: $hsc-pencairan;
+  }
+}
+.hsc-pengiriman {
+  &:before {
+    content: $hsc-pengiriman;
+  }
+}
+.hsc-penjualan {
+  &:before {
+    content: $hsc-penjualan;
+  }
+}
+.hsc-po {
+  &:before {
+    content: $hsc-po;
+  }
+}
+.hsc-report {
+  &:before {
+    content: $hsc-report;
+  }
+}
+.hsc-seripajak {
+  &:before {
+    content: $hsc-seripajak;
+  }
+}
+.hsc-spk {
+  &:before {
+    content: $hsc-spk;
+  }
+}
+.hsc-supplier {
+  &:before {
+    content: $hsc-supplier;
+  }
+}
+.hsc-terimabarang {
+  &:before {
+    content: $hsc-terimabarang;
+  }
+}
+

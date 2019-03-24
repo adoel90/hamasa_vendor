@@ -1,0 +1,82 @@
+include ./global/head.pug
+include ./parts/sidenav.pug
+main.main
+  include ./parts/main-header.pug
+  include ./parts/main-subheader.pug
+  
+  .main_content(ng-cloak)
+    .page_header
+      h2= page.title
+    .page_content
+      .page_block
+        form.form
+          .form-group
+            .flex-justify-between
+              label.form-label Cari Berdasarkan 
+            .row.m-top-15
+                .col-lg-2.col-md-2.col-sm-2.col-xs-12
+                    label.form-label.m-right-15 Tanggal
+                .col-lg-5.col-md-5.col-sm-5.col-xs-12
+                    datepicker(date-format="yyyy-MM-dd" date-set="{{requiredData.start_date}}")
+                        input.form-input(type="text" ng-model="requiredData.start_date")
+                .col-lg-3.col-md-3.col-sm-3.col-xs-12
+                    button.button.button--secondary.button--base.m-left-15(ng-click="viewReport()") Cari
+            .row.m-top-15
+                .col-lg-2.col-md-2.col-sm-2.col-xs-12
+                    label.form-label.m-right-15 Customer
+                .col-lg-5.col-md-5.col-sm-5.col-xs-12
+                    ui-select(ng-model="requiredData.selectedCustomer", on-select="changeCustomer($item)")
+                        ui-select-match
+                            span(ng-bind="$select.selected.name")
+                        ui-select-choices(repeat="customer in (customerList | filter: $select.search) track by $index")
+                            span(ng-bind="customer.name")
+
+            .row.flex-end
+                button.button.button--primary.button--base(ng-show="listReportData.length > 0" ng-click="exportIntoExcel()") Export
+            
+                
+
+      .page_block(ng-show="!listReportData || listReportData.length < 1" style="text-align: center;")
+        label There is no data
+        
+      .shrink-table(ng-show="listReportData.length > 0")
+        table.table--striped.table--hoverable
+          thead.thead--primary
+            tr
+                th(ng-repeat="heading in headings") {{ heading.name }}
+          tbody(ng-repeat="reportData in listReportData")
+            tr
+                td {{ reportData.c_name }}
+                td
+                    p.m-bottom-15(ng-repeat="invoice in reportData.invoice") {{ invoice.inv_id }}
+                td
+                    p.m-bottom-15(ng-repeat="invoice in reportData.invoice") {{ invoice.inv_date }}
+                td
+                    p.m-bottom-15(ng-repeat="invoice in reportData.invoice") {{ invoice.due_date }}
+                td
+                    p.m-bottom-15(ng-repeat="invoice in reportData.invoice") {{ invoice.tempo }}
+                td
+                    p.m-bottom-15(ng-repeat="invoice in reportData.invoice") {{ invoice.inv_total | number: fractionSize }}
+                td
+                    p.m-bottom-15(ng-repeat="invoice in reportData.invoice") {{ (invoice.bjt !== ' - ') ? (invoice.bjt | number: fractionSize) : invoice.bjt }}
+                td
+                    p.m-bottom-15(ng-repeat="invoice in reportData.invoice") {{ (invoice.bulan1 !== ' - ') ? (invoice.bulan1 | number: fractionSize) : invoice.bulan1 }}
+                td
+                    p.m-bottom-15(ng-repeat="invoice in reportData.invoice") {{ (invoice.bulan2 !== ' - ') ? (invoice.bulan2 | number: fractionSize) : invoice.bulan2 }}
+                td
+                    p.m-bottom-15(ng-repeat="invoice in reportData.invoice") {{ (invoice.bulan3 !== ' - ') ? (invoice.bulan3 | number: fractionSize) : invoice.bulan3 }}
+                td
+                    p.m-bottom-15(ng-repeat="invoice in reportData.invoice") {{ (invoice.bulan4 !== ' - ') ? (invoice.bulan4 | number: fractionSize) : invoice.bulan4 }}
+                td
+                    p.m-bottom-15(ng-repeat="invoice in reportData.invoice") {{ (invoice.bulan5 !== ' - ') ? (invoice.bulan5 | number: fractionSize) : invoice.bulan5 }}
+            tr
+                td(style="font-weight: bold;") {{ 'Total Piutang ' + reportData.c_name }}
+                td
+                td
+                td
+                td
+                td(style="font-weight: bold;") {{ reportData.total_inv | number: fractionSize }}
+
+      .page-block(style="text-align: center" ng-show="listReportData.length > 0")
+        pagination(total-rows="totalRows", data="requiredData")
+

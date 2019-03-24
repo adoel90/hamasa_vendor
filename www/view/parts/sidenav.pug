@@ -1,0 +1,59 @@
+aside.sidenav(role="main-sidenav" ng-class="sidenavOpen ? 'sidenav-open' : 'sidenav-hidden'")
+	.sidenav__container
+		header.sidenav__header
+			.sidenav__userinfo
+				.avatar.avatar--large.avatar--rounded(role="user-avatar")
+					img(ng-src="/dist/img/default-avatar.png")
+				.sidenav__
+				h5.clr-primary-light.tt-uppercase.fw-medium {{userProfile.name}}
+				.badge.badge--pill.badge--transparent
+					small.tt-uppercase.fw-medium {{userProfile.access.name}}
+					
+			.sidenav__links
+				ul
+					li
+						a(href="/user/settings") Settings
+					li(ng-click="doLogout()")
+						a Logout
+						
+		nav.sidenav_navigation
+			ul.sidenav_item-list
+				li.sidenav_item(ng-class="{'sidenav_item--is-active': containsMenu('dashboard')}" ng-show="userProfile.access.id === 1 || userProfile.access.id === 2 || userProfile.access.id === 8 || userProfile.access.id === 9")
+					a(href="/dashboard")
+						i.fa.fa-tachometer.icon.icon--regular
+						| Dashboard
+				li.sidenav_item(ng-class="{'sidenav_item--is-active': containsMenu('sales')}"  ng-show="accessModules.sales")
+					a(href="/sales")
+						i.fa.fa-line-chart.icon.icon--regular
+						| Penjualan
+				li.sidenav_item(ng-class="{'sidenav_item--is-active': containsMenu('purchasing')}" ng-show="accessModules.purchase")
+					a(href="/purchasing")
+						i.fa.fa-shopping-cart.icon.icon--regular
+						| Pembelian
+				li.sidenav_item(ng-class="{'sidenav_item--is-active': containsMenu('inventory')}" ng-show="accessModules.inventory")
+					a(href="/inventory")
+						i.fa.fa-archive.icon.icon--regular
+						| Inventory
+				li.sidenav_item(ng-class="{'sidenav_item--is-active': containsMenu('finance')}" ng-show="accessModules.finance")
+					a(href="/finance")
+						i.fa.fa-money.icon.icon--regular
+						| Finance
+				li.sidenav_item(ng-class="{'sidenav_item--is-active': containsMenu('authorization')}" ng-show="accessModules.auth")
+					a(href="/authorization")
+						i.fa.fa-certificate.icon.icon--regular
+						| Otorisasi
+				li.sidenav_item(ng-class="{'sidenav_item--is-active': containsPath('report')}" ng-show="accessModules.report")
+					a
+						i.fa.fa-book.icon.icon--regular
+						| Report
+					
+					li.sidenav_item(ng-show="userProfile.access.id == 1 || userProfile.access.id == 8")
+						a.menu-child(href="/salesreport" ng-class="{'menu-child--is-active': containsPath('salesreport')}" ng-show="accessModules.report.sales_report") Penjualan
+						a.menu-child(href="/purchasingreport" ng-class="{'menu-child--is-active': containsPath('purchasingreport')}" ng-show="accessModules.report.purchase_report") Pembelian
+						a.menu-child(href="/inventoryreport" ng-class="{'menu-child--is-active': containsPath('inventoryreport')}" ng-show="accessModules.report.inventory_report") Inventori
+						a.menu-child(href="/financereport" ng-class="{'menu-child--is-active': containsPath('financereport')}" ng-show="accessModules.report.finance_report") Finance
+							
+				li.sidenav_item(ng-class="{'sidenav_item--is-active': containsMenu('usermanagement')}" ng-show="accessModules.user")
+					a(href="/usermanagement")
+						i.fa.fa-users.icon.icon--regular
+						| User Management

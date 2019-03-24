@@ -1,0 +1,55 @@
+.default-modal
+	.default-modal-heading
+		h5.modal-title Detail Sales Order
+		a.modal-close(ng-click="$dismiss()")
+			i.icon.icon--regular.fa.fa-times
+	.default-modal-content
+		.default-modal-block
+			form.form.pd-bottom-30
+				.pd-bottom-15
+					h4 Data Sales Order
+				include ../parts/modalFieldsTemplate.pug
+										
+				.flex-row.flex-end
+					button.button.button--base.button--primary(ng-click="editSoDetail(salesOrderDetail.id)" ng-if="purpose == 'Approval SO' && soAuthStatus == 0") Edit
+					button.button.button--base.button--danger.m-right-15(ng-click="fixCustomerData(salesOrderDetail)" ng-show="purpose === 'SO Detail' && ((salesOrderDetail.customer.address !== salesOrderDetail.customer.address_on_so) || (salesOrderDetail.customer.name !== salesOrderDetail.customer.name_on_so))") Perbaiki Data Customer
+						
+		.default-modal-block
+			.pd-bottom-15
+				h4 Daftar Barang
+			.pd-bottom-15
+				p Total Berat Item adalah {{salesOrderDetail.weight_total + ' kg '}}
+			.shrink-table(drag-scroll="")
+				table.table--stripped.table--hoverable
+					thead.thead--primary
+						tr
+							th(ng-repeat="heading in salesOrderDetail.headings", ng-class="{ 'large': heading.size == 'lg'}") {{heading.name}}
+					tbody
+						tr(ng-repeat="item in salesOrderDetail.item")
+							td {{item.category.name}}
+							td {{item.name}}
+							td {{item.unit}}
+							td {{item.grade}}
+							td(ng-hide="purpose == 'Cut Cost Detail'") {{ item.sell_price | number: fractionSize }}
+							td {{ item.quantity | number: fractionSize }}
+							td(ng-show="purpose == 'Approval SO Cancelation'") {{ item.outstanding | number: fractionSize }}
+							td {{item.warehouse ? item.warehouse.name : '-'}}
+							td(ng-class="{ 'clr-passive': !item.note.length }") {{item.note ? item.note : 'No description added'}}
+							td(ng-show="purpose == 'Cut Cost Detail'") {{ item.cut_cost | number: fractionSize }}
+
+		.flex-row.flex-end(ng-show="purpose === 'Cut Cost Detail' || purpose === 'SO Detail'")
+			button.pd-right-15.button.button--base.button--danger.m-right-15(ng-click="printSo(salesOrderDetail.id)") Print
+					
+		.flex-row.flex-end(ng-show="purpose == 'Approval SO' && soAuthStatus == 0")
+			button.pd-right-15.button.button--base.button--secondary.m-right-15(ng-click="acceptSoDetail()") Accept
+			button.button.button--base.button--danger(ng-click="rejectAuth()") Reject
+			
+		.flex-row.flex-end(ng-show="purpose == 'Approval SO Cancelation' && soAuthStatus == 0")
+			button.pd-right-15.button.button--base.button--secondary.m-right-15(ng-click="acceptSoCancelation()") Accept
+			button.button.button--base.button--danger(ng-click="rejectAuth()") Reject
+				
+		.flex-row.flex-end(ng-show="purpose == 'Request for PO' && soAuthStatus == 0")
+			button.pd-right-15.button.button--base.button--secondary.m-right-15(ng-click="acceptPoRequest()") Accept
+			button.button.button--base.button--danger(ng-click="rejectAuth()") Reject
+			
+			

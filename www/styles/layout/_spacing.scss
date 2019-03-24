@@ -1,0 +1,30 @@
+.pd-5 { padding: 5px; }
+.pd-10 { padding: 10px; }
+.pd-top-15 		{ @include padding-stack(top 15px); }
+.pd-right-15 	{ @include padding-stack(right 15px); }
+.pd-bottom-15 	{ @include padding-stack(bottom 15px); }
+.pd-left-15 	{ @include padding-stack(left 15px); }
+
+.pd-top-30 		{ @include padding-stack(top 30px); }
+.pd-right-30 	{ @include padding-stack(right 30px); }
+.pd-bottom-30 	{ @include padding-stack(bottom 30px); }
+.pd-left-30 	{ @include padding-stack(left 30px); }
+
+.m-top-15 		{ @include margin-stack(top 15px); }
+.m-left-15 		{ @include margin-stack(left 15px); }
+.m-right-15 	{ @include margin-stack(right 15px); }
+.m-bottom-15 	{ @include margin-stack(bottom 15px); }
+
+.m-top-25  { @include margin-stack(top 25px); }
+.m-bottom-25  { @include margin-stack(bottom 25px); }
+.m-right-25 	{ @include margin-stack(right 25px); }
+.m-left-35 		{ @include margin-stack(left 35px); }
+
+.m-bottom-35  { @include margin-stack(bottom 35px); }
+
+.m-left-5     { @include margin-stack(left 5px); }
+.m-right-5     { @include margin-stack(right 5px); }
+.m-top-5     { @include margin-stack(top 5px); }
+.m-bottom-5     { @include margin-stack(bottom 5px); }
+
+.align-right { text-align: right; }

@@ -1,0 +1,42 @@
+.row
+  .col-lg-6.col-sm-6.col-md-6
+    h4 Informasi SPK
+    .form-input-group.m-top-15
+      .textfield.textfield--primary
+        label.textfield-label.col-md-4.col-sm-4.col-xs-4 No SPK
+        .col-md-8.col-sm-8.col-xs-8
+          input(type="text", placeholder="No SPK", ng-model="spkDetail.id", readonly)
+      .textfield.textfield--primary
+        label.textfield-label.col-md-4.col-sm-4.col-xs-4 Tanggal SPK
+        .col-md-8.col-sm-8.col-xs-8
+          input(type="text", placeholder="Tanggal SPK", ng-model="spkDetail.date", readonly)
+      .textfield.textfield--primary
+        label.textfield-label.col-md-4.col-sm-4.col-xs-4 Customer
+        .col-md-8.col-sm-8.col-xs-8
+          input(type="text", placeholder="Customer", ng-model="spkDetail.customer.name", readonly)
+    
+  .col-md-6.col-sm-6
+    h4 Informasi Barang yg Dipotong
+    .form-input-group.m-top-15
+      .textfield.textfield--primary
+        label.textfield-label.col-md-4.col-sm-4.col-xs-4 No Seri
+        .col-md-8.col-sm-8.col-xs-8
+          input(type="text", placeholder="No Seri", ng-model="spkDetail.spk_item.serial", readonly)
+      .textfield.textfield--primary
+        label.textfield-label.col-md-4.col-sm-4.col-xs-4 Nama Barang
+        .col-md-8.col-sm-8.col-xs-8
+          input(type="text", placeholder="Nama Barang", ng-model="spkDetail.spk_item.name", readonly)
+      .textfield.textfield--primary
+        label.textfield-label.col-md-4.col-sm-4.col-xs-4 Quantity
+        .col-md-8.col-sm-8.col-xs-8
+          input(type="text", placeholder="Quantity", ng-value="numberWithCommas(spkDetail.spk_item.quantity)", readonly)
+      .textfield.textfield--primary
+        label.textfield-label.col-md-4.col-sm-4.col-xs-4 Berat
+        .col-md-8.col-sm-8.col-xs-8
+          input(type="text", placeholder="Berat", ng-value="numberWithCommas(spkDetail.spk_item.weight)", readonly)
+      .textfield.textfield--primary
+        label.textfield-label.col-md-4.col-sm-4.col-xs-4 Keterangan
+        .col-md-8.col-sm-8.col-xs-8
+          input(type="text", placeholder="Keterangan", ng-value="spkDetail.spk_item.note", readonly)
+          
+        

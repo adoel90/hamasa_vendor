@@ -1,0 +1,41 @@
+.pagination {
+	@include relative;
+	overflow: hidden;
+	@include border-radius($border-radius-small);
+
+	.pagination-list {
+		@include flexbox;
+		@include padding(15px);
+		background-color: $clr-primary-light;
+
+		> button {
+			@include relative;
+			@include flexbox;
+			@include transition(all 250ms ease-in-out);
+			@include padding(20px 30px);
+			display: block;
+			background-color: $clr-primary-light;
+			font-size: $fs-base;
+
+			&.pagination--is-active {
+				@include border-radius($border-radius-small);
+				font-weight: bold;
+				background-color: $clr-secondary;
+				color: $clr-primary-light;
+			}
+
+
+			&:hover {
+				@include border-radius($border-radius-small);
+				font-weight: bold;
+				background-color: rgba($clr-secondary, 0.5);
+				color: $clr-primary-light;
+			}
+		}
+	}
+
+	[role="pagination-rows"] {
+		@include font($fs-small, $fw-regular, $lh-base);
+		@include margin-stack(top 10px);
+	}
+}

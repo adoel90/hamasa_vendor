@@ -1,0 +1,22 @@
+include ./global/head.pug
+
+.login
+	.login_wrapper.flex
+		aside.side-panel
+		main.main-panel
+			.main-panel_container
+				form.form.pd-bottom-30(ng-submit="doLogin()" autocomplete="nope")
+					.pd-bottom-15
+						h3 PT. MASAKWARTA SEJATI
+						p.clr-passive Stocks Import & Local Steel Materials
+					
+					.form-group
+						label.form-label(for="username") Username
+						input.form-input(type="text", name="username", ng-model="loginData.username", placeholder="Masukkan username")
+					
+					.form-group
+						label.form-label(for="password") Password
+						input.form-input(type="password", name="password", ng-model="loginData.password", placeholder="Masukkan password")
+					.flex-column
+						button.button.button--primary.button--base(type="submit") Login
+							

@@ -1,0 +1,41 @@
+.default-modal
+	.default-modal-heading
+		h5.modal-title Daftar Sales Order
+		a.modal-close(ng-click="$dismiss()")
+			i.icon.icon--regular.fa.fa-times
+	.default-modal-content
+		.row.pd-bottom-15
+			form.form
+				.form-group
+					label.form-label Cari Berdasarkan
+					.row
+						.col-lg-4.col-md-4.col-sm-4.col-xs-12.pd-right-15
+							ui-select(ng-model="salesOrderList.selectedFilter.item")
+								ui-select-match
+									span(ng-bind="$select.selected.name")
+								ui-select-choices(repeat="filter in (salesOrderList.searchFilters | filter: $select.search) track by $index")
+									span(ng-bind="filter.name")
+
+						.col-lg-8.col-md-8.col-ms-8.col-xs-12.pd-right-15
+							.input-group
+								input.form-input(type="text", ng-model="searchVal", placeholder="{{salesOrderList.selectedFilter.item.placeholder}}")
+								button.button.button--base.button--secondary(ng-click="doSearchFilter(searchVal, salesOrderList.selectedFilter.item.by)") Cari
+							
+		.default-modal-block
+			.table
+				table.table--striped.table--hoverable
+					thead.thead--primary
+						tr
+							th(ng-repeat="heading in salesOrderList.headings", ng-class="{ 'large': heading.size == 'lg', 'small': heading.size == 'sm'}") {{ heading.name }}
+					tbody
+						tr(ng-repeat="item in salesOrderList.data", ng-click="chooseItem(item)")
+							td {{ item.id }}
+							td {{ item.date }}
+							td {{ item.customer.name }}
+							td {{ item.sales.name }}
+							td {{ item.status.name }}
+							
+		
+		.ta-center
+			pagination(data="salesOrderList.requiredData", total-rows="salesOrderList.row")
+		

@@ -1,0 +1,46 @@
+.default-modal
+  .default-modal-heading
+    h5.modal-title {{ modalName }}
+    a.modal-close(ng-click="$dismiss()")
+      i.icon.icon--regular.fa.fa-times
+  .default-modal-content
+    .default-modal-block.pd-bottom-30
+      form.form.form--horizontal
+        h4.pd-bottom-15 Detail Delivery Order
+        include ../parts/modalFieldsTemplate.pug
+        .row.pd-bottom-15
+          h4.pd-bottom-15 Info Gudang & BKB
+          .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+            .form-group(ng-repeat="leftField2 in listFieldsInTheLeft2")
+              label.form-label {{ leftField2.name }}
+              input.form-input(type="text", ng-model="leftField2.value", placeholder="{{ leftField2.name }}", readonly)
+          .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-15
+            .form-group(ng-repeat="rightField2 in listFieldsInTheRight2")
+              label.form-label {{ rightField2.name }}
+              input.form-input(type="text", ng-model="rightField2.value", placeholder="{{ rightField2.name }}", readonly)
+    
+    .pd-bottom-15
+      h4 Daftar Barang
+    .pd-bottom-15
+      p Total Berat Item adalah {{doDetail.total_weight + ' kg '}}
+    table-content(type="'non-edited-table'" table-header="doDetailHeadings" table-body="doDetail.item" table-column="doDetailCols")
+    
+    .flex-row.flex-end(ng-show="(purpose == 'do reprint' || purpose == 'do print if invoice not paid') && soAuthStatus == 0")
+      button.pd-right-15.button.button--base.button--secondary.m-right-15(ng-click="acceptDoPrintRequest()") Accept
+      button.button.button--base.button--danger(ng-click="rejectDoPrintRequest()") Reject
+      
+  .default-modal-footer
+    .flex-row.flex-end
+      button.button.button--base.button--danger.m-right-15(ng-show="purpose == 'do'" ng-disabled="doDetail.status.code == 2 || doDetail.status.code == 3 || doDetail.status.code == -1" ng-click="cancelDo()") Batalkan DO
+      button.button.button--base.button--danger.m-right-15(ng-show="purpose == 'do' || purpose == 'do tipo'" ng-disabled="doDetail.status.code == -1 || doDetail.status.code == 3" ng-click="resumeDo()")
+        i.fa.fa-print.icon.icon--large
+        | Resume DO
+      button.button.button--base.button--success(ng-show="purpose == 'do' || purpose == 'do tipo'" ng-disabled="doDetail.status.code == -1 || doDetail.status.code == 3" ng-click="printDo()")
+        i.fa.fa-print.icon.icon--large
+        | Print DO
+      
+        
+      
+            
+              
+        

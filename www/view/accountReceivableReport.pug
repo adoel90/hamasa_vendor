@@ -1,0 +1,90 @@
+include ./global/head.pug
+include ./parts/sidenav.pug
+main.main
+  include ./parts/main-header.pug
+  include ./parts/main-subheader.pug
+  
+  .main_content(ng-cloak)
+    .page_header
+      h2= page.title
+    .page_content
+      .page_block
+        form.form
+          .form-group
+            .flex-justify-between
+              label.form-label Cari Berdasarkan
+              button.button.button--primary.button--base(ng-show="reportData.data.length > 0" ng-click="printReport()") PRINT
+            .row.m-top-15
+              .col-lg-2.col-md-2.col-sm-2.col-xs-12.align-right
+                label.form-label.m-right-15 Tanggal Awal
+              .col-lg-5.col-md-5.col-sm-5.col-xs-12
+                datepicker(date-format="yyyy-MM-dd" date-set="{{requiredData.start_date}}")
+                  input.form-input(type="text", ng-model="requiredData.start_date", placeholder="Masukkan tanggal awal")
+            .row.m-top-15
+              .col-lg-2.col-md-2.col-sm-2.col-xs-12.align-right
+                label.form-label.m-right-15 Tanggal Akhir
+              .col-lg-5.col-md-5.col-sm-5.col-xs-12
+                datepicker(date-format="yyyy-MM-dd" date-set="{{requiredData.end_date}}")
+                  input.form-input(type="text", ng-model="requiredData.end_date", placeholder="Masukkan tanggal akhir")
+            .row.m-top-15
+              .col-lg-2.col-md-2.col-sm-2.col-xs-12.align-right
+                label.form-label.m-right-15 Nama Customer
+              .col-lg-5.col-md-5.col-sm-5.col-xs-12
+                ui-select(ng-model="requiredData.selectedCustomer", on-select="changeCustomer($item)")
+                  ui-select-match
+                    span(ng-bind="$select.selected.name")
+                  ui-select-choices(repeat="customer in (customerList | filter: $select.search) track by $index")
+                    span(ng-bind="customer.name")
+
+              .col-lg-3.col-md-3.col-sm-3.col-xs-12.pd-left-15    
+                button.button.button--secondary.button--base(ng-click="viewReport()") Cari
+            .row.m-top-15
+              .col-lg-2.col-md-2.col-sm-2.col-xs-12.align-right
+                label.form-label.m-right-15 Rincian piutang
+              .col-lg-5.col-md-5.col-sm-5.col-xs-12
+                input(type="checkbox" class="checkbox" ng-model="requiredData.showDetailReport")
+      .page_block(ng-show="reportData.data.length == 0" style="text-align: center;")
+        label There is no data
+        
+      .shrink-table(ng-show="reportData.data.length > 0")
+        table.table--striped
+            thead.thead--primary
+                tr
+                    th(ng-show="!requiredData.showDetailReport" ng-repeat="heading in headings", ng-class="{ 'large': heading.size == 'lg' }") {{ heading.name }}
+                    th(ng-show="requiredData.showDetailReport" ng-repeat="heading in headingsReceivableDetail", ng-class="{ 'large': heading.size == 'lg' }") {{ heading.name }}
+            tbody
+                tr(ng-repeat="data in reportData.data")
+                    td {{ data.inv_type }}
+                    td {{ data.inv_id}}
+                    td {{ data.customer.name}}
+                    td
+                        p.m-bottom-15(ng-repeat="item in data.newItem") {{ item.i_name }}
+                    td
+                        p.m-bottom-15(ng-repeat="item in data.newItem") {{ item.so_quantity | number: fractionSize }}
+                    td
+                        p.m-bottom-15(ng-repeat="item in data.newItem") {{ item.so_sell_price | number: fractionSize }}
+                    td
+                        p.m-bottom-15(ng-repeat="item in data.newItem") {{ item.subtotal | number: fractionSize }}
+                    td {{ data.inv_total | number: fractionSize }}
+                    //- td {{ data.paid_total | number: fractionSize }}
+                    td(ng-show="requiredData.showDetailReport")
+                        p.m-bottom-15(ng-repeat="payment in data.newPayment") {{ payment.paid }}
+                    td(ng-show="requiredData.showDetailReport")
+                        p.m-bottom-15(ng-repeat="payment in data.newPayment") {{ payment.method }}
+                    td(ng-show="!requiredData.showDetailReport") {{ data.paid_total | number: fractionSize }}
+                    td {{ data.remain | number: fractionSize }}
+                    td {{ data.inv_status }}
+
+                tr
+                    td Total
+                    td
+                    td
+                    td
+                    td
+                    td
+                    td
+                    td {{ reportData.total | number: fractionSize }}
+                    td {{ reportData.paid_total | number: fractionSize}}
+                    td(ng-show="requiredData.showDetailReport")
+                    td {{ reportData.remain | number: fractionSize }}
+                    td 

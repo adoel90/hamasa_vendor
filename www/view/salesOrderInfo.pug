@@ -1,0 +1,125 @@
+include ./global/head.pug
+include ./parts/sidenav.pug
+main.main
+	include ./parts/main-header.pug
+	include ./parts/main-subheader.pug
+
+	.main_content(ng-cloak)
+		.page_header
+			h2 Informasi Sales Order
+		.page_content
+			.page_block
+				form.form.form--horizontal.row
+					.row
+						.col-lg-9.col-md-9.col-sm-12.col-xs-12
+							dt.col-lg-3.col-md-3.col-sm-4.col-xs-4 Nomor SO
+							dd {{ salesOrderInfo.id}}
+							
+							dt.col-lg-3.col-md-3.col-sm-4.col-xs-4 Nama Customer
+							dd {{ salesOrderInfo.customer.name_on_so}}
+							
+							dt.col-lg-3.col-md-3.col-sm-4.col-xs-4 Jenis Pembayaran
+							dd {{ salesOrderInfo.pay_method}}
+							
+							dt.col-lg-3.col-md-3.col-sm-4.col-xs-4 Status Pembayaran
+							dd {{ salesOrderInfo.payment_status.name}}
+							
+							dt.col-lg-3.col-md-3.col-sm-4.col-xs-4 Jenis Pengambilan
+							dd {{ salesOrderInfo.pickup.name}}
+							
+							dt.col-lg-3.col-md-3.col-sm-4.col-xs-4 Outstanding
+							dd {{ salesOrderInfo.outstanding}}
+							
+						.col-lg-3.col-md-3.col-sm-12.col-xs-12.pd-top-30
+							.form-button-group
+								.flex-column(style="width: 100%")
+									button.button.button--base.button--primary(style="margin-bottom: 10px", ng-click="redirectToCreateNewDo()" ng-disabled="salesOrderInfo.pickup.code == 1")
+										| Buat DO Baru
+									button.button.button--base.button--danger(style="margin-bottom: 10px", ng-click="cancelSalesOrder()")
+										i.fa.fa-trash.icon.icon--regular
+										| Batalkan SO
+										
+			.page_block
+				.row.m-top-15
+					.col-lg-2.flex-align-item-center
+						.grey-legend
+						span.m-left-5 DO belum aktif
+					.col-lg-2.flex-align-item-center
+						.yellow-legend
+						span.m-left-5 DO telah diprint
+					.col-lg-2.flex-align-item-center
+						.green-legend
+						span.m-left-5 DO telah selesai
+					.col-lg-2.flex-align-item-center
+						.red-legend
+						span.m-left-5 DO telah dibatalkan
+					.col-lg-2.flex-align-item-center
+						.orange-legend
+						span.m-left-5 DO retur
+			.row
+				.col-lg-3.col-md-3.col-md-4.col-sm-4.col-xs-6
+					a.tile.tile--primary.tile--equal(show-so-detail so-id="salesOrderInfo.id" purpose="'SO Detail'")
+						.tile_content
+							.tile_main
+								h2 SO
+							.tile_addon
+								i.fa.fa-calendar.icon.icon--small
+								.tt-uppercase.fw-medium {{salesOrderInfo.date}}
+				
+				.col-lg-3.col-md-3.col-md-4.col-sm-4.col-xs-6(ng-repeat="invoice in salesOrderInfo.invoice")
+					a.tile.tile--primary.tile--equal(show-invoice-detail invoice-id="invoice.id" change="invoice.change")
+						.tile_content
+							.tile_addon(style="border-radius: 35px;")
+								.tt-uppercase.fw-medium {{invoice.status.name }}
+							.tile_main
+								h2 {{invoice.change == 0 ? 'INVOICE' : 'INVOICE PENGGANTI'}} 
+								p.all-caps {{invoice.invoice_total | currency: "Rp"}}
+							.tile_addon
+								i.fa.fa-calendar.icon.icon--small
+								.tt-uppercase.fw-medium {{invoice.date}}
+
+				.col-lg-3.col-md-3.col-md-4.col-sm-4.col-xs-6(ng-repeat="po in salesOrderInfo.po")
+					a.tile.tile--primary.tile--equal
+						.tile_content
+							.tile_addon(style="border-radius: 35px;")
+								.tt-uppercase.fw-medium {{ po.status.name}}
+							.tile_main
+								h2 PO
+							.tile_addon
+								i.fa.fa-calendar.icon.icon--small
+								.tt-uppercase.fw-medium {{ po.date }}
+								
+				.col-lg-3.col-md-3.col-md-4.col-sm-4.col-xs-6(ng-repeat="do in salesOrderInfo.do")
+					a.tile.tile--equal(ng-class="getDOStatus(do.status.code)", show-do-detail do-id="do.id" purpose="'do'")
+						.tile_content
+							.tile_addon
+								.tt-uppercase.fw-medium {{do.id}}
+							.tile_main
+								h2 {{do.order}} / {{do.quantity}}
+								p.all-caps.fw-medium.font-size-20 {{do.warehouse.name}}
+							.tile_addon
+								i.fa.fa-calendar.icon.icon--small
+								.tt-uppercase.fw-medium {{do.date}}
+				.col-lg-3.col-md-3.col-md-4.col-sm-4.col-xs-6(ng-repeat="delivery in salesOrderInfo.delivery")
+					a.tile.tile--primary.tile--equal(ng-click="openDeliveryDetailInvoice(delivery.id)")
+						.tile_content
+							.tile_addon(style="border-radius: 35px;")
+								.tt-uppercase.fw-medium {{delivery.status.name }}
+							.tile_main
+								h2 PENGIRIMAN
+								p.all-caps {{delivery.type.price | currency: "Rp"}}
+							.tile_addon
+								i.fa.fa-calendar.icon.icon--small
+								.tt-uppercase.fw-medium {{delivery.date}}
+				.col-lg-3.col-md-3.col-md-4.col-sm-4.col-xs-6(ng-show="salesOrderInfo.cut")
+					a.tile.tile--primary.tile--equal(show-so-detail so-id="salesOrderInfo.id" purpose="'Cut Cost Detail'")
+						.tile_content
+							.tile_addon(style="border-radius: 35px;")
+								.tt-uppercase.fw-medium {{salesOrderInfo.cut.status.name }}
+							.tile_main
+								h2 PEMOTONGAN
+								p.all-caps {{salesOrderInfo.cut.cost | currency: "Rp"}}
+							.tile_addon
+								i.fa.fa-calendar.icon.icon--small
+								.tt-uppercase.fw-medium {{salesOrderInfo.cut.date}}
+				

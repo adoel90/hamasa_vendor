@@ -1,0 +1,43 @@
+form.form(ng-submit="saveChanges()" novalidate)
+	.page_block
+		.row.pd-bottom-30
+			.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+				div(ng-if="page == 'cashin'" ng-include="'/dist/view/widget/cashinFields.html'")
+				div(ng-if="page == 'cashout'" ng-include="'/dist/view/widget/cashoutFields.html'")
+				.form-group
+					label.form-label Metode Pembayaran
+					payment-method(data="requiredData")
+				
+				.form-group(ng-show="requiredData.method > 0")
+					label.form-label Bank
+					bank(data="requiredData")
+
+			.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-15
+				.form-group(ng-show="requiredData.method > 0")
+					label.form-label No. Bukti Pembayaran
+					input.form-input(type="text", ng-model="requiredData.proof" placeholder="Masukkan nomor bukti pembayaran", ng-required="requiredData.method > 0")
+					
+				.form-group
+					label.form-label Jumlah Pembayaran
+					.input-group
+						.input-group-extra
+							small.clr-passive.fw-semibold.tt-uppercase Rp
+						input.form-input(type="text", placeholder="Masukkan jumlah pembayaran", ng-model="requiredData.total", currency-input, required)
+													
+				.form-group(ng-show="requiredData.method > 1")
+					label.form-label Tanggal Jatuh Tempo
+					datepicker(date-format="yyyy-MM-dd", selector="form-input")
+						.input-group(ng-click="showCalendar()")
+							input.form-input(type="text", ng-model="requiredData.due_date", placeholder="Masukkan tanggal jatuh tempo", ng-required="requiredData.method > 1")
+							.input-group-extra
+								i.icon.icon--regular.fa.fa-calendar.clr-passive
+			
+			.col-lg-12.col-md-12.col-sm-12.col-xs-12
+				.form-group
+					label.form-label Catatan
+					textarea.form-input(rows="3", placeholder="Masukkan catatan kas keluar", ng-model="requiredData.note" required)
+
+		.flex-row.flex-end
+			button.button.button--base.button--primary
+				i.fa.fa-floppy-o.icon.icon--regular
+				| Simpan

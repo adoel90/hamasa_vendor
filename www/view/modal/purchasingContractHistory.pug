@@ -1,0 +1,45 @@
+.default-modal
+   .default-modal-heading
+      h5.modal-title History Kontrak Pembelian
+      a.modal-close(ng-click="$dismiss()")
+         i.icon.icon--regular.fa.fa-times
+   .default-modal-content
+      form.form.form--primary.form--horizontal
+         .row.pd-bottom-30
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+               .form-group
+                  label.form-label Nomor Kontrak
+                  input.form-input(type="text", ng-model="detailPurchasingHistory.data.id", readonly)
+               .form-group
+                  label.form-label Tonase Kontrak
+                  input.form-input(type="text", ng-value="numberWithCommas(detailPurchasingHistory.data.tonase)", readonly)
+               .form-group
+                  label.form-label DP Kontrak
+                  input.form-input(type="text", ng-value="numberWithCommas(detailPurchasingHistory.data.dp)", readonly)
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+               .form-group
+                  label.form-label Sisa Tonase
+                  input.form-input(type="text", ng-value="numberWithCommas(detailPurchasingHistory.data.tonase_remain)", readonly)
+               .form-group
+                  label.form-label Sisa DP
+                  input.form-input(type="text", ng-value="numberWithCommas(detailPurchasingHistory.data.dp_remain)", readonly)
+               
+      h3.m-top-15.m-bottom-15 List PO
+      p(ng-show="!detailPurchasingHistory.data.history") Belum ada transaksi PO pada kontrak ini
+      .shrink-table(ng-show="detailPurchasingHistory.data.history")
+         table.table--striped
+            thead.thead--primary
+               tr
+                  th(ng-repeat="heading in detailPurchasingHistory.headings") {{heading.name}}
+            tbody
+               tr(ng-repeat="history in detailPurchasingHistory.data.history")
+                  td {{history.po.id}}
+                  td {{history.po.date}}
+                  td {{history.item.category.name}}
+                  td {{history.item.name}}
+                  td {{ numberWithCommas(history.item.quantity) }}
+                  td {{ numberWithCommas(history.item.weight) }}
+                  td {{ numberWithCommas(history.item.tonase) }}
+                  td {{ numberWithCommas(history.item.price) }}
+                  td {{ numberWithCommas(history.item.total) }}
+                  

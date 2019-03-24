@@ -1,0 +1,23 @@
+.form-group
+  label.form-label Tipe Kas Keluar
+  ui-select(ng-model="requiredData.selectedCashoutType", on-select="changeCashoutType($item)")
+    ui-select-match
+      span(ng-bind="$select.selected.name")
+    ui-select-choices(repeat="cashoutType in (cashoutTypeList | filter: $select.search) track by $index")
+      span(ng-bind="cashoutType.name")
+
+.form-group(ng-show="requiredData.selectedCashoutType.id == 0")
+  label.form-label Pembayaran Kepada
+  input.form-input(type="text", ng-model="requiredData.to" placeholder="Masukkan tujuan pembayaran", required)
+
+.form-group(ng-show="requiredData.selectedCashoutType.id == 1")
+  label.form-label Customer
+  ui-select(ng-model="requiredData.selectedCustomer", on-select="changeCustomer($item)")
+    ui-select-match
+      span(ng-bind="$select.selected.name")
+    ui-select-choices(repeat="customer in (customerList | filter: $select.search) track by $index")
+      span(ng-bind="customer.name")
+
+.form-group(ng-show="requiredData.selectedCashoutType.id == 1")
+  label.form-label Saldo
+  input.form-input(type="text", ng-model="requiredData.saldo", placeholder="Saldo Customer" readonly)

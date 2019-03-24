@@ -1,0 +1,64 @@
+.breadcrumb {
+	@include flexbox;
+	@include size(height 100% width 100%);
+	@include margin(0);
+	@include padding(0);
+	@include border-radius(0);
+	background-color: shade($clr-primary-light, 2.5%);
+
+	> a.breadcrumb_item {
+		@include transition(all 250ms $transition-bouncy);
+		@include relative;
+		@include flexbox;
+		@include align-items(center);
+		@include padding(15px 30px);
+		@include margin(0 0 0 1px);
+		@include font($fs-base, $fw-regular, $lh-base);
+		border-bottom: shade($clr-primary-light, 2.5%);
+		background-color: shade($clr-primary-light, 2.5%);
+		color: $clr-primary-passive;
+
+		&:before {
+			content: "";
+			@include size(0);
+			@include absolute(top 0 left 100%);
+			margin-left: 2px;
+			border-left: 25px solid shade($clr-primary-light, 5%);
+			border-top: 25px solid transparent;
+			border-bottom: 25px solid transparent;
+			z-index: 1;
+		}
+
+		&:after {
+			@include transition(all 250ms $transition-bouncy);
+			@include absolute(top 0 left 100%);
+			border-left: 25px solid shade($clr-primary-light, 2.5%);
+			border-top: 25px solid transparent;
+			border-bottom: 25px solid transparent;
+			content: "";
+			height: 0;
+			z-index: 2;
+		}
+
+		&:hover {
+			background-color: shade($clr-primary-light, 0.5%);
+
+			&:after {
+				border-left: 25px solid $clr-primary-light;
+			}
+		}
+
+		&.breadcrumb_item--is-active {
+			color: $clr-primary-dark;
+			background-color: $clr-primary-light;
+
+			&:after {
+				border-left: 25px solid $clr-primary-light;
+			}
+		}
+
+		&:not(:first-child) {
+			padding-left: 60px;
+		}
+	}
+}

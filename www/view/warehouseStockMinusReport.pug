@@ -1,0 +1,48 @@
+include ./global/head.pug
+include ./parts/sidenav.pug
+main.main
+  include ./parts/main-header.pug
+  include ./parts/main-subheader.pug
+  
+  .main_content(ng-cloak)
+    .page_header
+      h2 Laporan Stok Minus
+    .page_content
+      .page_block
+        form.form
+          .form-group
+            .flex-justify-between
+              label.form-label Cari Berdasarkan
+              button.button.button--primary.button--base(ng-show="warehouseStockList.length > 0" ng-click="doPrint()") PRINT
+            .row.m-top-15
+              .col-lg-2.col-md-2.col-sm-2.col-xs-12
+                label.form-label.m-right-15 Gudang
+              .col-lg-5.col-md-5.col-sm-5.col-xs-12
+                .input-group
+                  ui-select(ng-model="requiredData.selectedWarehouse" on-select="changeWarehouse($item)" style="width: 100%;")
+                    ui-select-match
+                      span(ng-bind="$select.selected.name")
+                    ui-select-choices(repeat="warehouse in (warehouseList | filter: $select.search) track by $index")
+                      span(ng-bind="warehouse.name")
+              .col-lg-3.col-md-3.col-sm-3.col-xs-12
+                button.button.button--secondary.button--base.m-left-15(ng-click="viewWarehouseStockReport()") Cari
+            .row.m-top-15
+              .col-lg-2.col-md-2.col-sm-2.col-xs-12
+                label.form-label.m-right-15 Tanggal
+              .col-lg-5.col-md-5.col-sm-5.col-xs-12
+                input.form-input(type="text" ng-model="todayDate" readonly)
+      .page_block(ng-show="!warehouseStockList" style="text-align: center;")
+        label There is no data
+      .table(ng-show="warehouseStockList.length > 0")
+        table.table--striped.table--hoverable
+          thead.thead--primary
+            tr
+              th(ng-repeat="heading in headings", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+          tbody
+            tr(ng-repeat="warehouseStock in warehouseStockList")
+              td {{ warehouseStock.ig_id }}
+              td {{ warehouseStock.name }}
+              td {{ warehouseStock.grade }}
+              td {{ warehouseStock.plan }}
+      .page-block(style="text-align: center" ng-show="warehouseStockList.length > 0")
+        pagination(total-rows="totalRows", data="requiredData")

@@ -1,0 +1,62 @@
+.default-modal
+   .default-modal-heading
+      h5.modal-title Detail Kontrak Pembelian
+      a.modal-close(ng-click="$dismiss()")
+         i.icon.icon--regular.fa.fa-times
+   .default-modal-content
+      .default-modal-block.pd-bottom-30
+         form.form.form--horizontal
+            h4.pd-bottom-15 Detail Kontrak Pembelian
+            .row.pd-bottom-15
+               .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+                  .form-group
+                     label.form-label Nomor Kontrak
+                     input.form-input(type="text", ng-model="purchasingContractDetail.data.id", readonly)
+                  .form-group
+                     label.form-label Tanggal Kontrak
+                     input.form-input(type="text", ng-model="purchasingContractDetail.data.date", readonly)
+                  .form-group
+                     label.form-label Tanggal Berakhir Kontrak
+                     input.form-input(type="text", ng-model="purchasingContractDetail.data.end_date", readonly)
+               .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-15
+                  .form-group
+                     label.form-label Tonase
+                     input.form-input(type="text", ng-value="numberWithCommas(purchasingContractDetail.data.tonase)", readonly)
+                  .form-group
+                     label.form-label Sisa Tonase
+                     input.form-input(type="text", ng-value="numberWithCommas(purchasingContractDetail.data.tonase_remain)", readonly)
+                        
+         .flex-row.flex-end.pd-top-30
+            button.button.button--primary.button--base(style="margin-right: 15px" ng-click="goToAmandemenContract(purchasingContractDetail.data.id)") Amandemen Kontrak
+            
+      .default-modal-block.pd-top-30
+         .table
+            table.table--striped
+               thead.thead--primary
+                  tr
+                     th(ng-repeat="heading in purchasingContractDetail.headings", ng-class="{ 'small': heading.size == 'sm' }") {{ heading.name }}
+               tbody
+                  tr(ng-repeat="contractDetail in purchasingContractDetail.data.items")
+                     td {{ contractDetail.serial ? contractDetail.serial : '-'}}
+                     td {{ contractDetail.category.name }}
+                     td {{ contractDetail.name }}
+                     td {{ contractDetail.weight ? contractDetail.weight : '-' }}
+                     td {{ contractDetail.weight ? numberWithCommas( roundToTwoDecimalPlaces(contractDetail.price / contractDetail.weight) ) : '-'}}
+                     td {{ numberWithCommas(contractDetail.price) }}
+                     td {{ numberWithCommas(contractDetail.quantity) }}
+      .default-modal-block.m-top-15
+         .pd-bottom-15
+            h4 Histori Amandemen
+            p(class="m-top-15" ng-show="!purchasingContractDetail.amandementData") Belum ada history amandemen
+         .table(ng-show="purchasingContractDetail.amandementData.length > 0")
+            table.table--striped
+               thead.thead--primary
+                  tr
+                     th(ng-repeat="heading in purchasingContractDetail.amandementHeadings", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+               tbody
+                  tr(ng-repeat="amandemen in purchasingContractDetail.amandementData")
+                     td {{amandemen.date}}
+                     td {{amandemen.detail}}
+         .page-block(style="text-align: center" ng-show="purchasingContractDetail.amandementData.length > 0")
+            modal-pagination(total-rows-in-modal="totalRowsInModal", modal-data="purchasingContractDetail.requiredData")
+                     

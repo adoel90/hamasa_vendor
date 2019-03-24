@@ -1,0 +1,23 @@
+.default-modal
+	.default-modal-heading
+		h5.modal-title Daftar Barang
+		a.modal-close(ng-click="$dismiss()")
+			i.icon.icon--regular.fa.fa-times
+	.default-modal-content(style="padding-top: 3px;")
+		.default-modal-block
+			item-filter(data="itemPriceList.requiredData")
+			.shrink-table.vertical--scroll
+				table.table--hoverable
+					thead.thead--primary
+						tr
+							th(ng-repeat="heading in itemPriceList.headings" width="{{heading.width}}") {{ heading.name}}
+							
+					tbody
+						tr(ng-repeat="item in itemPriceList.items track by $index" ng-click="chooseItemForFactory(item)")
+							td(ng-repeat="col in itemPriceList.cols" width="{{col.width}}" ng-click="showHistory(col.name, item.ig_id)") {{ item[col.name]}}
+							td(ng-if="pickup == 2" ng-repeat="warehouse in item.warehouse" ng-click="$event.stopPropagation()")
+								.flex-column
+									button.small-button(ng-click="chooseItem(item, warehouse)") {{ warehouse.plan}}
+		
+			.row.align-center
+				pagination(data="itemPriceList.requiredData", total-rows="totalRows")

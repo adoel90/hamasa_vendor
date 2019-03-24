@@ -1,0 +1,26 @@
+include ./global/head.pug
+include ./parts/sidenav.pug
+main.main
+  include ./parts/main-header.pug
+  include ./parts/main-subheader.pug
+  .main_content(ng-cloak)
+    .page_header
+      h2 Item History
+    .page_content
+      div(style="margin-top: 25px;" ng-repeat="itemWarehouse in itemHistoryList")
+        h4 Table in {{ itemWarehouse.name}}
+        .shrink-table.vertical--scroll(style="width: 50%;")
+          table.table--hoverable
+            thead.thead--primary
+              tr
+                th(ng-repeat="heading in headings") {{ heading.name }}
+            tbody
+              tr(ng-repeat="history in itemWarehouse.history")
+                td {{ history.type }}
+                td {{ history.date }}
+                td {{ history.id }}
+                td {{ history.plan ? history.plan : 0 }}
+                td {{ history.actual ? history.actual : 0 }}
+                
+          
+          

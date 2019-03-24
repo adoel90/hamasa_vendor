@@ -1,0 +1,80 @@
+.default-modal
+	.default-modal-heading
+		h5.modal-title Detail Delivery Order TIPO
+		a.modal-close(ng-click="$dismiss()")
+			i.icon.icon--regular.fa.fa-times
+	.default-modal-content
+		.default-modal-block.pd-bottom-30
+			form.form.form--horizontal
+				h4.pd-bottom-15 Detail Delivery Order (DO) TIPO
+				.row.pd-bottom-15
+					.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+						.form-group
+							label.form-label Nomor DO TIPO
+							input.form-input(type="text", ng-model="doTipoDetail.id", readonly)
+								
+						.form-group
+							label.form-label Nomor EX DO TIPO
+							input.form-input(type="text", ng-model="doTipoDetail.ex_do", readonly)
+							
+						.form-group
+							label.form-label Tanggal
+							input.form-input(type="text", ng-model="doTipoDetail.date", readonly)
+							small.clr-passive Tanggal DO TIPO diisukan.
+							
+						.form-group
+							label.form-label Status
+							input.form-input(type="text", ng-model="doTipoDetail.status.name", readonly)
+							small.clr-passive Status DO TIPO.
+					
+					.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-15
+						.form-group
+							label.form-label ID Customer
+							input.form-input(type="text", ng-model="doTipoDetail.customer.id", readonly)
+								
+						.form-group
+							label.form-label Nama Customer
+							input.form-input(type="text", ng-model="doTipoDetail.customer.name", readonly)
+								
+						.form-group
+							label.form-label NPWP Customer
+							input.form-input(type="text", ng-model="doTipoDetail.customer.npwp", readonly)
+								
+				.row.pd-bottom-15
+					h4.pd-bottom-15 Info Gudang & BKB
+					.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+						.form-group
+							label.form-label Nama Gudang
+							input.form-input(type="text", ng-model="doTipoDetail.warehouse.name", readonly)
+								
+						.form-group
+							label.form-label Nomor BKB TIPO
+							input.form-input(type="text", ng-model="doTipoDetail.bkb.id", readonly)
+					
+					.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-15
+						.form-group
+							label.form-label Pengemudi
+							input.form-input(type="text", ng-model="doTipoDetail.bkb.driver", readonly)
+								
+						.form-group
+							label.form-label Nomor Kendaraan
+							input.form-input(type="text", ng-model="doTipoDetail.bkb.transport_number", readonly)
+						
+		.default-modal-block.pd-top-30
+			.table
+				table.table--striped
+					thead.thead--primary
+						tr
+							th(ng-repeat="heading in doTipoDetail.headings", ng-class="{ 'small': heading.size == 'sm' }") {{ heading.name }}
+					tbody
+						tr(ng-repeat="item in doTipoDetail.item track by $index")
+							td {{item.category}}
+							td {{item.name}}
+							td {{ numberWithCommas(item.quantity) }}
+							
+	.default-modal-footer
+		.flex-row.flex-end
+			button.button.button--base.button--danger.m-right-15(ng-click="resumeDoTipo(doTipoDetail.id)") Resume DO Tipo
+			button.button.button--base.button--success(ng-click="printDoTipo(doTipoDetail.id)")
+				i.fa.fa-print.icon.icon--regular
+				| Print

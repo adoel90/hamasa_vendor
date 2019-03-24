@@ -1,0 +1,42 @@
+.default-modal
+  .default-modal-heading
+    h5.modal-title Otorisasi Stok Item Per Gudang
+    a.modal-close(ng-click="$dismiss()")
+      i.icon.icon--regular.fa.fa-times
+  .default-modal-content
+    .default-modal-block.pd-bottom30
+      form.form
+        .row.pd-bottom-30
+          .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+            .form-group
+              label.form-label ID Gudang
+              input.form-input(type="text", ng-model="itemStockWarehouse.warehouse.id", placeholder="ID Gudang", readonly)
+            .form-group
+              label.form-label Nama Gudang
+              input.form-input(type="text", ng-model="itemStockWarehouse.warehouse.name", placeholder="Nama Gudang", readonly)
+            .form-group
+              label.form-label Alamat
+              input.form-input(type="text", ng-model="itemStockWarehouse.warehouse.address", placeholder="Alamat Gudang", readonly)
+            .form-group
+              label.form-label No Telepon
+              input.form-input(type="text", ng-model="itemStockWarehouse.warehouse.phone", placeholder="No Telepon", readonly)
+    .table
+      .table-wrapper
+        table
+          thead
+            tr
+              th(ng-repeat="heading in itemHeadings", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+          tbody
+            tr(ng-repeat="item in itemStockWarehouse.item")
+              td {{ item.category.name }}
+              td {{ item.name }}
+              td {{ item.unit }}
+              td {{ item.grade }}
+              td {{ item.before }}
+              td {{ item.after }}
+              td {{ item.reason }}
+              td {{ item.statusName }}
+              td
+                .flex-row
+                  button(ng-class="{'button button--small button--stick button--disabled': (item.status == 1 || item.status == -1) , 'button button--small button--stick button--success' : item.status == 0 }" ng-disabled="item.status == 1 || item.status == -1" ng-click="acceptItemStockAdjustment(item)") Accept
+                  button(ng-class="{'button button--small button--stick button--disabled': (item.status == 1 || item.status == -1) , 'button button--small button--stick button--danger' : item.status == 0 }" ng-disabled="item.status == 1 || item.status == -1" ng-click="rejectItemStockAdjustment(item)") Reject

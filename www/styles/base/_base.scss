@@ -1,0 +1,71 @@
+body,
+html {
+	@include relative;
+	@include min-size(height 100vh width 100vw);
+	@include font-smoothing;
+	color: $clr-primary-dark;
+}
+
+body {
+	overflow-x: hidden;
+	@include font($fs-base, $fw-regular, $lh-base);
+}
+
+.main {
+	@include relative;
+	@include flexbox;
+	@include flex-direction(column);
+	@include transition(all 250ms $transition-bouncy);
+	@include min-size(height 100vh);
+	height: auto;
+	background-color: $clr-gray-lightest;
+
+	z-index: 500;
+
+
+	&.menu--is-open {
+		margin-left: 250px;
+	}
+	&.menu--is-closed{
+		margin-left: 0;
+	}
+
+	.main_content {
+		@include flex(1 1 100%);
+		@include margin(70px 0 0 0);
+		@include padding(0);
+
+		@include phone {
+			@include padding(15px);
+		}
+	}
+
+
+	.page_header {
+		@include margin(15px);
+
+		@include phone {
+			@include margin(30px);
+
+		}
+	}
+
+	.page_content {
+		@include margin(10px);
+
+		@include phone {
+			@include margin(30px);
+		}
+	}
+
+	.page_block {
+		@include padding(30px);
+		@include border-radius($border-radius);
+		@include margin-stack(bottom 15px);
+		background-color: $clr-primary-light;
+	}
+}
+
+.align-center {
+	text-align: center;
+}

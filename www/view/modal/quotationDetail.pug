@@ -1,0 +1,26 @@
+.default-modal
+	.default-modal-heading
+		h5.modal-title Detail Penawaran
+		a.modal-close(ng-click="$dismiss()")
+			i.icon.icon--regular.fa.fa-times
+	.default-modal-content
+		.default-modal-block
+			.pd-bottom-15
+				h4 Informasi Penawaran
+			form.form.form--primary.form--horizontal
+				include ../parts/modalFieldsTemplate.pug
+		
+		.default-modal-block
+			.pd-bottom-15
+				h4 Daftar Barang
+			p.clr-passive(ng-show="!quotationDetail.item.length") Tidak terdapat barang pada penawaran ini.
+			table-content(purpose="'modal'" type="'table-with-price'" table-header="quotationDetail.headings" table-body="quotationDetail.item" table-column="quotationDetail.cols" ng-show="quotationDetail.item.length")
+											
+	.default-modal-footer
+		.flex-row.flex-end
+			button.button.button--base.button--success.m-right-15(ng-click="printQuotation(quotationDetail.id)")
+				i.fa.fa-print.icon.icon--large
+				| Print
+			button.button.button--base.button--primary(ng-click="realizeQuotation()", ng-disabled="quotationDetail.status == 1")
+				i.icon.icon--regular.fa(ng-class="quotationDetail.status == 0 ? 'fa-check' : 'fa-book'")
+				| {{ quotationDetail.status == 1 ? 'Telah terealisasi' : 'Realisasikan' }}

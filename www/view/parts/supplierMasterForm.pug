@@ -1,0 +1,69 @@
+form.form(ng-submit="save()")
+   .row
+      .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+         .form-group
+            label.form-label Jenis Perusahaan
+            ui-select(ng-model="supplierData.selectedCompanyType", on-select="changeCompany($item)")
+              ui-select-match
+                span(ng-bind="$select.selected.name")
+              ui-select-choices(repeat="company in (listCompanyType | filter: $select.search) track by $index")
+                span(ng-bind="company.name")
+                  
+         .form-group
+            label.form-label Supplier
+            input.form-input(type="text", ng-model="supplierData.name", placeholder="Masukkan nama supplier", required)
+              
+         .form-group
+            label.form-label No telepon
+            input.form-input(type="text", ng-model="supplierData.phone", placeholder="Masukkan no telepon")
+              
+         .form-group
+            label.form-label Kontak Person
+            input.form-input(type="text", ng-model="supplierData.contact_person", placeholder="Masukkan kontak person")
+         .form-group
+            label.form-label NPWP
+            input.form-input(type="text", ng-model="supplierData.npwp", placeholder="Masukkan NPWP", required)
+              
+      .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-15
+         .form-group
+            label.form-label Alamat
+            textarea.form-input(rows="3" ng-model="supplierData.address", placeholder="Masukkan alamat supplier", required)
+         .form-group  
+            label.form-label Provinsi
+            ui-select(ng-model="supplierData.selectedProvince", on-select="changeProvince($item)")
+              ui-select-match
+                span(ng-bind="$select.selected.name")
+              ui-select-choices(repeat="province in (listProvince | filter: $select.search) track by $index")
+                span(ng-bind="province.name")
+         .form-group
+            label.form-label Kota
+            ui-select(ng-model="supplierData.selectedCity", on-select="changeCity($item)", ng-click="validateCity()")
+              ui-select-match
+                span(ng-bind="$select.selected.name")
+              ui-select-choices(repeat="city in (listCity | filter: $select.search) track by $index")
+                span(ng-bind="city.name")
+         .form-group
+            label.form-label Kecamatan
+            ui-select(ng-model="supplierData.selectedDistrict", on-select="changeDistrict($item)", ng-click="validateDistrict()")
+              ui-select-match
+                span(ng-bind="$select.selected.name")
+              ui-select-choices(repeat="district in (listDistrict | filter: $select.search) track by $index")
+                span(ng-bind="district.name")
+         .form-group
+            label.form-label Kelurahan
+            ui-select(ng-model="supplierData.selectedUrban", on-select="changeUrban($item)", ng-click="validateUrban()")
+              ui-select-match
+                span(ng-bind="$select.selected.name")
+              ui-select-choices(repeat="urban in (listUrban | filter: $select.search) track by $index")
+                span(ng-bind="urban.name")
+         .form-group
+            label.form-label Kode Pos
+            input.form-input(type="text", ng-model="supplierData.postal_code", placeholder="Masukkan kode pos")
+              
+   .flex-row.flex-justify-between
+      button.button.button--base.button--danger(type="button" ng-click="goBack()")
+         i.fa.fa-chevron-left.icon.icon--small
+         | Kembali
+      button.button.button--base.button--primary(type="submit") 
+         i.fa.fa-floppy-o.icon.icon--regular
+         | Simpan               

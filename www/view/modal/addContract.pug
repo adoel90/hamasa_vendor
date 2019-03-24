@@ -1,0 +1,40 @@
+.default-modal
+	.default-modal-heading
+		h5.modal-title Daftar Kontrak
+		a.modal-close(ng-click="$dismiss()")
+			i.icon.icon--regular.fa.fa-times
+	.default-modal-content
+		.row.pd-bottom-15
+			form.form
+				.form-input-group
+					label(role="form-label") Cari Berdasarkan
+					.row
+						.col-md-4.pd-right-15
+							ui-select(ng-model="contractList.selectedFilter.item")
+								ui-select-match
+									span(ng-bind="$select.selected.name")
+								ui-select-choices(repeat="filter in (contractList.searchFilters | filter: $select.search) track by $index")
+									span(ng-bind="filter.name")
+						.col-md-4
+							.textfield.textfield--primary(style="margin-right: 15px")
+								.textfield-input
+									input(type="text", ng-model="searchVal", placeholder="{{contractList.selectedFilter.item.placeholder}}")
+						.col-md-4
+							.flex-row
+								button.button.button--secondary.button--base(ng-click="doSearchFilter(searchVal, contractList.selectedFilter.item.by)") Cari
+
+		.row.pd-bottom-15
+			.table
+				table.table--striped.table--hoverable
+					thead.thead--primary
+						tr
+							th(ng-repeat="heading in contractList.headings") {{ heading.name }}
+
+					tbody
+						tr(ng-repeat="item in contractList.items track by $index", ng-click="chooseContract(item)")
+							td {{ item.id }}
+							td {{ item.customer.name }}
+							td {{ item.date }}
+							td {{ item.end }}		
+		.row.align-center
+			pagination(data="itemPriceList.requiredData", total-rows="totalRows")

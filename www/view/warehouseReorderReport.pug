@@ -1,0 +1,53 @@
+include ./global/head.pug
+include ./parts/sidenav.pug
+main.main
+  include ./parts/main-header.pug
+  include ./parts/main-subheader.pug
+  
+  .main_content(ng-cloak)
+    .page_header
+      h2 Laporan Reorder Gudang
+    .page_content
+      .page_block
+        form.form
+          .form-group
+            .flex-justify-between
+              label.form-label Cari Berdasarkan
+              button.button.button--primary.button--base(ng-show="listReportData.length > 0" ng-click="printReport()") PRINT
+            .row.m-top-15
+              .col-lg-2.col-md-2.col-sm-2.col-xs-12
+                label.form-label.m-right-15 Gudang
+              .col-lg-5.col-md-5.col-sm-5.col-xs-12
+                warehouse-list(warehouse-id="requiredData.warehouse_id")
+              .col-lg-3.col-md-3.col-sm-3.col-xs-12
+                button.button.button--secondary.button--base.m-left-15(ng-click="viewReport()") Cari
+            .row.m-top-15
+              .col-lg-2.col-md-2.col-sm-2.col-xs-12
+                label.form-label.m-right-15 Tanggal
+              .col-lg-5.col-md-5.col-sm-5.col-xs-12
+                input.form-input(type="text" ng-model="todayDate" readonly)
+      .page_block(ng-show="!listReportData" style="text-align: center;")
+        label There is no data
+        
+      .table(ng-show="listReportData.length > 0")
+        table.table--striped.table--hoverable
+          thead.thead--primary
+            tr
+              th(ng-repeat="heading in headings", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+          tbody
+            tr(ng-repeat="reportData in listReportData")
+              td {{ reportData.category }}
+              td
+                p.m-bottom-15(ng-repeat="item in reportData.item") {{ item.name }}
+              td
+                p.m-bottom-15(ng-repeat="item in reportData.item") {{ item.actual }}
+              td
+                p.m-bottom-15(ng-repeat="item in reportData.item") {{ item.plan }}
+              td
+                p.m-bottom-15(ng-repeat="item in reportData.item") {{ item.min }}
+              td
+                p.m-bottom-15(ng-repeat="item in reportData.item") {{ item.reorder }}
+
+        
+      .page-block(style="text-align: center" ng-show="listReportData.length > 0")
+        pagination(total-rows="totalRows", data="requiredData")

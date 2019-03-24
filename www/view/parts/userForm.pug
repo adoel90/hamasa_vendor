@@ -1,0 +1,32 @@
+form.form(ng-submit="save()")
+  .row
+    .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+      .form-group
+        label.form-label User Name
+        input.form-input(type="text", ng-model="requiredData.username", placeholder="Masukkan username", required)
+      .form-group
+        label.form-label Nama
+        input.form-input(type="text", ng-model="requiredData.name", placeholder="Masukkan nama", required)
+      .form-group(ng-hide="currrentPath == '/usermanagement/updateuserdata'")
+        label.form-label Password
+        input.form-input(type="password", ng-model="requiredData.password", placeholder="Masukkan password", ng-readonly="currrentPath == '/usermanagement/updateuserdata'" , required)
+      .form-group
+        label.form-label Access Level
+        ui-select(ng-model="requiredData.selectedAccess", on-select="changeAccessLevel($item)")
+          ui-select-match
+            span(ng-bind="$select.selected.name")
+          ui-select-choices(repeat="access in (accessList | filter: $select.search) track by $index")
+            span(ng-bind="access.name")
+      .form-group
+        label.form-label Gudang
+        ui-select(ng-model="requiredData.selectedWarehouse", on-select="changeWarehouse($item)")
+          ui-select-match
+            span(ng-bind="$select.selected.name")
+          ui-select-choices(repeat="warehouse in (warehouseList | filter: $select.search) track by $index")
+            span(ng-bind="warehouse.name")
+  .flex-row.flex-end
+    .pd-right-15
+      button.button.button--base.button--danger(type="button" ng-click="goBack()") Kembali
+    button.button.button--base.button--primary(type="submit") 
+      i.fa.fa-floppy-o.icon.icon--regular
+      | Simpan

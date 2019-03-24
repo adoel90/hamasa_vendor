@@ -1,0 +1,53 @@
+///====================================================================================================
+///
+///		Functions
+///
+///
+///		https://sass.guidelin.es/#functions
+///
+///====================================================================================================
+//---------------------------------------------------------------------
+//		Colors
+//---------------------------------------------------------------------
+@function tint($color, $percentage) {
+	@return mix(white, $color, $percentage);
+}
+
+@function shade($color, $percentage) {
+	@return mix(black, $color, $percentage);
+}
+
+/**/
+
+
+//---------------------------------------------------------------------
+//		Em to Px Function
+//---------------------------------------------------------------------
+$browser-context: 16;
+@function em($pixels, $context: $browser-context) {
+	@if (unitless($pixels)) {
+		$pixels: $pixels * 1px;
+	}
+
+	@if (unitless($context)) {
+		$context: $context * 1px;
+	}
+
+	@return $pixels / $context * 1em;
+}
+
+@function strip-unit($number) {
+	@if type-of($number) == 'number' and not unitless($number) {
+		@return $number / ($number * 0 + 1);
+	}
+
+	@return $number;
+}
+
+@function is-number($value) {
+  @return type-of($value) == 'number';
+}
+
+@function is-integer($value) {
+  @return is-number($value) and round($value) == $value;
+}

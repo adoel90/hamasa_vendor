@@ -1,0 +1,72 @@
+.default-modal
+   .default-modal-heading
+      h5.modal-title Detail Tipo
+      a.modal-close(ng-click="$dismiss()")
+         .icon.icon--large.fa.fa-times
+   .default-modal-content
+      form.form.form--primary.form--horizontal
+         .pd-bottom-15
+            h4.form-title Informasi Tipo
+         .row.pd-bottom-30
+            .col-md-6.col-sm-6.pd-right-15
+               .form-input-group
+                  .textfield.textfield--primary
+                     label.textfield-label.col-md-4.col-sm-4.col-xs-4(for="id") No BKB Tipo
+                     .col-md-8.col-sm-8.col-xs-8
+                        input(type="text", name="id", ng-model="detailBkbTipo.id", placeholder="No BKB Tipo", readonly)
+                  .textfield.textfield--primary
+                     label.textfield-label.col-md-4.col-sm-4.col-xs-4(for="date") Tanggal Tipo
+                     .col-md-8.col-sm-8.col-xs-8
+                        input(type="text", name="date", ng-model="detailBkbTipo.date", placeholder="Tanggal Tipo", readonly)
+            
+            .col-md-6.col-sm-6
+               .form-input-group
+                  .textfield.textfield--primary
+                     label.textfield-label.col-md-4.col-sm-4.col-xs-4(for="doTipo") No DO Tipo      
+                     .col-md-8.col-sm-8.col-xs-8
+                        input(type="text", name="doTipo", ng-model="detailBkbTipo.do.id", placeholder="No DO Tipo", readonly)
+         .pd-bottom-15
+            h4.form-title Informasi Kendaraan dan Customer
+         .row.pd-bottom-30
+            .col-md-6.col-sm-6.pd-right-15
+               .form-input-group
+                  .textfield.textfield--primary
+                     label.textfield-label.col-md-4.col-sm-4.col-xs-4(for="vehicle") No Kendaraan
+                     .col-md-8.col-sm-8.col-xs-8
+                        input(type="text", name="vehicle", ng-model="detailBkbTipo.transport_number", placeholder="No Kendaraan", readonly)
+                  .textfield.textfield--primary
+                     label.textfield-label.col-md-4.col-sm-4.col-xs-4(for="driver") Nama Supir
+                     .col-md-8.col-sm-8.col-xs-8
+                        input(type="text", name="driver", ng-model="detailBkbTipo.driver", placeholder="Nama Supir", readonly)
+            .col-md-6.col-sm-6
+               .form-input-group
+                  .textfield.textfield--primary
+                     label.textfield-label.col-md-4.col-sm-4.col-xs-4(for="customerId") ID Customer
+                     .col-md-8.col-sm-8.col-xs-8
+                        input(type="text", name="customerId", ng-model="detailBkbTipo.customer.id", placeholder="ID Customer", readonly)      
+                  .textfield.textfield--primary
+                     label.textfield-label.col-md-4.col-sm-4.col-xs-4(for="customerName") Nama Customer
+                     .col-md-8.col-sm-8.col-xs-8
+                        input(type="text", name="customerName", ng-model="detailBkbTipo.customer.name", placeholder="Nama Customer", readonly)
+      
+      .table(ng-show="detailBkbTipo.item.length > 0")
+         .pd-bottom-15
+            h4 Detail Barang
+         .table-wrapper
+            table
+               thead
+                  tr
+                     th(ng-repeat="heading in detailHeadings") {{heading.name}}
+               tbody
+                  tr(ng-repeat="item in detailBkbTipo.item")
+                     td {{item.serial}}
+                     td {{item.category.name}}
+                     td {{item.name}}
+                     td {{item.weight}}
+                     td {{item.quantity}}
+            
+   .default-modal-footer
+     .flex-row.flex-end
+       button.button.button--base.button--secondary(type="button" ng-click="printBkbTipo(detailBkbTipo.id)")
+        i.fa.fa-print.icon.icon--regular
+        | Print

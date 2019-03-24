@@ -1,0 +1,18 @@
+.default-modal
+   .default-modal-heading
+      h5.modal-title Daftar Alamat Customer
+   .default-modal-content
+      .form-heading.pd-bottom-15
+         h4.form-title Detail Alamat Customer
+      .table
+         .table-wrapper(drag-scroll="")
+            table.table--selectable
+               thead
+                  tr
+                     th(ng-repeat="heading in customerHeadings", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+               tbody
+                  tr(ng-repeat="custAddress in customerAddressList" ng-click="selectCustAddress(custAddress)")
+                     td {{custAddress.city}}
+                     td {{custAddress.address}}
+                     
+                     

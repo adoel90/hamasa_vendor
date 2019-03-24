@@ -1,0 +1,68 @@
+form.form(ng-submit="saveConversion()" novalidate)
+	.page_block
+		.row.pd-bottom-30
+			.form-group
+				label.form-label Pilih Gudang
+				.row
+					.col-lg-6.pd-right-15
+						ui-select(ng-model="requiredData.warehouse", on-select="changeWarehouse($item)")
+							ui-select-match
+								span(ng-bind="$select.selected.name")
+							ui-select-choices(repeat="warehouse in (warehouseList | filter: $select.search) track by $index")
+								span(ng-bind="warehouse.name")
+					.col-lg-6.pd-left-15
+						.flex-row
+							button.button.button--base.button--primary(type="button" ng-click="addItem()")
+								i.icon.icon--regular.fa.fa-plus
+								| Pilih Barang
+								
+		
+		.flex-row
+			button.button.button--base.button--danger(type="button" ng-click="goBack()")
+				i.fa.fa-chevron-left.icon.icon--small
+				| Kembali
+
+	.page_block(ng-show="selectedItem")
+		.form-heading.pd-bottom-15
+			h4.form-title Detail Barang
+			p.form-subtitle.clr-passive Berikut adalah detail barang <span style="font-weight: 600">yang akan di konversi</span>. Klik tombol yang tersedia untuk memilih hasil barang konversi.
+		.form-input-group.pd-bottom-15
+			.textfield.textfield--primary
+				label.textfield-label.col-md-2.col-sm-2.col-xs-2(for="name") Nama Barang
+				.col-md-10.col-sm-10.col-xs-10
+					input(type="text", name="name", placeholder="Nama Barang", ng-model="selectedItem.name" readonly)
+			.textfield.textfield--primary
+				label.textfield-label.col-md-2.col-sm-2.col-xs-2(for="grade") Grade Barang
+				.col-md-10.col-sm-10.col-xs-10
+					input(type="text", name="grade", placeholder="Grade Barang", ng-model="selectedItem.grade" readonly)
+			.textfield.textfield--primary
+				label.textfield-label.col-md-2.col-sm-2.col-xs-2(for="grade") Jumlah Barang
+				.col-md-10.col-sm-10.col-xs-10
+					input(type="number", name="quantity", placeholder="Masukkan jumlah barang yg ingin dikonversi", ng-model="requiredData.quantity", required)
+		.form-button-group
+			.flex-row.flex-end
+				button.button.button--base.button--primary(type="button", ng-click="addItem('conversion')")
+					| Pilih Hasil Konversi
+					
+	.table(ng-show="requiredData.convert_item.length")
+		table.table--striped
+			thead.thead--primary
+				tr
+					th(ng-repeat="heading in headings", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+			tbody
+				tr(ng-repeat="item in requiredData.convert_item | filter: searchFilter.value")
+					td {{item.category.name}}
+					td {{item.name}}
+					td {{item.unit}}
+					td {{item.grade}}
+					td
+						input.form-input.ta-center(type="text", placeholder="Masukkan jumlah", ng-model="item.quantity", required)
+					td(ng-click="removeItem($index)")
+						i.icon.icon--large.fa.fa-trash.clr-passive
+
+	.page_block.flex-row.flex-end(ng-show="requiredData.convert_item.length")
+		.form-button-group
+			button.button.button--base.button--success(type="submit") 
+				i.icon.icon--large.fa.fa-floppy-o
+				| Simpan
+				

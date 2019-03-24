@@ -1,0 +1,69 @@
+//------------------------------------------------------------------------
+//
+//	##	MAIN.SCSS
+//
+//		Serves as the bridging file to all stylesheet files used
+//		thoughout the project.
+//
+//------------------------------------------------------------------------
+//	#	Vendor
+//------------------------------------------------------------------------
+@import 'vendor/bootstrap';
+@import 'vendor/angular-datepicker';
+//------------------------------------------------------------------------
+//	#	Abstracts
+//------------------------------------------------------------------------
+@import 'abstracts/abstracts';
+@import 'abstracts/functions';
+@import 'abstracts/mixins';
+@import 'abstracts/variables';
+
+//------------------------------------------------------------------------
+//	#	Vendor
+//------------------------------------------------------------------------
+@import 'vendor/bootstrap';
+@import 'vendor/720datepicker';
+
+//------------------------------------------------------------------------
+//	#	Base
+//------------------------------------------------------------------------
+@import 'base/reset';
+@import 'base/base';
+@import 'base/typography';
+@import 'base/colors';
+@import 'base/iconography';
+@import 'base/heading';
+@import 'base/animation';
+
+//------------------------------------------------------------------------
+//	#	Components
+//------------------------------------------------------------------------
+@import 'components/buttons';
+@import 'components/inputs';
+@import 'components/images';
+@import 'components/icons';
+@import 'components/badges';
+@import 'components/breadcrumb';
+@import 'components/tile';
+@import 'components/pagination';
+@import 'components/notification';
+@import 'components/legend';
+@import 'components/tooltip';
+//------------------------------------------------------------------------
+//	#	Layout
+//------------------------------------------------------------------------
+@import 'layout/forms';
+@import 'layout/alert';
+@import 'layout/sidenav';
+@import 'layout/header';
+@import 'layout/flex';
+@import 'layout/grid';
+@import 'layout/tables';
+@import 'layout/spacing';
+@import 'layout/modal';
+
+
+//------------------------------------------------------------------------
+//	#	Views
+//------------------------------------------------------------------------
+@import 'views/login';

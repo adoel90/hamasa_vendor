@@ -1,0 +1,71 @@
+form.form(ng-submit="saveBkb()")
+	.page_block
+		.row.pd-bottom-30
+			.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+				.form-group
+					label.form-label Tanggal BKB
+					.input-group
+						datepicker(date-format="yyyy-MM-dd" date-set="{{requiredData.date}}")
+							input.form-input(type="text" ng-model="requiredData.date")
+				.form-group
+					label.form-label Nomor DO
+					.input-group
+						input.form-input.bigLetter(type="text", ng-model="requiredData.do_id", placeholder="Masukkan nomor DO", required)
+						button.button.button--base.button--secondary(type="button", ng-click="searchDO()")
+							i.fa.fa-search.icon.icon--regular
+							| Cari
+						
+				div(ng-show="doDetail")
+					.form-group
+						label.form-label ID Customer
+						input.form-input(type="text", ng-model="doDetail.customer.id", readonly)
+					.form-group
+						label.form-label Nama Customer
+						input.form-input(type="text", ng-model="doDetail.customer.name", readonly)
+					.form-group
+						label.form-label Tanggal BKB
+						input.form-input(type="text", ng-model="doDetail.date", readonly)
+
+			.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-15
+				.form-group
+					label.form-label Nama Pengemudi
+					input.form-input(type="text", placeholder="Masukkan nama pengemudi", ng-model="requiredData.driver", required)
+				.form-group
+					label.form-label Nomor Kendaraan
+					input.form-input(type="text", placeholder="Masukkan nomor kendaraan", ng-model="requiredData.transport_number", required)
+				.form-group
+					label.form-label Deskripsi
+					textarea.form-input(rows="3", placeholder="Masukkan deskripsi (optional)", ng-model="requiredData.note")
+		
+		.flex-row.flex-justify-between
+			button.button.button--danger.button--base(type="button" ng-click="goBack()")
+				i.fa.fa-chevron-left.icon.icon--small
+				| Kembali
+				
+	.page_block(ng-show="!doDetail.item.length")
+		.flex-row.flex-align-center
+			p.clr-passive Lakukan pencarian Nomor DO untuk mendapatkan daftar barang.
+
+	.table(ng-show="doDetail.item.length")
+		table.table--striped
+			thead.thead--primary
+				tr
+					th(ng-repeat="heading in headings", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+			tbody
+				tr(ng-repeat="item in doDetail.item")
+					td {{item.category.name}}
+					td {{item.name}}
+					td {{item.unit}}
+					td {{item.grade}}
+					td {{item.quantity}}
+					td 
+						input.form-input.ta-center(type="text", placeholder="Masukkan jumlah", ng-model="item.quantity_out", required)
+					td
+						input.form-input.ta-center(type="text", placeholder="Masukkan keterangan", ng-model="item.description")
+
+	.page_block(ng-show="doDetail.item")
+		.form-button-group
+			.flex-row.flex-end
+				button.button.button--base.button--success(type="submit")
+					i.icon.icon--large.fa.fa-floppy-o
+					| Simpan

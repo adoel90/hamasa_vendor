@@ -1,0 +1,89 @@
+form.form(ng-submit="save()")
+   .page_block
+      .row
+         .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+            .form-group
+               label.form-label Tanggal BPB
+               .input-group
+                 datepicker(date-format="yyyy-MM-dd" date-set="{{bpbData.date}}")
+                   input.form-input(type="text" ng-model="bpbData.date")
+            .form-group
+               label.form-label Jenis Pembelian
+               ui-select(ng-model="bpbData.selectedBpbType", style="margin-right: 15px", on-select="changeBpbType($item)")
+                 ui-select-match
+                   span(ng-bind="$select.selected.name")
+                 ui-select-choices(repeat="poType in (listPoType | filter: $select.search) track by $index")
+                   span(ng-bind="poType.name")
+            .form-group
+               label.form-label Supplier
+               ui-select(ng-model="bpbData.selectedSupplier", style="margin-right: 15px", on-select="changeSupplier($item)")
+                  ui-select-match
+                     span(ng-bind="$select.selected.name")
+                  ui-select-choices(repeat="supplier in (supplierList | filter: $select.search) track by $index")
+                     span(ng-bind="supplier.name")
+            .form-group
+               label.form-label Gudang
+               ui-select(ng-model="bpbData.selectedWarehouse", style="margin-right: 15px", on-select="changeWarehouse($item)")
+                  ui-select-match
+                     span(ng-bind="$select.selected.name")
+                  ui-select-choices(repeat="filter in (warehouseList | filter: $select.search) track by $index")
+                     span(ng-bind="filter.name")
+         .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-15
+            .form-group
+               label.form-label Alamat
+               input.form-input(type="text", ng-model="bpbData.supp_address", placeholder="ID Kontrak", readonly)
+            .form-group
+               label.form-label No Telepon
+               input.form-input(type="text", ng-model="bpbData.supp_phone", placeholder="ID Kontrak", readonly)
+            .form-group
+               label.form-label Contact Person
+               input.form-input(type="text", ng-model="bpbData.supp_contact_person", placeholder="ID Kontrak", readonly)
+              
+      .flex-row.flex-justify-between
+        button.button.button--base.button--danger(type="button" ng-click="goBack()")
+          i.fa.fa-chevron-left.icon.icon--small
+          | Kembali
+        button.button.button--primary.button--base(type="button" ng-show="bpbData.selectedBpbType.value == 1" ng-click="addItem()")
+          i.fa.fa-plus.icon.icon--regular
+          | Tambah Barang
+        button.button.button--primary.button--base(type="button" ng-show="bpbData.selectedBpbType.value == 0" show-item-master-list api-accessed="'itemList'")
+          i.fa.fa-plus.icon.icon--regular
+          | Item dari DB
+        
+          
+   .shrink-table(ng-show="bpbData.item.length > 0")
+      .table-wrapper
+         table
+            thead
+               tr
+                  th(ng-repeat="heading in headings", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+            tbody
+               tr(ng-repeat="poItem in bpbData.item")
+                  td {{poItem.serial ? poItem.serial : '-'}}
+                  td {{poItem.category}}
+                  td {{poItem.name}}
+                  td {{poItem.unit}}
+                  td {{poItem.grade}}
+                  td
+                     .form-input-group
+                        .textfield.textfield--primary
+                           input.align-center(type="text", name="tes", ng-model="poItem.quantity", currency-input, required)
+                             
+                  td(ng-show="bpbData.type == 0")
+                    .input-group
+                      .input-group-extra
+                        small.clr-passive.fw-medium.tt-uppercase Rp
+                      input.form-input.ta-center(type="text", placeholder="Masukkan harga", ng-model="poItem.price", currency-input, ng-required="bpbData.type == 0")
+
+                  td
+                     .flex-row.flex-align-center
+                       button.button.button--base.button--primary(ng-click="deletePoItem($index)")
+                         i.fa.fa-trash.icon.icon--regular
+                         | Hapus
+   .page_block(ng-show="bpbData.item.length > 0")
+      .flex-row.flex-end
+         button.button.button--base.button--primary(type="submit") 
+            i.fa.fa-floppy-o.icon.icon--regular
+            | Simpan 
+      
+                     

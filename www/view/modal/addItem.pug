@@ -1,0 +1,26 @@
+.default-modal
+	.default-modal-heading
+		h5.modal-title Daftar Barang
+		a.modal-close(ng-click="$dismiss()")
+			i.icon.icon--regular.fa.fa-times
+	.default-modal-content
+		.row.pd-bottom-15
+			item-filter(data="itemList.requiredData")
+		.shrink-table
+			table.table--hoverable
+				thead.thead--primary
+					tr
+						th(ng-repeat="heading in itemList.headings") {{heading.name}}
+				tbody.vertical--scroll
+					tr(ng-repeat="item in itemList.items | filter: searchFilter.value", ng-click="chooseItem(item)")
+						td {{item.id}}
+						td {{item.serial}}
+						td {{item.category.name}}
+						td {{item.name}}
+						td {{item.unit}}
+						td {{item.weight}}
+						td {{item.grade}}
+						td(ng-show="apiAccessed == 'priceList'") {{ item.price.kredit_gudang | number: fractionSize }}
+									
+		div(style="text-align: center")
+			pagination(total-rows="totalRows", data="itemList.requiredData")

@@ -1,0 +1,74 @@
+form.form(ng-submit="saveBtb()" novalidate)
+	.page_block
+		.row.pd-bottom-30
+			.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+				.form-group
+					label.form-label Tanggal BTB
+					.input-group
+						datepicker(date-format="yyyy-MM-dd" date-set="{{requiredData.date}}")
+							input.form-input(type="text" ng-model="requiredData.date")
+				.form-group
+					label.form-label Jenis Pengiriman
+					ui-select(ng-model="requiredData.type_data", on-select="changeDeliveryType($item)")
+						ui-select-match
+							span(ng-bind="$select.selected.name")
+						ui-select-choices(repeat="deliveryType in (deliveryTypes | filter: $select.search) track by $index")
+							span(ng-bind="deliveryType.name")
+								
+				.form-group(ng-show="documentDetail")
+					label.form-label Berasal Dari
+					input.form-input(type="text", placeholder="Masukkan supplier asal", ng-model="requiredData.from", readonly)
+			
+			.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-15
+				.form-group
+					label.form-label Nomor Dokumen
+					.input-group
+						input.form-input.bigLetter(type="text", placeholder="{{ documentPlaceholder }}" ng-model="requiredData.order_id", required)
+						button.button.button--base.button--secondary(type="button", ng-click="searchItemByType(requiredData.type_data.type)") Cari
+				div(ng-show="documentDetail")
+					.form-group
+						label.form-label Nama Pengemudi
+						input.form-input(type="text", placeholder="Masukkan nama pengemudi", ng-model="requiredData.driver", ng-readonly="requiredData.type_data.type == 'mutation'", required)
+					.form-group(ng-show="documentDetail || requiredData.type == 'RETUR'")
+						label.form-label Nomor Kendaraan
+						input.form-input(type="text", placeholder="Masukkan nama pengemudi", ng-model="requiredData.transport_number", ng-readonly="requiredData.type_data.type == 'mutation'", required)
+					.form-group(ng-show="documentDetail || requiredData.type == 'RETUR'")
+						label.form-label Deskripsi
+						textarea.form-input(rows="3", placeholder="Masukkan deskripsi (optional)", ng-model="requiredData.description")
+		
+		.flex-row
+			button.button.button--base.button--danger(type="button" ng-click="goBack()") 
+				i.fa.fa-chevron-left.icon.icon--small
+				| Kembali
+		.flex-row.flex-end
+			button.button.button--base.button--primary.m-left-15(type="button" show-btb-history po-id="requiredData.order_id" ng-show="documentDetail && (requiredData.type == 'MUTATION' || requiredData.type == 'PO')") Histori BTB
+			a.button.button--base.button--primary.m-left-15(show-item-master-list api-accessed="'itemList'" ng-show="documentDetail && (requiredData.type == 'MUTATION' || requiredData.type == 'PO')")
+				i.icon.icon--regular.fa.fa-plus
+				| Tambah Barang
+	
+	.table(ng-show="requiredData.item.length")
+		table.table--striped
+			thead.thead--primary
+				tr
+					th(ng-repeat="heading in headings", ng-class="{ 'large': heading.size == 'lg'  }", ng-hide="heading.hide") {{ heading.name }}
+			tbody
+				tr(ng-repeat="item in requiredData.item track by $index")
+					td {{item.category.name}}
+					td {{item.name}}
+					td {{item.unit}}
+					td {{item.grade}}
+					td {{item.order_quantity ? item.order_quantity : '-'}}
+					td
+						input.form-input.ta-center(type="text", ng-model="item.quantity", placeholder="Masukkan jumlah",required)
+					td
+						input.form-input.ta-center(type="text", ng-model="item.description", placeholder="Masukkan keterangan")
+					td(ng-hide="requiredData.type == 'PO' || requiredData.type == 'MUTATION'")
+						button.button.button--small.button--danger.button--stick(type="button" ng-click="deleteItem($index)")
+							i.fa.fa-trash.icon.icon--small
+							| Hapus
+	.page_block(ng-show="requiredData.item.length")
+		.flex-row.flex-end
+			button.button.button--base.button--primary(type="submit")
+				i.fa.fa-floppy-o.icon.icon--regular
+				| Simpan
+				

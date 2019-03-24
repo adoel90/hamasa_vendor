@@ -1,0 +1,40 @@
+include ./global/head.pug
+include ./parts/sidenav.pug
+main.main
+  include ./parts/main-header.pug
+  include ./parts/main-subheader.pug
+
+  .main_content(ng-cloak)
+    .page_header
+      h2 List Otorisasi Pembelian
+    .page_content
+      .page_block
+        form.form
+          .form-group
+            label.form-label Cari Berdasarkan
+            .row
+              .col-lg-4.col-md-4.col-sm-4.col-xs-12
+                ui-select(ng-model="selectedFilter.item", style="margin-right: 15px")
+                  ui-select-match
+                    span(ng-bind="$select.selected.name")
+                  ui-select-choices(repeat="filter in (searchFilters | filter: $select.search) track by $index")
+                    span(ng-bind="filter.name") 
+              .col-lg-5.col-md-5.col-sm-5.col-xs-12
+                .input-group
+                  datepicker(date-format="yyyy-MM-dd")
+                    input.form-input(type="text", ng-model="searchVal", placeholder="{{selectedFilter.item.placeholder}}")
+                  button.button.button--secondary.button--base(ng-click="doSearchFilter(searchVal, selectedFilter.item.by)") Cari
+
+      .table
+        table.table--striped
+          thead.thead--primary
+            tr
+              th(ng-repeat="heading in headings", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+          tbody
+            tr(ng-repeat="purchaseAuth in purchaseAuthList" ng-click="viewDetailSoPickupAtFactory(purchaseAuth)")
+              td {{ purchaseAuth.date }}
+              td {{ purchaseAuth.type.name }}
+              td {{ purchaseAuth.statusName }}
+
+      .page-block(style="text-align: center")
+        pagination(total-rows="totalRows", data="requiredData")

@@ -1,0 +1,76 @@
+form.form(ng-submit="save()")
+   .page_block
+      .row
+         .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+            .form-group
+               label.form-label ID Kontrak
+               input.form-input(type="text", ng-model="amandemenPurchasingContract.id", placeholder="ID Kontrak", readonly)
+            .form-group
+               label.form-label Tgl Kontrak
+               input.form-input(type="text", ng-model="amandemenPurchasingContract.date", placeholder="Tgl Kontrak", readonly)
+            .form-group
+               label.form-label Akhir Kontrak
+               datepicker(date-format="yyyy-MM-dd")
+                 input.form-input(type="text", ng-model="amandemenPurchasingContract.end_date", placeholder="yyyy-mm-dd", required)
+         .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-15
+            .form-group
+               label.form-label ID Supplier
+               input.form-input(type="text", ng-model="amandemenPurchasingContract.supplier.id", placeholder="ID Customer", readonly)
+            .form-group
+               label.form-label Supplier
+               input.form-input(type="text", ng-model="amandemenPurchasingContract.supplier.name", placeholder="Customer", readonly)   
+            .form-group
+               label.form-label NPWP
+               input.form-input(type="text", ng-model="amandemenPurchasingContract.supplier.npwp", placeholder="NPWP", readonly)   
+            .form-group
+               label.form-label Uang Muka
+               input.form-input(type="text", ng-model="amandemenPurchasingContract.dp", placeholder="Uang Muka", readonly)   
+            .form-group
+               label.form-label Tonase
+               input.form-input(type="text", ng-model="amandemenPurchasingContract.tonase", ng-blur="amandemenPurchasingContract.tonase = numberWithCommas(amandemenPurchasingContract.tonase)" placeholder="Tonase", readonly)
+
+      .flex-row
+        button.button.button--base.button--danger(type="button" ng-click="goBack()")
+          i.fa.fa-chevron-left.icon.icon--small           
+          | Kembali
+   .shrink-table
+      table.table--striped
+         thead.thead--primary
+            tr
+               th(ng-repeat="heading in headings", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+         tbody
+            tr(ng-repeat="item in amandemenContractItem")
+               td {{item.serial ? item.serial : '-'}}
+               td {{item.category.name}}
+               td {{item.name}}
+               td {{item.unit}}
+               td {{item.grade}}
+               td {{item.weight ? item.weight : '-' }}
+               td
+                 input.ta-center.form-input(type="text", placeholder="Masukkan jumlah", ng-model="item.quantity", readonly)
+               td
+                 .input-group
+                   .input-group-extra
+                     small.clr-passive.fw-medium.tt-uppercase Rp
+                   input.form-input.ta-center(type="text", placeholder="Masukkan harga", ng-model="item.priceKg", ng-blur="item.priceKg = numberWithCommas(item.priceKg)", ng-focus="item.priceKg = numberWithNoCommas(item.priceKg)", ng-readonly="item.weight == null" required)
+               td(ng-if="item.weight == null")
+                 .input-group
+                   .input-group-extra
+                     small.clr-passive.fw-medium.tt-uppercase Rp
+                   input.form-input.ta-center(type="text", placeholder="Masukkan harga", ng-model="item.price", ng-blur="item.price = numberWithCommas(item.price)", ng-focus="item.price = numberWithNoCommas(item.price)", required)
+               td(ng-if="item.weight")
+                 .input-group
+                   .input-group-extra
+                     small.clr-passive.fw-medium.tt-uppercase Rp
+                   input.form-input.ta-center(type="text", placeholder="Masukkan harga", ng-model="item.price", ng-focus="makeSureThatPriceKgIsFilled(item)", ng-blur="item.price = numberWithCommas(item.price)")
+                     
+               td
+                 button.small-button.button--success.pd-10.button-tooltip(type="button" ng-click="doCalculate(item)" ng-disabled="item.weight == null")
+                   i.fa.fa-calculator.icon.icon--regular
+                   span.tooltiptext Hitung
+                      
+   .page_block
+      .flex-row.flex-end
+         button.button.button--base.button--primary(type="submit") 
+            i.fa.fa-floppy-o.icon.icon--regular
+            | Simpan 

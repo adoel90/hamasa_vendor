@@ -1,0 +1,79 @@
+include ./global/head.pug
+include ./parts/sidenav.pug
+main.main
+  include ./parts/main-header.pug
+  include ./parts/main-subheader.pug
+  
+  .main_content(ng-cloak)
+    .page_header
+      h2= page.title
+    .page_content
+      .page_block
+        form.form
+          .form-group
+            .flex-justify-between
+              label.form-label Cari Berdasarkan
+              button.button.button--primary.button--base(ng-show="incomeReportData.length > 0" ng-click="printReport()") PRINT
+            .row.m-top-15
+              .col-lg-2.col-md-2.col-sm-2.col-xs-12
+                label.form-label.m-right-15 Tanggal Awal
+              .col-lg-5.col-md-5.col-sm-5.col-xs-12
+                datepicker(date-format="yyyy-MM-dd" date-set="{{requiredData.start_date}}")
+                  input.form-input(type="text" ng-model="requiredData.start_date")
+            .row.m-top-15
+              .col-lg-2.col-md-2.col-sm-2.col-xs-12
+                label.form-label.m-right-15 Tanggal Akhir
+              .col-lg-5.col-md-5.col-sm-5.col-xs-12
+                datepicker(date-format="yyyy-MM-dd" date-set="{{requiredData.end_date}}")
+                  input.form-input(type="text" ng-model="requiredData.end_date")
+            .row.m-top-15
+              .col-lg-2.col-md-2.col-sm-2.col-xs-12
+                label.form-label.m-right-15 Metode Pembayaran
+              .col-lg-5.col-md-5.col-sm-5.col-xs-12
+                ui-select(ng-model="requiredData.selectedPaymentMethod", on-select="changePaymentMethod($item)")
+                  ui-select-match
+                    span(ng-bind="$select.selected.name")
+                  ui-select-choices(repeat="method in (paymentMethodList | filter: $select.search) track by $index")
+                    span(ng-bind="method.name")
+              .col-lg-3.col-md-3.col-sm-3.col-xs-12
+                button.button.button--secondary.button--base.m-left-15(ng-click="viewReport()") Cari
+            .row.flex-end
+              button.button.button--secondary.button--base(ng-show="incomeReportData.length > 0" ng-click="exportIntoExcel()") Export
+      .page_block(ng-show="incomeReportData.length == 0" style="text-align: center")
+        label There is no data
+        
+      .shrink-table(ng-show="incomeReportData.length > 0")
+        table.table--striped.table--hoverable
+            thead.thead--primary
+                tr
+                    th(ng-repeat="heading in headings") {{ heading.name }}
+            tbody
+                tr(ng-repeat="incomeData in incomeReportData")
+                    td {{ incomeData.date }}
+                    td {{ incomeData.customer }}
+                    td {{ incomeData.payment_method }}
+                    td
+                      p.m-bottom-15(ng-repeat="invoice in incomeData.invoice") {{ invoice.id }}
+                    td
+                      p.m-bottom-15(ng-repeat="invoice in incomeData.invoice") {{ invoice.dpp | number: fractionSize }}
+                    td
+                      p.m-bottom-15(ng-repeat="invoice in incomeData.invoice") {{ invoice.total | number: fractionSize }}
+                    td
+                      p.m-bottom-15(ng-repeat="invoice in incomeData.invoice") {{ invoice.paid | number: fractionSize }}
+                    td
+                      p.m-bottom-15(ng-repeat="invoice in incomeData.invoice") {{ invoice.stamp }}
+                    td {{ incomeData.cash_received | number: fractionSize }}
+                    td {{ incomeData.saldo_used | number: fractionSize }}
+                    td {{ incomeData.cash_in | number: fractionSize }}
+                tr
+                    td Total
+                    td
+                    td
+                    td 
+                    td
+                    td
+                    td
+                    td
+                    td {{ cash_received_total }}
+                    td 
+                    td {{ cash_in_total }}

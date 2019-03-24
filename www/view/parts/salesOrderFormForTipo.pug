@@ -1,0 +1,83 @@
+form.form.form--horizontal(ng-submit="saveChanges()")
+  .page_block
+    .row.pd-bottom-30
+      .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-30
+        .form-group
+          label.form-label Customer
+          input.form-input(type="text", ng-model="customerDetail.name", readonly)
+        .form-group
+          label.form-label NPWP Customer
+          input.form-input(type="text", ng-model="customerDetail.npwp", readonly)
+        .form-group
+          label.form-label Alamat
+          textarea.form-input(rows="3", ng-model="customerDetail.address[0].address", readonly)
+        .form-group
+          label.form-label Nomor Telepon
+          input.form-input(type="text", ng-model="customerDetail.phone[0].phone", readonly)
+      .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-30
+        .form-group
+          label.form-label Jenis Pembayaran
+          ui-select(ng-model="requiredData.selectedPaymentMethod", on-select="changePaymentMethod($item)")
+            ui-select-match
+              span(ng-bind="$select.selected.name")
+            ui-select-choices(repeat="paymentMethod in (paymentMethodList | filter: $select.search) track by $index")
+              span(ng-bind="paymentMethod.name")
+        .form-group
+          label.form-label Pengambilan
+          input.form-input(type="text", value="Gudang", readonly)
+        .form-group
+          label.form-label Lama Pembayaran
+          .input-group
+            input.form-input(type="text", ng-model="requiredData.due_date", placeholder="Masukkan lama pembayaran", required)
+            .input-group-extra
+              small.clr-passive.tt-uppercase.fw-medium hari
+              
+        .form-group
+          label.form-label Nomor TIPO
+          input.form-input(type="text", ng-model="requiredData.tipo_id" readonly)
+            
+    .flex-row.flex-justify-between
+      button.button.button--base.button--danger(type="button", ng-click="goBack()")
+        i.fa.fa-chevron-left.icon.icon--small
+        | Kembali
+      button.button.button--base.button--primary(type="button", jasa-potong pay-method="requiredData.pay_method" pickup="2" contract-id="")
+        i.fa.fa-plus.icon.icon--regular
+        | Tambah Barang
+        
+  .shrink-table(ng-show="requiredData.item.length")
+    table.table--striped
+      thead.thead--primary
+        tr
+          th(ng-repeat="heading in headings", ng-class="{ 'large': heading.size == 'lg' }") {{ heading.name }}
+      tbody
+        tr(ng-repeat="item in requiredData.item")
+          td {{ item.category }}
+          td {{ item.name  }}
+          td {{ item.unit }}
+          td
+            .input-group
+              .input-group-extra 
+                small.tt-uppercase.clr-gray.fw-semibold Rp.
+              input.form-input.align-center(type="text", ng-model="item.sell_price", ng-disabled="requiredData.contract_id", ng-focus="item.sell_price = numberWithNoCommas(item.sell_price)", ng-blur="item.sell_price = numberWithCommas(item.sell_price)", placeholder="Masukkan harga jual", required)
+          td
+            input.form-input.align-center(type="text", ng-model="item.quantity", ng-focus="item.quantity = numberWithNoCommas(item.quantity)", ng-blur="item.quantity = numberWithCommas(item.quantity)", placeholder="Masukkan Qty", required)
+          td
+            input.form-input.align-center(type="text", ng-model="item.note", placeholder="Masukkan keterangan")
+          td
+            .flex-column
+              button.small-button.button-tooltip(type="button" ng-click="deleteItem($index)")
+                i.fa.fa-trash.icon.icon--regular
+                span.tooltiptext Hapus
+                
+  .page_block(ng-show="requiredData.item.length")
+    .form-button-group
+      .flex-row.flex-end
+        button.button.button--base.button--primary(type="submit")
+          i.icon.icon--regular.fa.fa-floppy-o
+          | Simpan
+          
+            
+        
+            
+            
+            

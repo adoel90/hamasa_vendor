@@ -1,0 +1,149 @@
+.small-button{
+	border: none;
+	padding: 10px 5px;
+
+	@include border-radius($border-radius-small);
+	@include flexbox;
+	@include align-items(center);
+	@include justify-content(center);
+	@include font-family($ff-primary);
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	font-size: 12px;
+	font-weight: 600;
+
+	background-color: $clr-primary;
+	color: $clr-primary-light;
+
+	&.button--success {
+		background-color: $clr-primary-success;
+		color: $clr-primary-light;
+
+		&:hover {
+			background-color: shade($clr-primary-success, 24%);
+		}
+	}
+}
+
+button {
+	@include appearance(none);
+	background: transparent;
+	border: none;
+	outline: none;
+}
+
+.button {
+	@include transition(all 250ms $transition-bouncy);
+	@include flexbox;
+	@include align-items(center);
+	@include justify-content(center);
+	@include font($fs-small, $fw-semibold, $lh-base);
+	@include border-radius($border-radius-small);
+	@include font-family($ff-primary);
+	letter-spacing: 2px;
+	text-transform: uppercase;
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+	&.button--disabled{
+		background-color: #BDBDBD;
+		color: white;
+	}
+	> .icon {
+		@include margin-stack(right 15px);
+	}
+
+	&.button--primary {
+		background-color: $clr-primary;
+		color: $clr-primary-light;
+
+		&:hover {
+			background-color: shade($clr-primary, 24%);
+		}
+
+		&.button--inverted {
+			background-color: $clr-primary-light;
+			border: solid 1px $clr-primary;
+			color: $clr-primary;
+
+			&:hover {
+				background-color: $clr-primary;
+				color: $clr-primary-light;
+			}
+		}
+	}
+
+	&.button--secondary {
+		background-color: $clr-secondary;
+		color: $clr-primary-light;
+
+		&:hover {
+			background-color: shade($clr-secondary, 24%);
+		}
+	}
+
+	&.button--success {
+		background-color: $clr-primary-success;
+		color: $clr-primary-light;
+
+		&:hover {
+			background-color: shade($clr-primary-success, 24%);
+		}
+	}
+
+	&.button--danger {
+		background-color: $clr-primary-danger;
+		color: $clr-primary-light;
+
+		&:hover {
+			background-color: shade($clr-primary-danger, 24%);
+		}
+	}
+
+	&.button--base {
+		@include padding(0 20px);
+		@include size(height 50px);
+	}
+
+	&.button--small {
+		@include padding(0 15px);
+		@include size(height 40px);
+	}
+
+	&.button--large {
+		@include padding(0 30px);
+		@include size(height 60px);
+	}
+
+	&.button--stick {
+		@include border-radius(0);
+
+		&:first-child {
+			border-top-left-radius: $border-radius-small;
+			border-bottom-left-radius: $border-radius-small;
+		}
+
+		&:last-child {
+			border-top-right-radius: $border-radius-small;
+			border-bottom-right-radius: $border-radius-small;
+		}
+	}
+
+}
+
+.badge-custom{
+	@include flexbox;
+	@include align-items(center);
+	@include justify-content(center);
+
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	background-color: #B71C1C;
+	color: white;
+	position: absolute;
+	top: -15px;
+	right: -5px;
+}

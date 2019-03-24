@@ -1,0 +1,37 @@
+{
+  "name": "jade",
+  "version": "1.0.0",
+  "description": "jade first tutorial",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "angela ivani",
+  "license": "ISC",
+  "devDependencies": {
+    "cookie-parser": "^1.4.3",
+    "del": "^3.0.0",
+    "e": "0.0.4",
+    "express": "^4.15.3",
+    "express-session": "^1.15.4",
+    "gulp": "^3.9.1",
+    "gulp-as-css-imports": "0.0.2",
+    "gulp-cssmin": "^0.2.0",
+    "gulp-livereload": "^3.8.1",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-nop": "0.0.3",
+    "gulp-notify": "^3.0.0",
+    "gulp-pug": "^3.3.0",
+    "gulp-sass": "^3.1.0",
+    "gulp-uglify": "^3.0.0",
+    "node-sass": "^4.5.3",
+    "pug": "^2.0.0-rc.2",
+    "run-sequence": "^2.2.0",
+    "underscore": "^1.8.3"
+  },
+  "dependencies": {
+    "angular-momentjs": "^0.2.2",
+    "angularjs-datepicker": "^2.1.23",
+    "npm": "^6.4.1"
+  }
+}

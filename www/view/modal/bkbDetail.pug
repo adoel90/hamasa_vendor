@@ -1,0 +1,63 @@
+.default-modal
+	.default-modal-heading
+		h5.modal-title Detail Bukti Keluar Barang
+		a.modal-close(ng-click="$dismiss()")
+			i.icon.icon--regular.fa.fa-close
+
+	.default-modal-content
+		.default-modal-block.pd-bottom-30
+			form.form
+				.row
+					.pd-bottom-15
+						h4 Informasi BTB
+					.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+						.form-group
+							label.form-label Nomor BKB
+							input.form-input(type="text", ng-model="bkbItem.detail.id", readonly)
+						.form-group
+							label.form-label Tanggal Pengiriman
+							input.form-input(type="text", ng-model="bkbItem.detail.date", readonly)
+						.form-group
+							label.form-label ID Customer
+							input.form-input(type="text", ng-model="bkbItem.detail.customer.id", readonly)
+						.form-group
+							label.form-label Nama Customer
+							input.form-input(type="text", ng-model="bkbItem.detail.customer.name", readonly)
+
+					.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-15
+						.form-group
+							label.form-label Nama Pengemudi
+							input.form-input(type="text", ng-model="bkbItem.detail.driver", readonly)
+						.form-group
+							label.form-label Nomor Kendaraan
+							input.form-input(type="text", ng-model="bkbItem.detail.transport_number", readonly)
+						.form-group
+							label.form-label Keterangan
+							textarea.form-input(type="textarea", ng-model="bkbItem.detail.note", placeholder="Keterangan", readonly)
+
+		.default-modal-block
+			.table
+				.pd-bottom-15
+					h4 Daftar Barang
+				p.clr-passive(ng-hide="bkbItem.detail.item.length") Tidak dapat menemukan daftar barang pada BKB.
+				table.table--striped(ng-if="bkbItem.detail.item.length")
+					thead.thead--primary
+						tr
+							th(ng-repeat="heading in bkbItem.headings", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+					tbody
+						tr(ng-repeat="item in bkbItem.detail.item")
+							td {{ item.serial }}
+							td {{ item.category.name }}
+							td {{ item.name }}
+							td {{ item.unit }}
+							td {{ item.weight }}
+							td {{ item.do_quantity }}
+							td {{ item.bkb_quantity }}
+							td {{ item.description }}
+
+	
+	.default-modal-footer
+		.flex-row.flex-end
+			button.button.button--base.button--success(ng-click="printBkb(bkbItem.detail.id)")
+				i.fa.fa-print.icon.icon--large
+				| Cetak

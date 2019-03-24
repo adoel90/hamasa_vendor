@@ -1,0 +1,8 @@
+.alert
+	.alert-header
+		i.icon.icon--colossal.fa(ng-class="{ 'icon--success fa-check': alert.type == 'success', 'icon--danger fa-exclamation-triangle': alert.type == 'danger' }")
+	.alert-content
+		h4.alert-title(ng-class="{ 'clr-success': alert.type == 'success', 'clr-danger': alert.type == 'danger' }") {{alert.title}}
+		p.alert-message {{alert.message}}
+	.alert-footer(ng-class="alert.button.length > 1 ? 'flex-row flex-end' : 'flex-column'")
+		button.button.button--base(ng-class="{ 'button--success': button.type == 'success', 'button--danger': button.type == 'danger' }" ng-repeat="button in alert.button", ng-click="doAction($index)") {{ button.text }}

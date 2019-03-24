@@ -1,0 +1,17 @@
+.avatar {
+	@include relative;
+	overflow: hidden;
+
+	&.avatar--rounded {
+		@include border-radius($border-radius-full);
+	}
+
+	&.avatar--large {
+		@include size(height 100px width 100px);
+	}
+
+	> img {
+		@include object-fit(cover, center);
+		@include size(height 100% width 100%);
+	}
+}

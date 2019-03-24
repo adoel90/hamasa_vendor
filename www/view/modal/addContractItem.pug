@@ -1,0 +1,37 @@
+.default-modal
+   .default-modal-heading
+      h5.modal-title Daftar Barang Gudang
+      a.modal-close(ng-click="$dismiss()")
+         i.icon.icon--regular.fa.fa-times
+   .default-modal-content
+      .row.pd-bottom-15
+         form.form
+            .form-group
+               label.form-label Cari Berdasarkan
+               .row
+                  .col-lg-4
+                     ui-select(ng-model="selectedFilter.item", style="margin-right: 15px")
+                        ui-select-match
+                           span(ng-bind="$select.selected.name")
+                        ui-select-choices(repeat="filter in (searchFilters | filter: $select.search) track by $index")
+                           span(ng-bind="filter.name")
+                  .col-lg-5
+                     .input-group
+                        input.form-input(type="text", ng-model="searchVal", placeholder="{{selectedFilter.item.placeholder}}")
+                        button.button.button--secondary.button--base(ng-click="doSearchFilter(searchVal, selectedFilter.item.by)" style="margin-left: 10px;") Cari
+      .table
+         table.table--striped.table--hoverable
+            thead.thead--primary
+               tr
+                  th(ng-repeat="heading in warehouseItem.headings", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+            tbody
+               tr(ng-repeat="item in warehouseItem.items | filter: searchFilter.value", ng-click="chooseItem(item)")
+                  td {{item.serial}}
+                  td {{item.category.name}}
+                  td {{item.name}}
+                  td {{item.unit}}
+                  td {{item.grade}}
+                  td {{item.price}}
+                  td {{item.contract_id}}
+      .page-block(style="text-align: center")
+        pagination(total-rows="totalRows", data="requiredData")

@@ -1,0 +1,103 @@
+include ./global/head.pug
+include ./parts/sidenav.pug
+main.main
+	include ./parts/main-header.pug
+	include ./parts/main-subheader.pug
+
+	.main_content(ng-cloak)
+		.page_header
+			h2 Informasi TIPO
+		.page_content
+			.page_block
+				form.form.form--horizontal
+					.row
+						.col-lg-9.col-md-9.col-sm-12.col-xs-12
+							dt.col-lg-3.col-md-3.col-sm-4.col-xs-12 Nomor TIPO
+							dd {{ tipoInfo.id}}
+							
+							dt.col-lg-3.col-md-3.col-sm-4.col-xs-12 Nama Customer
+							dd {{ tipoInfo.customer.name}}
+							
+							dt.col-lg-3.col-md-3.col-sm-4.col-xs-12 Outstanding
+							dd {{ tipoInfo.outstanding}}
+							
+						.col-lg-3.col-md-3.col-sm-12.col-xs-12
+							.pd-bottom-15.flex-column
+								button.button.button--base.button--primary(ng-click="redirectTo('/sales/tipo/tipoinfo/' + tipoInfo.id + '/createnewsalesorder/' + tipoInfo.customer.id)")
+									| Buat SO Baru
+							.pd-bottom-15.flex-column
+								button.button.button--base.button--primary(ng-click="redirectTo('/sales/tipo/tipoinfo/' + tipoInfo.id + '/createnewspk')")
+									| Buat SPK Baru
+							.pd-bottom-15.flex-column
+								button.button.button--base.button--secondary(ng-click="redirectTo('/sales/tipo/tipoinfo/' + tipoInfo.id + '/createnewdeliveryordertipo')")
+									| Buat DO TIPO
+			.page_block
+				.row.m-top-15
+					.col-lg-3.flex-align-item-center
+						.grey-legend
+						span.m-left-5 DO belum aktif
+					.col-lg-3.flex-align-item-center
+						.yellow-legend
+						span.m-left-5 DO telah diprint
+					.col-lg-3.flex-align-item-center
+						.green-legend
+						span.m-left-5 DO telah selesai
+					.col-lg-3.flex-align-item-center
+						.red-legend
+						span.m-left-5 DO telah dibatalkan	
+									
+			.row
+				.col-lg-3.col-md-3.col-md-4.col-sm-4.col-xs-12
+					a.tile.tile--primary.tile--equal.tile--selectable(show-tipo-detail tipo-id="tipoInfo.id")
+						.tile_content
+							.tile_main
+								h2 TIPO
+							.tile_addon
+								i.fa.fa-calendar.icon.icon--small
+								.tt-uppercase.fw-medium {{tipoInfo.date}}
+								
+				.col-lg-3.col-md-3.col-md-4.col-sm-4.col-xs-12(ng-repeat="so in tipoInfo.so")
+					a.tile.tile--primary.tile--equal.tile--selectable(show-so-detail so-id="so.id")
+						.tile_content
+							.tile_addon
+								.tt-uppercase.fw-medium {{so.id}}
+							.tile_main
+								h2 SO
+							.tile_addon
+								i.fa.fa-calendar.icon.icon--small
+								.tt-uppercase.fw-medium {{so.date}}
+								
+				.col-lg-3.col-md-3.col-md-4.col-sm-4.col-xs-12(ng-repeat="spk in tipoInfo.spk")
+					a.tile.tile--primary.tile--equal.tile--selectable(ng-click="openSpkDetail(spk.id)")
+						.tile_content
+							.tile_addon
+								.tt-uppercase.fw-medium {{spk.id}}
+							.tile_main
+								h2 SPK
+							.tile_addon
+								i.fa.fa-calendar.icon.icon--small
+								.tt-uppercase.fw-medium {{spk.date}}
+								
+				.col-lg-3.col-md-3.col-md-4.col-sm-4.col-xs-12(ng-repeat="do in tipoInfo.do")
+					a.tile.tile--equal.tile--selectable(show-do-detail do-id="do.id" purpose="'do tipo'", ng-class="getDOStatus(do.status.code)")
+						.tile_content
+							.tile_addon
+								.tt-uppercase.fw-medium {{do.id}}
+							.tile_main
+								h2 {{do.order + '/' + do.quantity}}
+								.badge.badge--secondary.fw-medium.tt-uppercase DO TIPO
+							.tile_addon
+								i.fa.fa-calendar.icon.icon--small
+								.tt-uppercase.fw-medium {{do.date}}
+								
+				.col-lg-3.col-md-3.col-md-4.col-sm-4.col-xs-12(ng-repeat="invoice in tipoInfo.invoice")
+					a.tile.tile--primary.tile--equal.tile--selectable(show-invoice-detail invoice-id="invoice.id" change="invoice.change")
+						.tile_content
+							.tile_addon(style="border-radius: 35px;")
+								.tt-uppercase.fw-medium {{invoice.payment_status.name}}
+							.tile_main
+								h2 INVOICE
+								p.all-caps {{invoice.total | currency: "Rp"}}
+							.tile_addon
+								i.fa.fa-calendar.icon.icon--small
+								.tt-uppercase.fw-medium {{invoice.date}}

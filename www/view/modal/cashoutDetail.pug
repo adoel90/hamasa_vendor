@@ -1,0 +1,11 @@
+.default-modal
+	.default-modal-heading
+		h5.modal-title {{ modalName }}
+		a.modal-close(ng-click="$dismiss()")
+			i.icon.icon--regular.fa.fa-times
+	.default-modal-content
+		.default-modal-block
+			form.form
+				.pd-bottom-15
+					h4
+				include ../parts/modalFieldsTemplate.pug

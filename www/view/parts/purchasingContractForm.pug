@@ -1,0 +1,94 @@
+form.form(ng-submit="save()")
+   .page_block
+      .row
+         .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+            .form-group
+               label.form-label ID Kontrak
+               input.form-input(type="text", ng-model="purchasingContract.id", placeholder="Masukkan ID Kontrak", required)
+            .form-group
+               label.form-label Awal Kontrak
+               datepicker(date-format="yyyy-MM-dd")
+                 input.form-input(type="text", ng-model="purchasingContract.date", placeholder="Masukkan tanggal awal kontrak", required)
+            .form-group
+               label.form-label Akhir Kontrak
+               datepicker(date-format="yyyy-MM-dd")
+                 input.form-input(type="text", ng-model="purchasingContract.end", placeholder="Masukkan tanggal akhir kontrak", required)
+            .form-group
+               label.form-label Tonase
+               input.form-input(type="text", ng-model="purchasingContract.tonase", placeholder="Masukkan tonase" currency-input, required)
+            .form-group
+               label.form-label Uang Muka
+               input.form-input(type="text", ng-model="purchasingContract.dp", placeholder="Masukkan uang muka", currency-input,  required)
+                  
+         .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-15
+            .form-group
+               label.form-label Supplier
+               ui-select(ng-model="purchasingContract.selectedSupplier", style="margin-right: 15px", on-select="chooseSupplier(purchasingContract.selectedSupplier)")
+                  ui-select-match
+                     span(ng-bind="$select.selected.name")
+                  ui-select-choices(repeat="supplier in (supplierList | filter: $select.search) track by $index")
+                     span(ng-bind="supplier.name")
+            .form-group
+               label.form-label Alamat
+               input.form-input(type="text", ng-model="supplierDetail.address", placeholder="Alamat", readonly)
+            .form-group
+               label.form-label No Telepon
+               input.form-input(type="text", ng-model="supplierDetail.contact_number", placeholder="No Telepon", readonly)
+            .form-group
+               label.form-label Contact Person
+               input.form-input(type="text", ng-model="supplierDetail.contact_person", placeholder="Contact Person", readonly)
+                 
+      .flex-row.flex-justify-between
+        button.button.button--base.button--danger(type="button" ng-click="goBack()")
+          i.fa.fa-chevron-left.icon.icon--small
+          | Kembali
+        button.button.button--primary.button--base(type="button" show-item-master-list api-accessed="'itemList'")
+          i.fa.fa-plus.icon.icon--regular
+          | Tambah Barang
+    
+   .shrink-table(ng-show="purchasingContract.item.length > 0")
+      table.table--striped
+         thead.thead--primary
+            tr
+               th(ng-repeat="heading in headings", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+         tbody
+            tr(ng-repeat="contractItem in purchasingContract.item")
+               td {{contractItem.serial ? contractItem.serial : '-'}}
+               td {{contractItem.category}}
+               td {{contractItem.name}}
+               td {{contractItem.weight ? contractItem.weight : '-'}}
+               td
+                 input.ta-center.form-input(type="text", placeholder="Masukkan jumlah", ng-model="contractItem.quantity", required)
+               td     
+                 input.ta-center.form-input(type="text", placeholder="Total berat", ng-model="contractItem.total", ng-value="contractItem.total = numberWithNoCommas(contractItem.quantity) * contractItem.weight", readonly)
+                      
+               td
+                 .input-group
+                   .input-group-extra
+                     small.clr-passive.fw-medium.tt-uppercase Rp
+                   input.form-input.ta-center(type="text", placeholder="Masukkan harga", ng-model="contractItem.priceKg", currency-input, ng-readonly="contractItem.weight == null", ng-required="contractItem.weight")
+               
+               td(ng-if="contractItem.weight")
+                 .input-group
+                   .input-group-extra
+                     small.clr-passive.fw-medium.tt-uppercase Rp
+                   input.form-input.ta-center(type="text", placeholder="Masukkan harga", ng-model="contractItem.price", currency-input, ng-required="contractItem.weight")
+               td
+                 .flex-row.flex-align-center
+                   button.small-button.button--success.m-right-5.pd-10.button-tooltip(type="button" ng-click="doCalculate(contractItem)" ng-disabled="contractItem.weight == null")
+                     i.fa.fa-calculator.icon.icon--regular
+                     span.tooltiptext Hitung
+                   button.small-button.button--primary.pd-10.button-tooltip(type="button" ng-click="deleteContractItem($index)")
+                     i.fa.fa-trash.icon.icon--regular
+                     span.tooltiptext Hapus
+                          
+   .page_block(ng-show="purchasingContract.item.length > 0")
+      .flex-row.flex-end
+         button.button.button--base.button--primary(type="submit") 
+            i.fa.fa-floppy-o.icon.icon--regular
+            | Simpan 
+      
+               
+            
+            
+               

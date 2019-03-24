@@ -1,0 +1,12 @@
+.pagination
+	.pagination-list
+
+		button(ng-click="goToPreviousPage(requiredData)" ng-show="showPageBeforeSymbol") &#8249;
+		button(ng-show="showPageBeforeSymbol" ng-click="goToFirstPageOrLastPage('firstPage')") {{pages[0].numb}}
+		button(ng-show="showPageBeforeSymbol", disabled) ...
+		button(ng-repeat="page in pages", ng-show="page.show" ng-click="goToPage($index, requiredData)", ng-class="{ 'pagination--is-active': currentPage == $index }") {{page.numb}}
+		button(ng-show="showNextPageSymbol", disabled) ...
+		button(ng-show="showNextPageSymbol", ng-click="goToFirstPageOrLastPage('lastPage')", ng-class="{ 'pagination--is-active': currentPage == pages.length - 1 }") {{pages[pages.length - 1].numb}}
+		button(ng-click="goToNextPage(requiredData)" ng-show="showNextPageSymbol") &#8250;
+
+	p(role="pagination-rows") Rows Found: {{totalRows}}

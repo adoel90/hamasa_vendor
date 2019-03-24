@@ -1,0 +1,46 @@
+.badge {
+	@include padding(0.5em);
+	@include border-radius($border-radius);
+
+	///---------------------------------
+	//	#	Badge Layout Modifier
+	//---------------------------------
+	&.badge--pill {
+		@include border-radius($border-radius-rounded);
+	}
+
+	//---------------------------------
+	//	#	Badge Color Modifier
+	//---------------------------------
+	&.badge--primary {
+		color: $clr-primary-light;
+		border: solid 1px $clr-primary;
+		background: $clr-primary;
+	}
+
+	&.badge--active{
+		color: $clr-primary-light;
+		background: $clr-primary-active;
+	}
+	&.badge--success {
+		color: $clr-primary-light;
+		background: $clr-primary-success;
+	}
+
+	&.badge--danger {
+		color: $clr-primary-light;
+		background: $clr-primary-danger;
+	}
+
+	&.badge--passive {
+		color: $clr-primary-light;
+		border: solid 1px $clr-primary-passive;
+		background: $clr-primary-passive;
+	}
+
+	&.badge--transparent {
+		color: $clr-primary-passive;
+		border: solid 1px $clr-primary-passive;
+		background: transparent;
+	}
+}

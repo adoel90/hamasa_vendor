@@ -1,0 +1,33 @@
+.default-modal
+	.default-modal-heading
+		h5.modal-title Detail Kontrak Penjualan
+		a.modal-close(ng-click="$dismiss()")
+			i.icon.icon--regular.fa.fa-times
+	.default-modal-content
+		.default-modal-block.pd-bottom-15
+			form.form
+				include ../parts/modalFieldsTemplate.pug
+
+			.flex-row.flex-end.pd-top-30(ng-hide=" (purpose == 'Approval Sales Contract Cancelation') || (salesContractDetail.status == -1) || (salesContractDetail.status == 0)")
+				button.button.button--base.button--success.m-right-15(ng-click="redirectToAmandemenSalesContract(salesContractDetail.id)") Amandemen Kontrak
+				button.button.button--base.button--danger.m-right-15(ng-click="cancelSalesContract()")
+					i.fa.fa-times.icon.icon--regular
+					| Batalkan Kontrak
+				button.button.button--base.button--danger(ng-click="closeContract(salesContractDetail.id)") Tutup Kontrak
+		
+		//- Item Table
+		.default-modal-block.pd-bottom-15
+			.pd-bottom-15
+				h4 Daftar Barang
+			table-content(type="'table-with-price'" table-header="item.headings" table-body="salesContractDetail.item" table-column="contractDetailCols")
+							
+		//- Amandement History
+		.default-modal-block
+			.pd-bottom-15
+				h4 Histori Amandemen
+			p.clr-passive(ng-hide="salesContractDetail.amandemen.data") Tidak ditemukan data history amandemen.
+			table-content(type="'non-edited-table'" table-header="amandement.headings" table-body="salesContractDetail.amandemen.data" table-column="amandemenCol" ng-show="salesContractDetail.amandemen.data")
+							
+		.flex-row.flex-end(ng-show="purpose == 'Approval Sales Contract Cancelation' && contractAuthStatus == 0")
+			button.pd-right-15.button.button--base.button--secondary.m-right-15(ng-click="acceptSoContractCancelation()") Accept
+			button.button.button--base.button--danger(ng-click="rejectSoContractCancelation()") Reject

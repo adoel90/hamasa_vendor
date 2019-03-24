@@ -1,0 +1,77 @@
+include ./global/head.pug
+include ./parts/sidenav.pug
+main.main
+	include ./parts/main-header.pug
+	include ./parts/main-subheader.pug
+
+	.main_content(ng-cloak)
+		.page_header
+			h2(role="page-title") Cetak Faktur
+		.page_content
+			form.form(ng-submit="proceedPrintInvoice()")
+				.page_block
+					.row
+						.col-lg-4.col-md-4.col-sm-4.col-xs-12.pd-right-15
+							ui-select(ng-model="selectedFilter.item")
+								ui-select-match
+									span(ng-bind="$select.selected.name")
+								ui-select-choices(repeat="filter in (searchFilters | filter: $select.search) track by $index")
+									span(ng-bind="filter.name")
+						.col-lg-5.col-md-5.col-sm-5.col-xs-12.pd-right-15
+							.input-group
+								datepicker(date-format="yyyy-MM-dd" style="margin-right: 5px;")
+									input.form-input(type="text", ng-model="printInvoice.requiredData.s_date", placeholder="Masukkan Tanggal Awal")
+								datepicker(date-format="yyyy-MM-dd")
+									input.form-input(type="text", ng-model="printInvoice.requiredData.e_date", placeholder="Masukkan Tanggal Akhir")
+						.col-lg-3.col-md-3.col-sm-3.col-xs-12
+							button.button.button--base.button--secondary(type="button" ng-click="exportToExcel()") EXPORT
+
+				.page_block
+					.row
+						.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+							.form-group
+								label.form-label Nomor SO
+								.input-group
+									input.form-input(type="text", placeholder="Klik tombol 'Cari' untuk mulai pencarian", ng-model="printInvoice.so_id", required)
+									button.button.button--base.button--secondary.m-left-15(type="button", ng-click="openSalesOrderList()") Cari
+					.flex-row.m-top-15
+						button.button.button--base.button--danger(type="button" ng-click="goBack()")
+							i.fa.fa-chevron-left.icon.icon--small
+							| Kembali
+				.page_block(ng-if="salesOrderInvoiceDetail")
+					.row
+						.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+							div
+								.form-group
+									label.form-label Tanggal SO
+									input.form-input(type="text", ng-model="salesOrderInvoiceDetail.date", readonly)
+								.form-group
+									label.form-label Nomor Seri Pajak
+									input.form-input(type="text", ng-model="salesOrderInvoiceDetail.tax_serial", readonly)
+								.form-group
+									label.form-label Total Pembayaran
+									input.form-input(type="text", ng-value="numberWithCommas(salesOrderInvoiceDetail.payment_total)", readonly)
+						
+						.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-15
+							div
+								.form-group
+									label.form-label ID Invoice
+									input.form-input(type="text", ng-model="salesOrderInvoiceDetail.id", readonly)
+								.form-group
+									label.form-label ID Customer
+									input.form-input(type="text", ng-model="salesOrderInvoiceDetail.customer.id" readonly)
+								.form-group
+									label.form-label Customer
+									input.form-input(type="text", ng-model="salesOrderInvoiceDetail.customer.name" readonly)
+								.form-group
+									label.form-label Alamat
+									textarea.form-input(rows="3", ng-model="salesOrderInvoiceDetail.customer.address[0].address" readonly)
+								.form-group
+									label.form-label NPWP
+									input.form-input(type="text", ng-model="salesOrderInvoiceDetail.customer.npwp" readonly)
+				
+				.page_block(ng-if="salesOrderInvoiceDetail")
+					.flex-row.flex-end
+						button.button.button--base.button--secondary(ng-click="printSelectedInvoice()")
+							i.fa.fa-print.icon.icon--regular
+							| Print

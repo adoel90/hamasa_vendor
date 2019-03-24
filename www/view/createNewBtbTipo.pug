@@ -1,0 +1,64 @@
+include ./global/head.pug
+include ./parts/sidenav.pug
+main.main
+   include ./parts/main-header.pug
+   include ./parts/main-subheader.pug
+   
+   .main_content(ng-cloak)
+      .page_header
+         h2(role="page-title") Buat BTB TIPO
+      .page_content
+         form.form.form--horizontal(ng-submit="save()")
+            include ./parts/tipoForm.pug
+            
+            .flex-row.flex-end.pd-bottom-15
+              button.button.button--base.button--primary(type="button" ng-click="addItem()")
+                 i.icon.fa.fa-plus
+                 | Tambah Barang
+                        
+            .table
+               .table-wrapper
+                  table
+                     thead
+                        tr
+                           th(ng-repeat="heading in headings", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+                     tbody
+                        tr(ng-repeat="item in tipoData.item")
+                           td
+                              .form-button-group
+                                 .textfield.textfield--primary
+                                    input.align-center(type="text", ng-model="item.serial")               
+                           td
+                              .form-button-group
+                                 .textfield.textfield--primary
+                                    input.align-center(type="text", ng-model="item.category", required)
+                           td
+                              .form-button-group
+                                 .textfield.textfield--primary
+                                    input.align-center(type="text", ng-model="item.name", required)
+                           td
+                              .form-button-group
+                                 .textfield.textfield--primary
+                                    input.align-center(type="number", ng-model="item.weight", required)
+                           td
+                              .form-button-group
+                                 .textfield.textfield--primary
+                                    input.align-center(type="number", ng-model="item.quantity", required)
+                           td
+                              .form-button-group
+                                 .textfield.textfield--primary
+                                    input.align-center(type="text", ng-model="item.note", required)
+                           td
+                              .flex-column
+                                 button.button.button--base.button--danger(type="button" ng-click="removeItem($index)")
+                                    i.icon.icon--regular.fa.fa-trash
+                                    | Hapus
+               
+            .page_block
+               .form-button-group
+                  .flex-row.flex-end
+                     button.button.button--base.button--success(type="submit")
+                        i.icon.icon--large.fa.fa-floppy-o
+                        | Simpan
+                           
+                     

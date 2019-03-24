@@ -1,0 +1,13 @@
+.default-modal
+  .default-modal-heading
+    h5.modal-title PO Invoice Detail
+    a.modal-close(ng-click="$dismiss()")
+      i.icon.icon--regular.fa.fa-times
+  .default-modal-content
+    form.form.form--primary.form--horizontal
+      include ../parts/modalFieldsTemplate.pug
+    
+    table-content(table-header="poInvoiceDetail.headings" table-body="poInvoiceDetail.item" table-column="poInvoiceDetail.column" type="'table-with-price'")
+  
+      
+        

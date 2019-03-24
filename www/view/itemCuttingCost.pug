@@ -1,0 +1,63 @@
+include ./global/head.pug
+include ./parts/sidenav.pug
+main.main
+  include ./parts/main-header.pug
+  include ./parts/main-subheader.pug
+  
+  .main_content(ng-cloak)
+    .page_header
+      h2 Pemotongan Barang
+    .page_content  
+      form.form(ng-submit="save()")
+        .page_block    
+          label.form-label EXPORT TO EXCEL
+          .row.flex-end
+            .col-lg-4.col-md-4.col-sm-4.col-xs-12.pd-right-15
+              ui-select(ng-model="selectedFilter.item")
+                ui-select-match
+                  span(ng-bind="$select.selected.name")
+                ui-select-choices(repeat="filter in (searchFilters | filter: $select.search) track by $index")
+                  span(ng-bind="filter.name")
+            .col-lg-8.col-md-8.col-sm-8.col-xs-12.pd-right-15
+              .input-group
+                datepicker(date-format="yyyy-MM-dd" style="margin-right: 5px;")
+                  input.form-input(type="text", ng-model="requiredData.s_date", placeholder="Masukkan Tanggal Awal")
+                datepicker(date-format="yyyy-MM-dd")
+                  input.form-input(type="text", ng-model="requiredData.e_date", placeholder="Masukkan Tanggal Akhir")
+                button.button.button--secondary.button--base(type="button" ng-click="exportToExcel()") EXPORT
+
+        .page_block
+          .row
+            .col-lg-1.col-md-1.col-sm-1.col-xs-12
+              label.form-label No SO
+            .col-lg-5.col-md-5.col-sm-5.col-xs-12
+              input.form-input(type="text", ng-model="requiredData.so_id", placeholder="Masukkan No SO")
+            .col-lg-3.col-md-3.col-sm-3.col-xs-12.pd-left-15
+              button.button.button--secondary.button--base(type="button" ng-click="viewSoDetail(requiredData.so_id)") Cari
+      
+        .table(ng-show="requiredData.items.length > 0")
+          table.table--striped.table--hoverable
+            thead.thead--primary
+              tr
+                th(ng-repeat="heading in headings", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+            tbody
+              tr(ng-repeat="item in requiredData.items")
+                td {{ item.serial}}
+                td {{ item.name }}
+                td {{ item.category.name }}
+                td {{ item.weight }}
+                td {{ item.unit }}
+                td {{ item.grade }}
+                td {{ item.quantity }}
+                td
+                  .form-input-group
+                    .textfield.textfield--primary
+                      input.align-center(type="text", ng-model="item.cut_cost", currency-input, required)
+                
+        .page_block(ng-show="requiredData.items.length > 0")
+          .flex-row.flex-end
+            .pd-right-15
+              button.button.button--base.button--danger(type="button" ng-click="goBack()") Kembali
+            button.button.button--base.button--primary(type="submit") 
+              i.fa.fa-floppy-o.icon.icon--regular
+              | Simpan

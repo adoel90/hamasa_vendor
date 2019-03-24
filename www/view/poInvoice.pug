@@ -1,0 +1,56 @@
+include ./global/head.pug
+include ./parts/sidenav.pug
+main.main
+  include ./parts/main-header.pug
+  include ./parts/main-subheader.pug
+  
+  .main_content(ng-cloak)
+    .page_header
+      h2 PO Invoice
+    .page_content
+      .page_block
+        .row.flex-end
+          button.button.button--base.button--secondary(ng-click="exportToExcel()") EXPORT
+        .row
+          form.form
+            .form-group
+              label.form-label Cari Berdasarkan
+              .row
+                .col-lg-4.col-md-4.col-sm-4.col-xs-12.pd-right-15
+                  ui-select(ng-model="selectedFilter.item", style="margin-right: 15px")
+                    ui-select-match
+                      span(ng-bind="$select.selected.name")
+                    ui-select-choices(repeat="filter in (searchFilters | filter: $select.search) track by $index")
+                      span(ng-bind="filter.name")
+                .col-lg-5.col-md-5.col-sm-5.col-xs-12.pd-right-15
+                  .input-group(ng-show="selectedFilter.item.by !== 'range_date'")
+                    input.form-input(type="text", ng-model="searchVal", placeholder="{{selectedFilter.item.placeholder}}")
+                    button.button.button--secondary.button--base(ng-click="doSearchFilter(searchVal, selectedFilter.item.by)") Cari
+                  .input-group(ng-show="selectedFilter.item.by === 'range_date'")
+                    datepicker(date-format="yyyy-MM-dd" style="margin-right: 5px;")
+                      input.form-input(type="text", ng-model="requiredData.s_date", placeholder="Masukkan Tanggal Awal")
+                    datepicker(date-format="yyyy-MM-dd")
+                      input.form-input(type="text", ng-model="requiredData.e_date", placeholder="Masukkan Tanggal Akhir")
+                    button.button.button--secondary.button--base(ng-click="doSearchFilter(searchVal, selectedFilter.item.by)") Cari
+                .col-lg-3.col-md-3.col-sm-3.col-xs-12
+                  a.button.button--primary.button--base(href="/purchasing/poinvoice/createpoinvoice")
+                    i.fa.fa-plus.icon.icon--regular
+                    | Buat Invoice
+                  
+      .table
+        table.table--striped
+          thead.thead--primary
+            tr
+              th(ng-repeat="heading in headings") {{heading.name}}
+          tbody
+            tr(ng-repeat="poInvoice in poInvoiceList" ng-click="openPoInvoiceDetail(poInvoice.id)")
+              td {{ poInvoice.id }}
+              td {{ poInvoice.date }}
+              td
+                .badge.tt-uppercase.fw-semibold(ng-class="{'badge--success': poInvoice.status == 0, 'badge--passive': poInvoice.status == 1 }") {{poInvoice.status == 0 ? 'Belum Lunas' : 'Sudah lunas'}}
+              td {{ numberWithCommas(poInvoice.total) }}
+              td(ng-click="$event.stopPropagation()")
+                .flex-row.flex-align-center
+                  button.button.button--small.button--success.button--stick(ng-click="redirectToEditInvoice(poInvoice.id)")
+                    i.fa.fa-pencil.icon.icon--small
+                    | Ubah

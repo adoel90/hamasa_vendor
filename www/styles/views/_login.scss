@@ -1,0 +1,41 @@
+.login {
+	@include size(height 100vh);
+	background-color: $clr-gray-lightest;
+
+	.login_wrapper {
+		@include flexbox;
+		@include flex-direction(row);
+		@include size(height 100% width 100%);
+	}
+
+	.side-panel {
+		@include flex(1 1 400px);
+		@include size(height 100%);
+
+		@include filter(brightness(0.75) contrast(1.5));
+
+		background: url('/dist/img/hsc-panel-bg.jpg');
+		background-size: cover;
+		background-position: center;
+	}
+
+	.main-panel {
+		@include flexbox;
+		@include flex-direction(column);
+		@include align-items(center);
+		@include justify-content(center);
+		@include flex(1 1 100%);
+		@include size(height 100%);
+
+		.main-panel_container {
+			@include flexbox;
+			@include flex-direction(column);
+			@include min-size(height 400px width 400px);
+			@include padding(30px);
+			@include border-radius($border-radius-small);
+			box-shadow: 0 6px 15px rgba(36,37,38,0.08);
+			// box-shadow 0.25s ease 0s, transform 0.25s ease 0s, transform 0.5s cubic-bezier(0.6, 0.2, 0.1, 1) 0s, opacity 0.5s cubic-bezier(0.6, 0.2, 0.1, 1) 0s
+			background-color: $clr-primary-light;
+		}
+	}
+}

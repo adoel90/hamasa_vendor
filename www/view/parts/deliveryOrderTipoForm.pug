@@ -1,0 +1,63 @@
+form.form(ng-submit="saveChanges()")
+	.page_block
+		.row
+			.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+				.form-group
+					label.form-label Nomor SO
+					.input-group
+						input.form-input(type="text", placeholder="Klik 'Cari' untuk mulai pencarian", ng-model="salesOrderDetail.so_id" readonly)
+						button.button.button--base.button--primary(type="button", ng-click="openSalesOrderList()") Cari
+						
+	.page_block(ng-show="salesOrderDetail")
+		.row
+			.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+				.pd-bottom-15
+					h4 Detail Gudang
+						
+				.form-group
+					label.form-label ID Gudang
+					input.form-input(type="text", ng-model="salesOrderDetail.warehouse.id", readonly)
+						
+				.form-group
+					label.form-label Nama Gudang
+					input.form-input(type="text", ng-model="salesOrderDetail.warehouse.name", readonly)
+						
+			.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-15
+				.pd-bottom-15
+					h4 Detail Customer
+				.form-group
+					label.form-label ID Customer
+					input.form-input(type="text", ng-model="salesOrderDetail.customer.id", readonly)
+						
+				.form-group
+					label.form-label Nama Customer
+					input.form-input(type="text", ng-model="salesOrderDetail.customer.name", readonly)
+						
+				.form-group
+					label.form-label NPWP
+					input.form-input(type="text", ng-model="salesOrderDetail.customer.npwp", readonly)
+						
+	.table(ng-show="salesOrderDetail")
+		table.table--striped
+			thead.thead--primary
+				tr
+					th(ng-repeat="heading in salesOrderDetail.headings", ng-class="{ 'small': heading.size == 'sm', 'large': heading.size == 'lg' }") {{heading.name}}
+			tbody
+				tr(ng-repeat="item in salesOrderDetail.item")
+					td {{ item.category }}
+					td {{ item.name }}
+					td {{ item.quantity_left }}
+					td 
+						input.form-input.align-center(type="text", ng-model="item.quantity", placeholder="Qty Ambil" required)
+					td
+						input.form-input.align-center(type="text", ng-model="item.note", placeholder="Masukkan keterangan")
+					td
+						button.button.button--base.button--primary(type="button" ng-click="deleteItem($index)")
+							i.icon.icon--regular.fa.fa-trash
+							| Hapus
+	
+	.page_block(ng-show="salesOrderDetail")
+		.flex-row.flex-end
+			button.button.button--large.button--primary(type="submit")
+				i.fa.fa-floppy-o.icon.icon--regular
+				| Simpan

@@ -1,0 +1,46 @@
+.default-modal
+   .default-modal-heading
+      h5.modal-title Detail Supplier
+      a.modal-close(ng-click="$dismiss()")
+         .icon.icon--large.fa.fa-times
+   .default-modal-content
+      form.form.form--horizontal
+         .form-input-group
+            .textfield.textfield--primary
+               label.textfield-label.col-md-4.col-sm-4.col-xs-4(for="id") ID Supplier
+               input(type="text", name="id", ng-model="supplierDetail.id", placeholder="ID Gudang" readonly)
+            .textfield.textfield--primary
+               label.textfield-label.col-md-4.col-sm-4.col-xs-4(for="id") Supplier      
+               input(type="text", name="id", ng-model="supplierDetail.name", placeholder="Nama Supplier" readonly)
+            .textfield.textfield--primary
+               label.textfield-label.col-md-4.col-sm-4.col-xs-4(for="type") Jenis Supplier
+               input(type="text", name="type", ng-model="supplierDetail.type", placeholder="Jenis Supplier" readonly)
+            .textarea.textarea--primary
+               label.textarea-label.col-md-4.col-sm-4.col-xs-4(for="address") Alamat
+               textarea(name="address", ng-model="supplierDetail.address", placeholder="Alamat Gudang" readonly)
+            .textfield.textfield--primary
+               label.textfield-label.col-md-4.col-sm-4.col-xs-4(for="id") Provinsi
+               input(type="text", name="id", ng-model="supplierDetail.province", placeholder="Provinsi" readonly)
+            .textfield.textfield--primary
+               label.textfield-label.col-md-4.col-sm-4.col-xs-4(for="id") Kota
+               input(type="text", name="id", ng-model="supplierDetail.city", placeholder="Kota" readonly)
+            .textfield.textfield--primary
+               label.textfield-label.col-md-4.col-sm-4.col-xs-4(for="id") Kecamatan
+               input(type="text", name="id", ng-model="supplierDetail.district", placeholder="Kecamatan" readonly)      
+            .textfield.textfield--primary
+               label.textfield-label.col-md-4.col-sm-4.col-xs-4(for="id") Kelurahan
+               input(type="text", name="id", ng-model="supplierDetail.urban", placeholder="Kelurahan" readonly)
+            .textfield.textfield--primary
+               label.textfield-label.col-md-4.col-sm-4.col-xs-4(for="id") Kode Pos
+               input(type="text", name="id", ng-model="supplierDetail.postal_code", placeholder="Kode Pos" readonly)
+            .textfield.textfield--primary
+               label.textfield-label.col-md-4.col-sm-4.col-xs-4(for="id") No Telepon
+               input(type="text", name="id", ng-model="supplierDetail.phone", placeholder="No Telepon" readonly)
+            .textfield.textfield--primary
+               label.textfield-label.col-md-4.col-sm-4.col-xs-4(for="id") Kontak Person
+               input(type="text", name="id", ng-model="supplierDetail.contact_person", placeholder="Kontak Person" readonly)
+            .textfield.textfield--primary
+               label.textfield-label.col-md-4.col-sm-4.col-xs-4(for="id") NPWP
+               input(type="text", name="id", ng-model="supplierDetail.npwp", placeholder="NPWP" readonly)
+                  
+            

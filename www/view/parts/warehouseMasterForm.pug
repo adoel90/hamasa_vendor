@@ -1,0 +1,70 @@
+form.form(ng-submit="save()")
+	.row
+		.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+			.form-group
+				label.form-label Kode Gudang
+				input.form-input(type="text", ng-model="requiredData.code", placeholder="Masukkan kode gudang", required)
+			.form-group
+				label.form-label Kode DO
+				input.form-input(type="text", ng-model="requiredData.do_code", placeholder="Masukkan kode DO", required)
+			.form-group
+				label.form-label Kode BKB
+				input.form-input(type="text", ng-model="requiredData.bkb_code", placeholder="Masukkan kode BKB", required)
+			.form-group
+				label.form-label Kode BTB
+				input.form-input(type="text", ng-model="requiredData.btb_code", placeholder="Masukkan kode BTB", required)
+			.form-group
+				label.form-label Nama Gudang
+				input.form-input(type="text", ng-model="requiredData.name", placeholder="Masukkan nama gudang", required)
+			.form-group
+				label.form-label Nomor Telepon
+				input.form-input(type="text", ng-model="requiredData.phone", placeholder="Masukkan nomor telepon gudang", required)
+			.form-group
+				label.form-label Nomor FAX
+				input.form-input(type="text", ng-model="requiredData.fax", placeholder="Masukkan nomor FAX gudang")
+			.form-group
+				label.form-label Contact Person (CP)
+				input.form-input(type="text", ng-model="requiredData.contact_person", placeholder="Masukkan kontak yang dapat dihubungi")
+		.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-15
+			.form-group
+				label.form-label Alamat
+				textarea.form-input(rows="3" ng-model="requiredData.address", placeholder="Masukkan alamat gudang", required)
+			.form-group
+				label.form-label Provinsi
+				ui-select(ng-model="requiredData.selectedProvince", on-select="changeProvince($item)")
+					ui-select-match
+						span(ng-bind="$select.selected.name")
+					ui-select-choices(repeat="province in (listProvince | filter: $select.search) track by $index")
+						span(ng-bind="province.name")
+			.form-group
+				label.form-label Kota
+				ui-select(ng-model="requiredData.selectedCity", on-select="changeCity($item)", ng-click="validateCity()")
+					ui-select-match
+						span(ng-bind="$select.selected.name")
+					ui-select-choices(repeat="city in (listCity | filter: $select.search) track by $index")
+						span(ng-bind="city.name")
+			.form-group
+				label.form-label Kecamatan
+				ui-select(ng-model="requiredData.selectedDistrict", on-select="changeDistrict($item)", ng-click="validateDistrict()")
+					ui-select-match
+						span(ng-bind="$select.selected.name")
+					ui-select-choices(repeat="district in (listDistrict | filter: $select.search) track by $index")
+						span(ng-bind="district.name")
+			.form-group
+				label.form-label Kelurahan
+				ui-select(ng-model="requiredData.selectedUrban", on-select="changeUrban($item)", ng-click="validateUrban()")
+					ui-select-match
+						span(ng-bind="$select.selected.name")
+					ui-select-choices(repeat="urban in (listUrban | filter: $select.search) track by $index")
+						span(ng-bind="urban.name")
+			.form-group
+				label.form-label Kode Pos	
+				input.form-input(type="text", ng-model="requiredData.postal_code", placeholder="Masukkan kode pos")
+	.flex-row.flex-justify-between
+		
+		button.button.button--base.button--danger(type="button" ng-click="goBack()")
+			i.fa.fa-chevron-left.icon.icon--small
+			| Kembali
+		button.button.button--base.button--primary(type="submit") 
+			i.fa.fa-floppy-o.icon.icon--regular
+			| Simpan

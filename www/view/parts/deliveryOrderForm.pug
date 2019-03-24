@@ -1,0 +1,65 @@
+form.form(ng-submit="saveChanges()")
+	.page_block
+		.row
+			.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+				.form-group
+					label.form-label Tanggal Pembuatan DO
+					.input-group
+						datepicker(date-format="yyyy-MM-dd" date-set="{{requiredData.date}}")
+							input.form-input(type="text" ng-model="requiredData.date")
+				.form-group
+					label.form-label Nomor SO
+					input.form-input(type="text", ng-model="salesOrderDetail.id", readonly)
+						
+				.form-group
+					label.form-label Pilih Gudang
+					ui-select(ng-model="selectedWarehouse", on-select="changeWarehouse($item)")
+						ui-select-match
+							span(ng-bind="$select.selected.name")
+						ui-select-choices(repeat="warehouse in (warehouseList | filter: $select.search) track by $index")
+							span(ng-bind="warehouse.name")
+			
+			.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-15
+				.form-group
+					label.form-label ID Customer
+					input.form-input(type="text", ng-model="salesOrderDetail.customer.id", readonly)
+						
+				.form-group
+					label.form-label Nama Customer
+					input.form-input(type="text", ng-model="salesOrderDetail.customer.name", readonly)
+						
+				.form-group
+					label.form-label NPWP Customer
+					input.form-input(type="text", ng-model="salesOrderDetail.customer.npwp", readonly)
+						
+				.form-group
+					label.form-label Nomor Telepon
+					input.form-input(type="text", ng-model="salesOrderDetail.customer.phone[0].phone", readonly)
+						
+		.flex-row
+			.button.button--base.button--primary.m-left-15(show-sales-price pay-method="1" pickup="2" contract-id=" ") Lihat Stok Gudang
+						
+	.table
+		table.table--striped
+			thead.thead--primary
+				tr
+					th(ng-repeat="heading in headings", ng-class="{ 'large': heading.size == 'lg'}") {{heading.name}}
+			tbody
+				tr(ng-repeat="item in salesOrderDetail.item")
+					td {{ item.category.name }}
+					td {{ item.name }}
+					td {{ item.unit }}
+					td {{ item.grade }}
+					td {{ item.qtyOrdered }}
+					td {{ item.outstanding }}
+					td 
+						input.form-input.ta-center(type="text", ng-model="item.quantity" placeholder="min. 1", required)
+					td 
+						input.form-input.ta-center(type="text", ng-model="item.note", placeholder="Keterangan")
+							
+	.page_block
+		.flex-row.flex-end
+			button.button.button--large.button--primary(type="submit")
+				i.fa.fa-floppy-o.icon.icon--regular
+				| Simpan
+				

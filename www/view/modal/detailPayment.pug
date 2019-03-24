@@ -1,0 +1,52 @@
+.default-modal
+   .default-modal-heading
+      h5.modal-title Detail Pembayaran
+      a.modal-close(ng-click="$dismiss()")
+         i.icon.icon--regular.fa.fa-times
+   .default-modal-content
+      form.form.form--primary.form--horizontal
+         .row.pd-bottom-30
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+               .form-group
+                  label.form-label Customer
+                  input.form-input(type="text", ng-model="paymentDetail.customer.name", readonly)
+               .form-group
+                  label.form-label Alamat
+                  input.form-input(type="text", ng-model="paymentDetail.customer.address[0].address", readonly)
+               .form-group
+                  label.form-label NPWP
+                  input.form-input(type="text", ng-model="paymentDetail.customer.npwp", readonly)
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+               .form-group
+                  label.form-label Total Pelunasan
+                  input.form-input(type="text", ng-model="paymentDetail.totalMustPay", readonly)
+               .form-group
+                  label.form-label Jumlah Pembayaran
+                  input.form-input(type="text", ng-model="paymentDetail.total_payment", readonly)
+               .form-group
+                  label.form-label Metode Pembayaran
+                  input.form-input(type="text", ng-model="paymentDetail.method.name", readonly)
+               .form-group
+                  label.form-label No Bukti Pembayaran
+                  input.form-input(type="text", ng-model="paymentDetail.proof", readonly)
+               .form-group
+                  label.form-label Tgl Jatuh Tempo
+                  input.form-input(type="text", ng-model="paymentDetail.due_date", readonly)      
+      .table
+         table.table--striped
+            thead.thead--primary
+               tr
+                  th(ng-repeat="heading in paymentDetail.headings") {{heading.name}}
+            tbody
+               tr(ng-repeat="invoice in paymentDetail.invoice")
+                  td {{invoice.type | uppercase }}
+                  td {{invoice.so.id ? invoice.so.id : '-'}}
+                  td {{invoice.so.date ? invoice.so.date : '-'}}
+                  td {{ numberWithCommas(invoice.total_invoice) }}
+                  td {{ numberWithCommas(invoice.paid) }}
+                  td
+                     input(type="checkbox", class="checkbox", ng-checked="invoice.stamp", disabled)
+   .default-modal-footer
+      .flex-end
+            button.button.button--secondary.button--base(ng-click="printBkm(paymentDetail.id)") PRINT BKM
+                  

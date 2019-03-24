@@ -1,0 +1,26 @@
+.default-modal
+  form.form.form--horizontal
+    .default-modal-heading
+      h5.modal-title Edit Warehouse Inventory
+      a.modal-close(ng-click="$dismiss()")
+        .icon.icon--large.fa.fa-times
+    .default-modal-content
+      .form-input-group.pd-bottom-15
+        .textfield.textfield--primary  
+          label.textfield-label.col-md-4.col-sm-4.col-xs-4 Kategori Barang
+          input(type="text", placeholder="Kategori Barang", ng-model="itemToEdit.category" readonly)
+        .textfield.textfield--primary
+          label.textfield-label.col-md-4.col-sm-4.col-xs-4 Nama Barang
+          input(type="text", placeholder="Nama Barang", ng-model="itemToEdit.name", readonly)
+        .textfield.textfield--primary
+          label.textfield-label.col-md-4.col-sm-4.col-xs-4 ROP
+          input(type="text", placeholder="ROP", ng-model="itemToEdit.minimum", currency-input, required)
+        .textfield.textfield--primary
+          label.textfield-label.col-md-4.col-sm-4.col-xs-4 Stok Maksimum
+          input(type="text", placeholder="Stok Maksimum", ng-model="itemToEdit.maximum", currency-input, required)
+    .default-modal-footer
+      .flex-row.flex-end
+        button.button.button--base.button--success(ng-click="saveItem(itemToEdit)")
+          i.icon.icon--regular.fa.fa-floppy-o
+          | Simpan
+      

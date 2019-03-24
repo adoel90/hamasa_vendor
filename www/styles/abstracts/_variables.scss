@@ -1,0 +1,239 @@
+///====================================================================================================
+///
+///		Variables
+///
+///		Variables are the very essense of any programming language, including Sass. They allow us
+///		to reuse any value without having to copy them over and over again. Most importantly, they
+///		make updating a value really easy and make it maintainable throughout the project
+///
+///
+///		https://sass.guidelin.es/#variables
+///
+///====================================================================================================
+//---------------------------------------------------------------------
+//
+//		Colors
+//
+//---------------------------------------------------------------------
+//	#	Brand Color Pallete
+//---------------------------------------------------------------------
+@import url(https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,900);
+@import url(https://fonts.googleapis.com/css?family=Droid+Sans);
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);
+@import url(https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css);
+
+//	Primary
+$rose-madder			: #E42E36 !default;			//	base
+$tango-pink				: tint($rose-madder, 36%);	//	#EB6F74
+$light-carmine-pink		: tint($rose-madder, 27%);	//	#EA6167
+$desire-light			: tint($rose-madder, 18%);	//	#E85258
+$desire					: tint($rose-madder, 9%);	//	#E64148
+
+$international-orange	: shade($rose-madder, 18%);	//	#BB262D
+$vivid-auburn			: shade($rose-madder, 36%);	//	#9A2025
+$falu-red				: shade($rose-madder, 54%);	//	#7F1B1F
+$prune					: shade($rose-madder, 72%);	//	#68171A
+
+//	Secondary
+$iguana-green			: #EA482E; //#66BB6A --> warna hamasa
+$arsenic				: #424242;
+
+//---------------------------------------------------------------------
+//	#	Global Color Pallete
+//---------------------------------------------------------------------
+//	Light
+$white				: #FFFFFF;
+$snow				: #FDFDFD;
+$baby-powder		: #FAFAFA;
+$platinum			: #E6E6E6;
+$light-gray			: #D0D0D0;
+$xii-gray			: #B9B9B9;
+
+//	Dark
+$quick-silver		: #A2A2A2;
+$taupe-gray			: #8B8B8B;
+$nickel				: #737373;
+$outer-space		: #454545;
+$eerie-black		: #171717;
+$orange             : #f09506;
+
+//	Others
+$facebook			: #3B5998;
+$google-plus		: #3B5998;
+
+//---------------------------------------------------------------------
+//	#	Status Color Palletes
+//---------------------------------------------------------------------
+//	Default
+$green-blue			: #0F6FB7;	// default
+
+//	Danger
+$lava				: #D11A10; // btn delete hamasa #D11A10, delete mks #FF8F00
+
+//	Success
+$metallic-gold		: #D6C12B;
+
+$straw				: #E0DD73;	// yellow : active
+$granny-smith-apple	: #A1E086;	// green : done
+
+
+// green: a1e086
+// yellow: e0dd73
+
+
+//---------------------------------------------------------------------
+//	#	Color Declaration
+//---------------------------------------------------------------------
+$clr-primary				: $rose-madder !default;
+$clr-primary-default		: $green-blue !default;
+$clr-primary-dark			: $eerie-black !default;
+$clr-primary-light			: $snow !default;
+$clr-primary-passive		: $quick-silver !default;
+$clr-primary-muted			: $xii-gray !default;
+$clr-primary-success		: $iguana-green !default;
+$clr-primary-danger			: $lava !default;
+$clr-primary-active			: $straw !default;
+$clr-primary-completed		: $granny-smith-apple !default;
+
+$clr-secondary				: $iguana-green;
+
+$clr-gray					: $taupe-gray !default;
+$clr-gray-light				: $xii-gray !default;
+$clr-gray-lightest			: $platinum !default;
+$clr-gray-dark				: $outer-space !default;
+
+
+//---------------------------------------------------------------------
+//
+//	##	Typography
+//
+//---------------------------------------------------------------------
+//	#	Font Family
+//---------------------------------------------------------------------
+$ff-sans-serif				: 'Montserrat', Helvetica, Arial, sans-serif;
+$ff-sans-serif-secondary	: 'Droid Sans', Helvetica, Arial, sans-serif;
+$ff-serif					: Georgia, 'Times New Roman', Times, serif;
+$ff-monospace				: Menlo, Monaco, Consolas, "Courier New", monospace;
+
+$ic-font-awesome			: 'FontAwesome', 'Buzzbuddies', Arial, sans-serif;
+
+//---------------------------------------------------------------------
+//	#	Font Size
+//---------------------------------------------------------------------
+$fs-base			: 14px !default;
+$fs-xxxx-large	: ceil(($fs-base * 4.8));
+$fs-xxx-large		: ceil(($fs-base * 3.4));	// ~48px
+$fs-xx-large		: floor(($fs-base * 2.6)); 	// ~36px
+$fs-x-large			: floor(($fs-base * 1.75)); // ~24px
+$fs-large			: ceil(($fs-base * 1.25));	// ~18px
+$fs-small			: ceil(($fs-base * 0.85)); 	// ~12px
+$fs-smallest		: ceil(($fs-base * 0.7));	// ~10px
+
+//---------------------------------------------------------------------
+//	#	Icon Size
+//---------------------------------------------------------------------
+$icon-colossal	: $fs-xxxx-large;
+$icon-titan		: $fs-xx-large;
+$icon-large		: $fs-x-large;
+$icon-base		: $fs-large;
+$icon-small		: $fs-base;
+$icon-tiny		: $fs-small;
+
+
+//---------------------------------------------------------------------
+//	#	Font Family
+//---------------------------------------------------------------------
+$ff-primary		: $ff-sans-serif;
+$ff-secondary	: $ff-sans-serif-secondary;
+
+//---------------------------------------------------------------------
+//	#	Font Weight
+//---------------------------------------------------------------------
+$fw-light		: 300 !default;
+$fw-regular		: normal !default;
+$fw-medium		: 500 !default;
+$fw-semibold	: 600 !default;
+$fw-bold		: bold !default;
+$fw-black		: 700 !default;
+
+$lh-base		: 1.428571429 !default; // 20/14
+$lh-computed	: floor(($fs-base * $lh-base)) !default; // ~20px
+
+//---------------------------------------------------------------------
+//	#	Headings
+//---------------------------------------------------------------------
+$fs-h1			: $fs-xxx-large;	// ~48px
+$fs-h2			: $fs-xx-large; 	// ~36px
+$fs-h3			: $fs-x-large;		// ~24px
+$fs-h4			: $fs-large; 		// ~18px
+$fs-h5			: $fs-base;			// ~16px
+$fs-h6			: $fs-small; 		// ~12px
+
+
+//---------------------------------------------------------------------
+//	#	Border Radius
+//---------------------------------------------------------------------
+$border-radius			: em(6px) !default;
+$border-radius-small	: em(4px) !default;
+$border-radius-large	: em(15px) !default;
+$border-radius-rounded	: em(100px) !default;
+$border-radius-full		: 100% !default;
+
+//---------------------------------------------------------------------
+//
+//	##	Button
+//
+//		For each of the project's buttons, define text, background and
+//		border color.
+//
+//---------------------------------------------------------------------
+//	#	Button Declaration
+//---------------------------------------------------------------------
+// $btn-primary-font			: $ff-primary;
+// $btn-primary-text-color		: $clr-primary-light !default;
+// $btn-primary-bg-color		: $clr-primary !default;
+// $btn-border-radius			: $border-radius-small !default;
+// $btn-primary-spacing		: em(4px);
+
+
+//---------------------------------------------------------------------
+//
+//	##	Forms & Inputs
+//
+//		The variables that includes values used to create a form
+//		component and its predecessors (input, select, textarea).
+//
+//---------------------------------------------------------------------
+$input-bg-color			: transparent !default;
+$input-color			: $clr-gray-lightest !default;
+$input-hover			: $clr-gray-light !default;
+$input-focus			: $clr-gray-light !default;
+$input-border-radius	: $border-radius-small !default;
+
+
+//---------------------------------------------------------------------
+//
+//	##	Media Query Breakpoints
+//
+//		Sizes used for media queries used throughout the project.
+//		Do not use any function to determine the size (for example using em()
+//		function), instead use the usual pixels (px) to determine
+//		breakpoints.
+//
+//---------------------------------------------------------------------
+$phone-width: 576px;
+$tablet-width: 768px;
+$desktop-width: 992px;
+$large-desktop-width: 1200px;
+
+$phone-max-width: 540px;
+$tablet-max-width: 720px;
+$desktop-max-width: 960px;
+$large-desktop-max-width: 1140px;
+
+//---------------------------------------------------------------------
+//
+//	##	Animations
+//
+//---------------------------------------------------------------------
+$transition-bouncy		: cubic-bezier(0.2, 0.85, 0.2, 1.1);

@@ -1,0 +1,70 @@
+form.form(validate-payment data="poPaymentData" purpose="poPayment")
+  .page_block
+    .row
+      .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+        .form-group
+          label.form-label Tanggal Pelunasan Hutang
+          .input-group
+            datepicker(date-format="yyyy-MM-dd" date-set="{{poPaymentData.date}}")
+              input.form-input(type="text" ng-model="poPaymentData.date")
+        .form-group
+          label.form-label Supplier
+          .flex-row
+            input.form-input(type="text", ng-model="supplier.name", placeholder="Nama Supplier", readonly)
+            button.button.button--secondary.button--base.m-left-15(type="button" show-supplier-list) Pilih Supplier
+        .form-group
+          label.form-label Alamat
+          input.form-input(type="text", ng-model="supplier.address", placeholder="Alamat Supplier", readonly)
+        .form-group
+          label.form-label Npwp
+          input.form-input(type="text", ng-model="supplier.npwp", placeholder="NPWP Supplier", readonly)
+    .flex-row
+      button.button.button--base.button--danger(type="button" ng-click="goBack()")
+        i.fa.fa-chevron-left.icon.icon--small
+        | Kembali
+  .table.vertical--scroll(ng-show="poPaymentData.listInvoice.length > 0")
+    table.table--hoverable
+      thead.thead--primary
+        tr
+          th(ng-repeat="heading in headings") {{heading.name}}
+      tbody
+        tr(ng-repeat="poInvoice in poPaymentData.listInvoice")
+          td {{ poInvoice.id }}
+          td {{ poInvoice.date }}
+          td {{ numberWithCommas(poInvoice.totalMustPay) }}
+          td
+            .form-input-group
+              .textfield.textfield--primary
+                input.align-center(type="text", ng-model="poInvoice.paid", calculate-paid-changed , data="poPaymentData", paid-invoice="poInvoice.paid", currency-input, ng-readonly="!poInvoice.check")
+          td
+            input.align-center(type="checkbox", class="checkbox", ng-model="poInvoice.check", copy-total-to-pay, invoice-data="poInvoice", data="poPaymentData")
+  .page_block(ng-show="poPaymentData.listInvoice.length > 0")
+    .row
+      .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+        .form-group
+          label.form-label Total Pelunasan
+          input.form-input(type="text", ng-model="poPaymentData.total_should_pay", placeholder="Total Pelunasan", readonly)
+        .form-group
+          label.form-label Jumlah Pembayaran
+          input.form-input(type="text", ng-model="poPaymentData.total", readonly)
+        .form-group
+          label.form-label Metode Pembayaran
+          payment-method(data="poPaymentData")
+        .form-group(ng-show="poPaymentData.selectedPaymentMethod.id > 0")
+          label.form-label Bank
+          bank(data="poPaymentData")
+        .form-group(ng-show="poPaymentData.selectedPaymentMethod.id > 0")
+          label.form-label No Bukti pembayaran
+          input.form-input(type="text", ng-model="poPaymentData.proof", placeholder="No Bukti Pembayaran", ng-required="poPaymentData.selectedPaymentMethod.id > 0")
+        .form-group(ng-show="poPaymentData.selectedPaymentMethod.id > 1")
+          label.form-label Tgl Jatuh Tempo
+          datepicker(date-format="yyyy-MM-dd")
+            input.form-input(type="text", ng-model="poPaymentData.due_date", placeholder="Tgl Jatuh Tempo", ng-required="poPaymentData.selectedPaymentMethod.id > 1")
+    .flex-row.flex-end
+      button.button.button--base.button--primary(type="submit")
+        i.fa.fa-floppy-o.icon.icon--regular
+        | Simpan
+          
+          
+            
+        

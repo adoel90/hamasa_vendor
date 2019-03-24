@@ -1,0 +1,45 @@
+include ./global/head.pug
+include ./parts/sidenav.pug
+main.main
+  include ./parts/main-header.pug
+  include ./parts/main-subheader.pug
+  
+  .main_content(ng-cloak)
+    .page_header
+      h2 Laporan Kontrak Pembelian
+    .page_content
+      .page_block
+        form.form
+          .form-group
+            .flex-justify-between
+              label.form-label Cari Berdasarkan
+              button.button.button--primary.button--base(ng-show="purchasingContract.history" ng-click="printReport()") PRINT
+            .row.m-top-15
+              .col-lg-2.col-md-2.col-sm-2.col-xs-12
+                label.form-label.m-right-15 No Kontrak
+              .col-lg-4.col-md-4.col-sm-4.col-xs-12
+                input.form-input(type="text" ng-model="contractId", placeholder="Masukkan No Kontrak", required)
+              .col-lg-2.col-md-2.col-sm-2.col-xs-12
+                button.button.button--secondary.button--base.m-left-15(type="submit" ng-click="doSearchFilter(contractId)") Cari
+      
+      .page_block(ng-show="purchasingContract")
+        form.form            
+          .form-group
+            .row.m-top-15
+              .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-30
+                .form-group
+                  label.form-label Tonase Kontrak
+                  input.form-input(type="text", ng-value="numberWithCommas(purchasingContract.tonase)" readonly)
+                .form-group
+                  label.form-label DP Kontrak
+                  input.form-input(type="text", ng-value="numberWithCommas(purchasingContract.dp)" readonly)
+              .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-30
+                .form-group
+                  label.form-label Sisa Tonase
+                  input.form-input(type="text", ng-value="numberWithCommas(purchasingContract.tonase_remain)" readonly)
+                .form-group
+                  label.form-label Sisa DP
+                  input.form-input(type="text", ng-value="numberWithCommas(purchasingContract.dp_remain)" readonly)
+      .page_block(ng-show="purchasingContract && (!purchasingContract.history)" style="text-align: center")
+        label Belum ada histori kontrak Pembelian
+      table-content(table-header="headings" table-body="purchasingContract.history" table-column="cols" type="'table-with-price'" ng-show="purchasingContract.history")

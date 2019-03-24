@@ -1,0 +1,21 @@
+.default-modal
+	.default-modal-heading
+		h5.modal-title Daftar Pembayaran
+		a.modal-close(ng-click="$dismiss()")
+			i.icon.icon--regular.fa.fa-times
+	.default-modal-content
+		.default-modal-block.pd-bottom-30
+			search-filter-bar(filters="paymentProof.searchFilters")
+		
+		.default-modal-block
+			.table
+				table.table--striped.table--hoverable
+					thead.thead--primary
+						tr
+							th(ng-repeat="heading in paymentList.headings") {{heading.name}}
+					tbody
+						tr(ng-repeat="item in paymentList.data", ng-click="chooseItem(item)")
+							td {{item.id}}
+							td {{item.invoice[0]}}
+							td {{item.payment | currency: 'Rp'}}
+							td {{item.customer.name}}

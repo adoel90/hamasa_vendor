@@ -1,0 +1,53 @@
+include ./global/head.pug
+include ./parts/sidenav.pug
+main.main
+   include ./parts/main-header.pug
+   include ./parts/main-subheader.pug
+   
+   .main_content(ng-cloak)
+      .page_header
+         h2 List Supplier
+      .page_content
+         .page_block
+            form.form
+               .form-group
+                  label.form-label Cari Berdasarkan
+                  .row
+                     .col-lg-4.col-md-4.pd-right-15
+                        ui-select(ng-model="selectedFilter.item")
+                           ui-select-match
+                              span(ng-bind="$select.selected.name")
+                           ui-select-choices(repeat="filter in (searchFilters | filter: $select.search) track by $index")
+                              span(ng-bind="filter.name")
+                     .col-lg-5.col-md-5.col-sm-5.col-xs-12.pd-right-15
+                        .input-group
+                           input.form-input(type="text", ng-model="searchVal", placeholder="{{selectedFilter.item.placeholder}}")
+                           button.button.button--base.button--secondary(ng-click="doSearchFilter(searchVal, selectedFilter.item.by)") Cari
+                     .col-lg-3.col-md-3.col-sm-3.col-xs-12
+                        a.button.button--primary.button--base(href="/purchasing/supplier/createnewsupplier")
+                           i.fa.fa-plus.icon.icon--regular
+                           | Tambah Supplier
+         .table
+            table.table--striped.table--hoverable
+               thead.thead--primary
+                  tr
+                     th(ng-repeat="heading in headings") {{heading.name}}
+               tbody
+                  tr(ng-repeat="supplier in supplierList" ng-click="openDetailSupplier(supplier.id)")
+                     td {{supplier.name}}
+                     td {{supplier.npwp}}
+                     td {{supplier.city != null ? supplier.city.name : ''}}
+                     td(ng-click="$event.stopPropagation()")
+                        .flex-row.flex-align-center
+                           button.button.button--small.button--success.button--stick(ng-click="redirectTo('/purchasing/supplier/editsupplier/'+ supplier.id)")
+                              i.fa.fa-pencil.icon.icon--small
+                              | Ubah
+                           button.button.button--small.button--danger.button--stick(ng-click="deleteSupplier(supplier.id)")
+                              i.fa.fa-trash.icon.icon--small
+                              | Hapus
+                              
+         .page-block(style="text-align: center")
+            pagination(total-rows="totalRows", data="requiredData")
+                        
+                     
+                  

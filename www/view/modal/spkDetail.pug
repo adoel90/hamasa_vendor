@@ -1,0 +1,15 @@
+.default-modal
+   .default-modal-heading
+      h5.modal-title Detail SPK
+      a.modal-close(ng-click="$dismiss()")
+         .icon.icon--large.fa.fa-times
+   .default-modal-content
+      form.form.form--primary.form--horizontal
+         include ../parts/spkFields.pug
+      table-content(table-header="detailHeadings" table-body="spkDetail.spk_result" table-column="columns" type="'non-edited-table'" ng-show="spkDetail.spk_result.length > 0")
+   .default-modal-footer
+     .flex-row.flex-end
+       button.button.button--base.button--secondary.m-right-15(type="button" ng-click="redirectTo('/inventory/spk/editspk/' + spkDetail.id)") Update SPK
+       button.button.button--base.button--secondary(type="button" ng-click="printSpk(spkDetail.id)")
+         i.fa.fa-print.icon.icon--regular
+         | Print

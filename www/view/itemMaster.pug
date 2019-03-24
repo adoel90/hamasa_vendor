@@ -1,0 +1,51 @@
+include ./global/head.pug
+include ./parts/sidenav.pug
+main.main
+	include ./parts/main-header.pug
+	include ./parts/main-subheader.pug
+
+	.main_content(ng-cloak)
+		.page_header
+			h2 Master Barang
+		.page_content
+			.page_block
+				.row.flex-end
+					button.button.button--base.button--secondary(ng-click="exportToExcel()") EXPORT
+				.row
+					item-filter(data="requiredData")
+				
+				.flex-row.flex-end
+					form(enctype="multipart/form-data" accept-charset="utf-8")
+						label(class="button button--secondary button--base") IMPORT XLS 
+							input(type="file" id="fileUpload" accept=".xls,.xlsx" style="display: none")
+								
+					button.button.button--secondary.button--base.m-left-15(ng-click="exportCoilTemplate()") Export XLS
+					a.button.button--primary.button--base.m-left-15(href="/inventory/itemmaster/createnewitem" style="margin-left: 15px")
+						i.fa.fa-plus.icon.icon--regular(role="button-icon")
+						| Tambah Barang
+						
+			.shrink-table
+				table.table--striped
+					thead.thead--primary
+						tr
+							th(ng-repeat="heading in headings", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+					tbody
+						tr(ng-repeat="item in masterItems | filter: searchFilter.value", ng-click="openItemDetail(item.ig_id)")
+							td {{item.id}}
+							td {{item.serial}}
+							td {{item.name}}
+							td {{item.category.id}}
+							td {{item.category.name}}
+							td {{item.unit}}
+							td {{item.weight}}
+							td {{item.grade}}
+							td 
+								//- i.icon.icon--large.fa.fa-lock(ng-if="item.stock_lock")
+								input(type="checkbox", class="checkbox", ng-checked="item.stock_lock", disabled)
+							td(ng-click="$event.stopPropagation()")
+								.flex-row.flex-align-center
+									button.button.button--success.button--base(ng-click="redirectTo('/inventory/itemmaster/createnewitem/'+item.ig_id)") Copy
+			
+			.page-block(style="text-align: center")
+				pagination(total-rows="totalRows", data="requiredData")
+				

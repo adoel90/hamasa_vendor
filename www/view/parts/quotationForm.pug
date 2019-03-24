@@ -1,0 +1,93 @@
+form.form.form--horizontal(ng-submit="saveChanges()")
+	.page_block
+		.row.pd-bottom-30
+			.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+				.form-group
+					label.form-label Nama Customer
+					ui-select(ng-model="selectedCustomer", on-select="changeCustomer($item)")
+						ui-select-match
+							span(ng-bind="$select.selected.name")
+						ui-select-choices(repeat="customer in (customerList | filter: $select.search) track by $index")
+							span(ng-bind="customer.name")
+				
+				.form-group
+					label.form-label NPWP Customer
+					input.form-input(type="text", ng-model="selectedCustomer.detail.npwp", readonly)
+										
+				.form-group(ng-repeat="address in selectedCustomer.detail.address track by $index")
+					label.form-label Alamat {{ $index + 1 }}
+					textarea.form-input(rows="3", ng-model="address.address", readonly)
+						
+				.form-group(ng-repeat="phone in selectedCustomer.detail.phone track by $index")
+					label.form-label Nomor Telepon {{ $index + 1 }}
+					input.form-input(type="text", ng-model="phone.phone", readonly)
+						
+			.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-15
+				.form-group
+					label.form-label Jenis Pembayaran
+					ui-select(ng-model="selectedPaymentMethod", on-select="changePaymentMethod($item)")
+						ui-select-match
+							span(ng-bind="$select.selected.name")
+						ui-select-choices(repeat="paymentMethod in (paymentMethodList | filter: $select.search) track by $index")
+							span(ng-bind="paymentMethod.name")
+								
+				.form-group
+					label.form-label Jenis Pengambilan
+					ui-select(ng-model="selectedPickup", on-select="changePickup($item)")
+						ui-select-match
+							span(ng-bind="$select.selected.name")
+						ui-select-choices(repeat="pickup in (pickupList | filter: $select.search) track by $index")
+							span(ng-bind="pickup.name")
+								
+				.form-group
+					label.form-label Lama Pembayaran
+					.input-group
+						input.form-input(type="text", ng-model="requiredData.due_date", placeholder="Batas akhir pembayaran", required)
+						.input-group-extra
+							small.clr-passive.fw-medium.tt-uppercase hari
+					
+		.flex-row.flex-justify-between
+			button.button.button--base.button--danger.m-right-15(ng-click="goBack()")
+				i.fa.fa-chevron-left.icon.icon--small
+				| Kembali
+					
+	.page_block(ng-hide="requiredData.item.length")
+		.flex-row.flex-align-center
+			p.clr-passive Klik 'Tambah Barang' untuk mulai menambah barang.
+
+	.shrink-table(ng-show="requiredData.item.length")
+		table.table--striped
+			thead.thead--primary
+				tr
+					th(ng-repeat="heading in headings", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+			tbody
+				tr(ng-repeat="item in requiredData.item")
+					td {{item.category}}
+					td {{item.name}}
+					td {{item.unit}}
+					td {{item.warehouse ? item.warehouse : '-'}}
+					td {{item.grade}}
+					td
+						.input-group
+							.input-group-extra 
+								small.tt-uppercase.clr-gray.fw-semibold Rp.
+							input.form-input.align-center(type="text", ng-model="item.sell_price", ng-blur="item.sell_price = numberWithCommas(item.sell_price)", ng-focus="item.sell_price = numberWithNoCommas(item.sell_price)", placeholder="e.g: 10000", required)
+					td
+						.input-group
+							input.form-input.align-center(type="text", placeholder="cth: 5", ng-model="item.quantity", ng-blur="item.quantity = numberWithCommas(item.quantity)", ng-focus="item.quantity = numberWithNoCommas(item.quantity)", required)
+					td
+						.input-group
+							input.form-input.align-center(type="text", placeholder="Masukkan keterangan", ng-model="item.note")
+					td
+						.flex-column
+							button.small-button.button--danger.button-tooltip(type="button" ng-click="deleteItem($index)" style="position: relative;")
+								i.fa.fa-trash.icon.icon--regular
+								span.tooltiptext Hapus
+	.page_block
+		.flex-row.flex-end
+			button.button.button--base.button--primary.m-right-15(type="button" show-sales-price pay-method="requiredData.pay_method" pickup="requiredData.pickup" contract-id="requiredData.contract_id")
+				i.fa.fa-plus.icon.icon--regular
+				| Tambah Barang
+			button.button.button--base.button--primary(ng-show="requiredData.item.length")
+				i.fa.fa-floppy-o.icon.icon--regular
+				| Simpan

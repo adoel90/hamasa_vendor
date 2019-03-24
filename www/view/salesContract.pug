@@ -1,0 +1,61 @@
+include ./global/head.pug
+include ./parts/sidenav.pug
+main.main
+	include ./parts/main-header.pug
+	include ./parts/main-subheader.pug
+
+	.main_content(ng-cloak)
+		.page_header
+			h2(role="page-title") Kontrak Penjualan
+		.page_content
+			.page_block
+				form.form
+					.form-group
+						.row.flex-end
+							button.button.button--base.button--secondary(ng-click="printSalesContractReport()") EXPORT
+						label.form-label Cari Berdasarkan
+						.row
+							.col-lg-4.col-md-4.col-sm-4.col-xs-12.pd-right-15
+								ui-select(ng-model="selectedFilter.item")
+									ui-select-match
+										span(ng-bind="$select.selected.name")
+									ui-select-choices(repeat="filter in (searchFilters | filter: $select.search) track by $index")
+										span(ng-bind="filter.name")
+							.col-md-5.col-md-5.col-sm-5.col-xs-12.pd-right-15
+								.input-group(ng-show="selectedFilter.item.by !== 'range_date'")
+									input.form-input.bigLetter(type="text", ng-model="searchVal", placeholder="{{selectedFilter.item.placeholder}}")
+									button.button.button--secondary.button--base(ng-click="doSearchFilter(searchVal, selectedFilter.item.by)") Cari
+								.input-group(ng-show="selectedFilter.item.by === 'range_date'")
+									datepicker(date-format="yyyy-MM-dd" style="margin-right: 5px;")
+										input.form-input(type="text", ng-model="requiredData.s_date", placeholder="Masukkan Tanggal Awal")
+									datepicker(date-format="yyyy-MM-dd")
+										input.form-input(type="text", ng-model="requiredData.e_date", placeholder="Masukkan Tanggal Akhir")
+									button.button.button--secondary.button--base(ng-click="doSearchFilter(searchVal, selectedFilter.item.by)") Cari
+
+								
+							.col-lg-3.col-md-3.col-sm-3.col-xs-12
+								.flex-column
+									a.button.button--primary.button--base(href="/sales/salescontract/createnewsalescontract")
+										i.fa.fa-plus.icon.icon--regular
+										| Buat Kontrak
+			.table
+				table.table--striped
+					thead.thead--primary
+						tr
+							th(ng-repeat="heading in headings", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+					tbody
+						tr(ng-repeat="contract in contracts", ng-click="openContractDetail(contract)")
+							td {{ contract.id }}
+							td {{ contract.date }}
+							td {{ contract.end }}
+							td {{ contract.customer.name }}
+							td
+								.badge.tt-uppercase.fw-semibold(ng-class="{'badge--success': contract.status.code == 1, 'badge--passive': contract.status.code == 0, 'badge--danger': contract.status.code == -1 }") {{contract.statusName }}
+							td(ng-click="$event.stopPropagation()")
+								.flex-row.flex-align-center
+									button.button.button--base.button--success.button--stick(ng-click="openSalesContractHistory(contract)")
+										i.fa.fa-history.icon.icon--regular
+										| History
+										
+			.page-block(style="text-align: center")
+				pagination(total-rows="totalRows", data="requiredData")

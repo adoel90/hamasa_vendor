@@ -1,0 +1,71 @@
+form.form(ng-submit="save()")
+	.row.pd-bottom-30
+		.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+			.form-group
+				label.form-label Kode Barang
+				input.form-input(type="text", ng-model="requiredData.id", placeholder="Masukkan kode barang")
+					
+			.form-group
+				label.form-label Nomor Seri
+				input.form-input(type="text", ng-model="requiredData.serial", placeholder="Masukkan nomor seri")
+					
+			.form-group
+				label.form-label Merek
+				input.form-input(type="text", ng-model="requiredData.brand", placeholder="Masukkan merek barang", required)
+			
+			.form-group
+				label.form-label Nama Barang
+				input.form-input(type="text", ng-model="requiredData.name", placeholder="Masukkan nama barang", required)
+			
+			.form-group
+				label.form-label Kategori
+				ui-select(ng-model="requiredData.categories", on-select="changeCategory($item)")
+					ui-select-match
+						span(ng-bind="$select.selected.name")
+					ui-select-choices(repeat="category in (categories | filter: $select.search) track by $index")
+						span(ng-bind="category.name")
+							
+			.form-group
+				label.form-label Golongan
+				ui-select(ng-model="requiredData.group", on-select="changeGroup($item)")
+					ui-select-match
+						span(ng-bind="$select.selected.name")
+					ui-select-choices(repeat="group in (groups | filter: $select.search) track by $index")
+						span(ng-bind="group.name")
+							
+		.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-15
+			.form-group
+				label.form-label Berat
+				.row
+					.col-lg-8.col-md-8.col-sm-8.col-xs-12.pd-right-15
+						input.form-input(type="text", ng-model="requiredData.weight", placeholder="Masukkan berat barang")
+					.col-lg-4.col-md-4.col-sm-4.col-xs-12
+						input.form-input(type="text", ng-model="requiredData.unit", placeholder="Masukkan satuan barang", required)
+		
+			.form-group
+				label.form-label Grade
+				ui-select(ng-model="requiredData.selectedGrade", on-select="changeGrade($item)")
+					ui-select-match
+						span(ng-bind="$select.selected.name")
+					ui-select-choices(repeat="grade in (gradeList | filter: $select.search) track by $index")
+						span(ng-bind="grade.name")
+			
+			.form-group
+				label.form-label Supplier
+				ui-select.form-input(multiple sortable="true" ng-model="requiredData.supplier" close-on-select="false")
+					ui-select-match(placeholder="Pilih supplier dapat berupa multiple")
+						span(ng-bind="$item.name")
+					ui-select-choices(repeat="supplier in (suppliers | filter: $select.search) track by $index")
+						span(ng-bind="supplier.name")
+			
+			.form-group
+				label.form-label Kunci Stok?
+				input.form-check.m-left-15(type="checkbox", ng-model="requiredData.stock_lock")
+					
+	.flex-row.flex-justify-between
+		button.button.button--base.button--danger.m-right-15(type="button" ng-click="goBack()") 
+			i.fa.fa-chevron-left.icon.icon--small
+			| Kembali
+		button.button.button--base.button--primary(type="submit") 
+			i.fa.fa-floppy-o.icon.icon--regular
+			| Simpan

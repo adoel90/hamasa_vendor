@@ -1,0 +1,113 @@
+form.form.form--horizontal(ng-submit="saveChanges()")
+	.page_block
+		.row.pd-bottom-30
+			.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-30
+				.form-group
+					label.form-label(ng-if="page == 'so'") Tanggal SO
+					label.form-label(ng-if="page == 'quotation'") Tanggal Quotation
+					.input-group
+						datepicker(date-format="yyyy-MM-dd" date-set="{{requiredData.date}}")
+							input.form-input(type="text" ng-model="requiredData.date")
+				.form-group(ng-if="page == 'create so'")
+					label.form-label Pilih Kontrak
+					.input-group
+						input.form-input(type="text", ng-model="requiredData.contract_id", readonly)
+						button.button.button--base.button--primary(type="button", ng-click="openContractList()")
+							| Pilih Kontrak
+					small.clr-passive Dapat memilih kontrak dengan menekan 'Pilih Kontrak', dan daftar barang akan otomatis diperbarui menurut kontrak.
+				.form-group(ng-show="requiredData.contract_id")
+					label.form-label Sisa DP
+					input.form-input(type="text", ng-value="numberWithCommas(contractDetail.dp_remain)", readonly)
+				.form-group(ng-show="requiredData.contract_id")
+					label.form-label Sisa Tonase
+					input.form-input(type="text", ng-value="numberWithCommas(contractDetail.tonase_remain)", readonly)
+				.form-group
+					label.form-label Customer
+					ui-select(ng-model="selectedCustomer", on-select="changeCustomer($item)")
+						ui-select-match
+							span(ng-bind="$select.selected.name")
+						ui-select-choices(repeat="customer in (customerList | filter: $select.search) track by $index")
+							span(ng-bind="customer.name")
+								
+				.form-group
+					label.form-label NPWP Customer
+					input.form-input(type="text", ng-model="customerDetail.npwp", readonly)
+						
+				.form-group
+					label.form-label Alamat
+					textarea.form-input(rows="3", ng-model="customerDetail.address[0].address", readonly)
+						
+				.form-group
+					label.form-label Nomor Telepon
+					input.form-input(type="text", ng-model="customerDetail.phone[0].phone", readonly)
+			
+			.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-30
+				.form-group
+					label.form-label Jenis Pembayaran
+					ui-select(ng-model="selectedPaymentMethod", on-select="changePaymentMethod($item)")
+						ui-select-match
+							span(ng-bind="$select.selected.name")
+						ui-select-choices(repeat="paymentMethod in (paymentMethodList | filter: $select.search) track by $index")
+							span(ng-bind="paymentMethod.name")
+				
+				.form-group
+					label.form-label Pengambilan
+					ui-select(ng-model="selectedPickupMethod", on-select="changePickupMethod($item)")
+						ui-select-match
+							span(ng-bind="$select.selected.name")
+						ui-select-choices(repeat="pickupMethod in (pickupMethodList | filter: $select.search) track by $index")
+							span(ng-bind="pickupMethod.name")
+								
+				.form-group
+					label.form-label Lama Pembayaran
+					.input-group
+						input.form-input(type="text", ng-model="requiredData.due_date", placeholder="Masukkan lama pembayaran", required)
+						.input-group-extra
+							small.clr-passive.tt-uppercase.fw-medium hari
+				.form-group(ng-show="requiredData.contract_id")
+					label.form-label Potongan Uang Muka
+					input.form-input(type="text", ng-model="requiredData.sc_percent", placeholder="Masukkan potongan uang muka")
+								
+				.form-group(ng-if="requiredData.tipo_id")
+					label.form-label Nomor TIPO
+					input.form-input(type="text", ng-model="requiredData.tipo_id", readonly)
+
+					
+		.flex-row.flex-justify-between
+			button.button.button--base.button--danger(type="button", ng-click="goBack()")
+				i.fa.fa-chevron-left.icon.icon--small
+				| Kembali
+
+	.shrink-table(ng-show="requiredData.item.length")
+		table.table--striped
+			thead.thead--primary
+				tr
+					th(ng-repeat="heading in headings" width="{{ heading.width }}") {{ heading.name }}
+			tbody
+				tr(ng-repeat="item in requiredData.item")
+					td(width="15%") {{ item.category }}
+					td(width="25%") {{ item.name  }}
+					td(width="5%") {{ item.unit }}
+					td(width="15%") {{ item.warehouse ? item.warehouse : '-' }}
+					td(width="5%") {{ item.grade }}
+					td(width="10%")
+						input.form-input.align-center(type="text", ng-model="item.sell_price", placeholder="Harga Jual", currency-input, required)
+					td(width="10%")
+						input.form-input.align-center.qtyInput(type="text", ng-model="item.quantity",  placeholder="Qty", currency-input, required)
+					td(width="10%")
+						input.form-input.align-center(type="text", ng-model="item.note", placeholder="Keterangan")
+					td(width="auto")
+						.flex-column
+							button.small-button.button-tooltip(type="button" ng-click="deleteItem($index)")
+								i.fa.fa-trash.icon.icon--regular
+								span.tooltiptext Hapus
+								
+	.page_block
+		.form-button-group
+			.flex-row.flex-end
+				button.button.button--base.button--primary.m-right-15(type="button" show-sales-price pay-method="requiredData.pay_method" pickup="requiredData.pickup" contract-id="requiredData.contract_id")
+					i.fa.fa-plus.icon.icon--regular
+					| Tambah Barang
+				button.button.button--base.button--primary(type="submit" ng-show="requiredData.item.length")
+					i.icon.icon--regular.fa.fa-floppy-o
+					| Simpan

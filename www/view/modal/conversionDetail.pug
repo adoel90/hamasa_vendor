@@ -1,0 +1,49 @@
+.default-modal
+	.default-modal-heading
+		h5.modal-title Detail Konversi Barang
+		a.modal-close(ng-click="$dismiss()")
+			i.icon.icon--regular.fa.fa-times
+	.default-modal-content
+		.default-modal-block
+			form.form
+				.pd-bottom-15
+					h4 Informasi Gudang dan Barang
+				.row.pd-bottom-30
+					.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+						.form-group
+							label.form-label ID Gudang
+							input.form-input(type="text", ng-model="conversionDetail.item.warehouse.id", readonly)
+						.form-group
+							label.form-label Nama Gudang
+							input.form-input(type="text", ng-model="conversionDetail.item.warehouse.name", readonly)
+					.col-ld-6.col-md-6.col-sm-6.col-xs-12.pd-left-15
+						.form-group
+							label.form-label ID Barang
+							input.form-input(type="text", ng-model="conversionDetail.item.converting_item.ig_id", readonly)
+						.form-group
+							label.form-label Nama Barang
+							input.form-input(type="text", ng-model="conversionDetail.item.converting_item.name", readonly)
+						.form-group
+							label.form-label Grade
+							input.form-input(type="text", ng-model="conversionDetail.item.converting_item.grade", readonly)
+						.form-group
+							label.form-label Quantity
+							input.form-input(type="text", ng-model="conversionDetail.item.converting_item.quantity", readonly)
+
+		//- Stok Gudang
+		.default-modal-block
+			.table
+				.pd-bottom-15
+					h4 Hasil Konversi
+				p.clr-passive(ng-hide="conversionDetail.item.converting_result.length")
+				table(ng-show="conversionDetail.item.converting_result.length")
+					thead
+						tr
+							th(ng-repeat="heading in conversionDetail.headings", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+					tbody
+						tr(ng-repeat="item in conversionDetail.item.converting_result")
+							td {{ item.category.name }}
+							td {{ item.name }}
+							td {{ item.unit }}
+							td {{ item.grade }}
+							td {{ item.quantity }}

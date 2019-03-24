@@ -1,0 +1,61 @@
+form.form(ng-submit="saveMutation()")
+	.page_block
+		.row.pd-bottom-30
+			.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+				.form-group
+					label.form-label Gudang Asal
+					ui-select(ng-model="requiredData.from_data", on-select="changeWarehouse($item, 'from')")
+						ui-select-match
+							span(ng-bind="$select.selected.name")
+						ui-select-choices(repeat="warehouse in (warehouses | filter: $select.search) track by $index")
+							span(ng-bind="warehouse.name")
+			
+								
+			.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-15
+				.form-group
+					label.form-label Gudang Tujuan
+					ui-select(ng-model="requiredData.to_data", on-select="changeWarehouse($item, 'to')")
+						ui-select-match
+							span(ng-bind="$select.selected.name")
+						ui-select-choices(repeat="warehouse in (warehouses | filter: $select.search) track by $index")
+							span(ng-bind="warehouse.name")
+				
+		.flex-row.flex-justify-between
+			.pd-right-15
+				button.button.button--base.button--danger(type="button" ng-click="goBack()") 
+					i.fa.fa-chevron-left.icon.icon--small
+					| Kembali
+			button.button.button--base.button--primary(type="button" ng-click="openItemList()")
+				i.icon.icon--regular.fa.fa-plus
+				| Tambah Barang
+				
+	.table(ng-show="selectedItems.items.length")
+		table.table--striped
+			thead.thead--primary
+				tr
+					th(ng-repeat="heading in selectedItems.headings", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+			tbody
+				tr(ng-repeat="item in selectedItems.items | filter: searchFilter.value", ng-if="selectedItems.items")
+					td {{item.serial}}
+					td {{item.category.name}}
+					td {{item.name}}
+					td {{item.unit}}
+					td {{item.grade}}
+					td {{item.plan}}
+					td
+						input.form-input.ta-center(type="number", placeholder="Masukkan jumlah", ng-model="item.quantity" required)
+					td
+						button.button.button--small.button--danger.button--stick(type="button" ng-click="deleteItem(selectedItems.items, $index)")
+							i.fa.fa-trash.icon.icon--small
+							| Hapus
+							
+	.page_block(ng-show="selectedItems.items.length")
+		.flex-row.flex-end
+			button.button.button--base.button--success(type="button", ng-disabled="selectedItems.items.length < 1")
+				i.fa.fa-print.icon.icon--large
+				| Print
+			.pd-left-15
+				button.button.button--base.button--success(type="submit", ng-disabled="selectedItems.items.length < 1")
+					i.fa.fa-floppy-o.icon.icon--large
+					| Simpan
+				

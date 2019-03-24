@@ -1,0 +1,10 @@
+.form-group
+  label.form-label Pembayaran Dari
+  input.form-input(type="text", ng-model="requiredData.from", placeholder="Masukkan pembayaran dari", required)
+.form-group
+  label.form-label Tanggal
+  datepicker(date-format="yyyy-MM-dd", selector="form-input")
+    .input-group(ng-click="showCalendar()")
+      input.form-input(type="text", ng-model="requiredData.date", placeholder="Masukkan tanggal kas masuk", required)
+      .input-group-extra
+        i.icon.icon--regular.fa.fa-calendar.clr-passive

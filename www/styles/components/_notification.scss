@@ -1,0 +1,62 @@
+.notification{
+  display: none;
+  position: absolute;
+  top: 35px;
+  right: 0px;
+  color: black;
+  background-color: #F5F5F5;
+  width: 400px;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 5px 5px 5px #9E9E9E;
+
+  li a{
+    display: block;
+    padding: 15px;
+    border-bottom: 1px solid #FAFAFA;
+
+    p{
+      font-size: 12px;
+    }
+
+    &.new-notif{
+      background-color: #E0E0E0;
+    }
+
+    &.notification-header{
+      color: #212121;
+      font-weight: 500;
+    }
+
+    &.show_all{
+      display: block;
+      padding: 5px;
+      text-align: center;
+      color: black;
+      font-size: 12px;
+    }
+
+    &.show_all:hover{
+      text-decoration: underline solid black;
+    }
+    &:hover:not(.notification-header){
+
+    }
+  }
+}
+.show-notification{
+  display: block;
+}
+
+#notif-scroll::-webkit-scrollbar
+{
+	width: 9px;
+	background-color: #F5F5F5;
+}
+
+#notif-scroll::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #757575;
+}

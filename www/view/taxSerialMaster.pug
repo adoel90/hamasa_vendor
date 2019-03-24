@@ -1,0 +1,69 @@
+include ./global/head.pug
+include ./parts/sidenav.pug
+main.main
+	include ./parts/main-header.pug
+	include ./parts/main-subheader.pug
+
+	.main_content(ng-cloak)
+		.page_header
+			h2 Master Nomor Seri Pajak
+		.page_content
+			.page_block.flex-end
+				button.button.button--base.button--secondary(ng-click="exportToExcel()") Export
+			.page_block
+				form.form(ng-submit="createNewTaxSerial()")
+					.row.pd-bottom-30
+						.pd-bottom-15
+							h4 Buat Nomor Seri Pajak Baru
+						.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+							.form-group
+								label.form-label Tanggal Mulai Seri
+								datepicker(date-format="yyyy-MM-dd", selector="form-input")
+									.input-group(ng-click="showCalendar()")
+										input.form-input(type="text", placeholder="Masukkan tanggal mulai seri", ng-model="taxSerialMaster.create.requiredData.start_date")
+										.input-group-extra
+											i.fa.fa-calendar.icon.icon--regular.clr-passive
+							.form-group
+								label.form-label Tanggal Berakhir Seri
+								datepicker.datepicker--top(date-format="yyyy-MM-dd", selector="form-input")
+									.input-group(ng-click="showCalendar()")
+										input.form-input(type="text", placeholder="Masukkan tanggal akhir seri" ng-model="taxSerialMaster.create.requiredData.end_date")
+										.input-group-extra
+											i.fa.fa-calendar.icon.icon--regular.clr-passive
+									
+						.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-15
+							.form-group
+								label.form-label Seri Awal
+								input.form-input(type="text", placeholder="Masukkan seri awal" ng-model="taxSerialMaster.create.requiredData.serial_start")
+							.form-group
+								label.form-label Seri Berakhir
+								input.form-input(type="text", placeholder="Masukkan seri akhir" ng-model="taxSerialMaster.create.requiredData.serial_end")
+						
+					.flex-row.flex-justify-between
+						.pd-right-15
+							button.button.button--base.button--danger(ng-click="goBack()")
+								i.fa.fa-chevron-left.icon.icon--small
+								| Kembali
+						button.button.button--base.button--secondary
+							i.fa.fa-floppy-o.icon.icon--regular
+							| Simpan
+						
+			.table
+				table.table--striped.table--hoverable
+					thead.thead--primary
+						tr
+							th(ng-repeat="heading in taxSerialMaster.headings") {{heading.name}}
+					tbody
+						tr(ng-repeat="item in taxSerialMaster.data track by $index")
+							td {{item.start_date}}
+							td {{item.end_date}}
+							td {{item.start}}
+							td {{item.end}}
+							td
+								.flex-row.flex-align-center
+									button.button.button--small.button--success.button--stick(ng-click="deleteTax(item.id)")
+										i.fa.fa-pencil.icon.icon--small
+										| Delete
+									
+			.ta-center
+				pagination(data="taxSerialMaster.data", total-rows="taxSerialMaster.row")

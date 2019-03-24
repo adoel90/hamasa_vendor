@@ -1,0 +1,23 @@
+.default-modal
+	form.form.form--horizontal(ng-submit="saveStock()")
+		.default-modal-heading
+			h5.modal-title Pengaturan Stok
+			a.modal-close(ng-click="$dismiss()")
+				.icon.icon--large.fa.fa-times
+		.default-modal-content.pd-bottom-15
+			.form-input-group
+				.textfield.textfield--primary(ng-repeat="fields in listFields")
+					label.textfield-label.col-md-4.col-sm-4.col-xs-4 {{ fields.name}}
+					input(type="text", name="id", ng-model="fields.value" placeholder="{{fields.name}}" readonly)
+				.textfield.textfield--primary
+					label.textfield-label.col-md-4.col-sm-4.col-xs-4 Qty Plus Minus
+					input(type="text", ng-model="selectedItem.stock_actual" placeholder="Stok Aktual", required)
+				.textarea.textarea--primary
+					label.textarea-label.col-md-4.col-sm-4.col-xs-4 Keterangan Ubah
+					textarea(ng-model="selectedItem.reason", required)
+			
+		.default-modal-footer
+			.flex-row.flex-end
+				button.button.button--base.button--success
+					i.icon.icon--regular.fa.fa-floppy-o
+					| Simpan

@@ -1,0 +1,93 @@
+.default-modal
+	.default-modal-heading
+		h5.modal-title Detail Customer
+		a.modal-close(ng-click="$dismiss()")
+			i.icon.icon--regular.fa.fa-times
+	.default-modal-content
+		.default-modal-block
+			form.form
+				.row.pd-bottom-30
+					.col-lg-6.col-md-6.col-sm-6.pd-right-15
+						.form-group
+							label.form-label ID Customer
+							input.form-input(type="text", ng-model="customerDetail.id", placeholder="ID Customer", readonly)
+						.form-group
+							label.form-label Nama Customer
+							input.form-input(type="text", ng-model="customerDetail.name", placeholder="Nama Customer", readonly)
+						.form-group
+							label.form-label Jenis Customer
+							input.form-input(type="text", ng-model="customerDetail.type", placeholder="Jenis Customer", readonly)
+						.form-group
+							label.form-label NPWP Customer
+							input.form-input(type="text", ng-model="customerDetail.npwp", placeholder="NPWP Customer", readonly)
+						.form-group
+							label.form-label No Fax Customer
+							input.form-input(type="text", ng-model="customerDetail.fax", placeholder="No Fax Customer", readonly)
+						.form-group
+							label.form-label ID Induk Customer
+							input.form-input(type="text", ng-model="customerDetail.parent.id", placeholder="ID Induk Customer", readonly)
+						.form-group
+							label.form-label Nama Induk Customer
+							input.form-input(type="text", ng-model="customerDetail.parent.name", placeholder="Nama Induk Customer", readonly)
+								
+					.col-lg-6.col-md-6.col-sm-6.pd-left-15
+						.form-grup(ng-show="customerDetail.saldo > 0")
+							label.form-label Saldo
+							input.form-input(type="text", ng-value="numberWithCommas(customerDetail.saldo)", placeholder="Saldo", readonly)
+						.form-group
+							label.form-label Status Kredit
+							br
+							input.form-check(type="checkbox", ng-model="customerDetail.credit.status", placeholder="Status Kredit", disabled)
+						.form-group
+							label.form-label Customer	Region
+							input.form-input(type="text", ng-model="customerDetail.region", placeholder="Customer Region", readonly)
+								
+						.form-group
+							label.form-label Batas Kredit
+							input.form-input(type="text", ng-model="customerDetail.credit.limit", placeholder="Batas Kredit", readonly)
+								
+						.form-group
+							label.form-label Hari Penagihan
+							input.form-input(type="text" ng-show="!customerDetail.credit.charge_day", placeholder="Hari Penagihan", readonly)
+							ul
+								li(ng-repeat="charge_day in customerDetail.credit.charge_day" style="display: block; padding: 15px; border: 1px solid #E0E0E0;") {{charge_day | uppercase }}
+								
+						.form-group
+							label.form-label Hari Pembayaran
+							input.form-input(type="text" ng-show="!customerDetail.credit.pay_day", placeholder="Hari Pembayaran", readonly)
+							ul
+								li(ng-repeat="pay_day in customerDetail.credit.pay_day" style="display: block; padding: 15px; border: 1px solid #E0E0E0;") {{pay_day | uppercase}}
+								
+						.form-group(ng-show="purpose == 'Approval for Customer Credit' && financeAuthStatus == 0")
+							button.button.button--base.button--primary(ng-click="redirectTo('/authorization/financeauth/customerauthorization/' +customerDetail.id )") Edit
+		.default-modal-block
+			.table.pd-bottom-15
+				.pd-bottom-15
+					h4 Alamat Customer
+				table.table--striped
+					thead.thead--primary
+						tr
+							th(ng-repeat="heading in address.headings", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+					tbody
+						tr(ng-repeat="item in customerDetail.address")
+							td {{ item.address }}
+							td {{ item.province != null ? item.province.name : '' }}	
+							td {{ item.city != null ? item.city.name : '' }}
+							td {{ item.district != null ? item.district.name : ''}}
+							td {{ item.urban != null ? item.urban.name : '' }}
+							td {{ item.postal_code }}
+			.table
+				.pd-bottom-15
+					h4 No Telepon Customer
+				table.table--striped
+					thead.thead--primary
+						tr
+							th(ng-repeat="heading in contact.headings", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+					tbody
+						tr(ng-repeat="item in customerDetail.phone")
+							td {{ item.phone }}
+							td {{ item.contact_person }}
+							
+			.flex-row.flex-end(ng-show="purpose == 'Approval for Customer Credit' && financeAuthStatus == 0")
+				button.pd-right-15.button.button--base.button--secondary.m-right-15(ng-click="acceptCustomerCreditStatus()") Accept
+				button.button.button--base.button--danger(ng-click="rejectCustomerCreditStatus()") Reject

@@ -1,0 +1,50 @@
+include ./global/head.pug
+include ./parts/sidenav.pug
+main.main
+   include ./parts/main-header.pug
+   include ./parts/main-subheader.pug
+   
+   .main_content(ng-cloak)
+      .page_header
+         h2(role="page-title") Buat Surat Perintah Kerja
+      .page_content
+         include ./parts/spkForm.pug
+         form.form.form--horizontal(ng-submit="save()")      
+            .table(ng-show="spkData.item.length > 0")
+               .table-wrapper
+                  table
+                     thead
+                        tr
+                           th(ng-repeat="heading in headings", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+                     tbody
+                        tr(ng-repeat="item in spkData.item")
+                           td
+                             .form-button-group
+                               .textfield.textfield--primary
+                                 input.align-center(type="text", ng-model="item.category")
+                           td
+                             .form-button-group
+                               .textfield.textfield--primary
+                                 input.align-center(type="text", ng-model="item.name")
+                           td
+                              .form-button-group
+                                 .textfield.textfield--primary
+                                    input.align-center(type="text", ng-model="item.description")
+                           td
+                              .form-button-group
+                                 .textfield.textfield--primary
+                                    input.align-center(type="numb", ng-model="item.quantity", required)
+                           td.flex-align-center
+                              .form-button-group
+                                 button.button.button--base.button--primary(type="button" ng-click="deleteItem($index)")
+                                    i.icon.icon--regular.fa.fa-trash
+                                    | Hapus
+                              
+            .page_block.flex-row.flex-end(ng-show="spkData.item.length > 0")
+               .form-button-group
+                  button.button.button--base.button--success(type="submit") 
+                     i.icon.icon--large.fa.fa-floppy-o
+                     | Simpan
+                        
+                  
+            

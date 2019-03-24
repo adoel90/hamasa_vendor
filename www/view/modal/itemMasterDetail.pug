@@ -1,0 +1,87 @@
+.default-modal
+	.default-modal-heading
+		h5.modal-title Detail Master Barang
+		a.modal-close(ng-click="$dismiss()")
+			i.icon.icon--regular.fa.fa-times
+	.default-modal-content
+		.default-modal-block
+			form.form.form--horizontal
+				.row
+					.pd-bottom-15
+						h4.form-title Informasi Barang
+					.col-lg-6.col-md-6.col-sm-12.col-xs-12.pd-right-15
+						.form-group
+							label.form-label Kode Barang
+							input.form-input(type="text", name="serial-number", placeholder="Kode Barang", ng-model="itemDetail.id", readonly)
+						.form-group
+							label.form-label Nomor Seri
+							input.form-input(type="text", name="serial-number", placeholder="Nomor Seri Barang", ng-model="itemDetail.serial", readonly)
+						.form-group
+							label.form-label Merek
+							input.form-input(type="text", name="brand", placeholder="Merek Barang", ng-model="itemDetail.brand" readonly)
+						.form-group
+							label.form-label Nama Barang	
+							input.form-input(type="text", name="item-name", placeholder="Item Name", ng-model="itemDetail.name" readonly)
+						.form-group
+							label.form-label Kode Kategori	
+							input.form-input(type="text", name="category-id", placeholder="ID Kategori", ng-model="itemDetail.category.id" readonly)
+						.form-group
+							label.form-label Kategori	
+							input.form-input(type="text", name="category", placeholder="Kategori Barang", ng-model="itemDetail.category.name" readonly)
+						.form-group
+							label.form-label Golongan
+							input.form-input(type="text", name="group", placeholder="Golongan Barang", ng-model="itemDetail.group" readonly)
+					.col-lg-6.col-md-6.col-sm-12.col-xs-12.pd-left-15
+						.form-group
+							label.form-label Satuan
+							input.form-input(type="text", name="unit", placeholder="Satuan Barang", ng-model="itemDetail.unit" readonly)
+						.form-group
+							label.form-label Berat
+							input.form-input(type="text", name="weight", placeholder="Berat Barang", ng-model="itemDetail.weight" readonly)
+						.form-group
+							label.form-label Grade
+							input.form-input(type="text", name="grade", placeholder="Grade Barang", ng-model="itemDetail.grade" readonly)
+						.form-group(ng-show="itemDetail.supplier")
+							label.form-label Supplier
+							ul
+								li(ng-repeat="supp in itemDetail.supplier" style="display: block; padding: 15px; border: 1px solid #E0E0E0;") {{supp.name}}
+						.form-group.flex-column
+							label.form-label.m-right-15 LOCK STOCK
+							input.checkbox(type="checkbox" ng-model="itemDetail.stock_lock")
+						.flex-row.flex-end
+							button.button.button--base.button--success.m-right-15(ng-click="redirectTo('/inventory/itemmaster/edititem/' + itemDetail.ig_id)")
+								i.icon.icon--large.fa.fa-pencil
+								| Ubah
+							button.button.button--base.button--danger(ng-click="deleteItem()")
+								i.icon.icon--large.fa.fa-trash
+								| Hapus
+								
+		.table
+			.pd-bottom-15
+				h4 Stok Gudang
+			.table-wrapper
+				table
+					thead
+						tr
+							th(ng-repeat="heading in itemDetail.headings.warehouse", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+					tbody
+						tr(ng-repeat="item in itemDetail.stock")
+							td {{ item.warehouse.name }}
+							td {{ item.warehouse.plan }}
+							td {{ item.warehouse.actual }}
+							td {{ item.warehouse.maximum }}
+							td {{ item.warehouse.minimum }}
+							
+		.table
+			.pd-bottom-15
+				h4 Stok Opname Terakhir
+			.table-wrapper
+				table
+					thead
+						tr
+							th(ng-repeat="heading in itemDetail.headings.opname", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+					tbody
+						tr(ng-repeat="item in itemDetail.opname")
+							td {{ item.warehouse.name }}
+							td {{ item.warehouse.date }}
+							td {{ item.warehouse.detail }}

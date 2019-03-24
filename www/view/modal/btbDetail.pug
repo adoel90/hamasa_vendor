@@ -1,0 +1,50 @@
+.default-modal
+	.default-modal-heading
+		h5.modal-title Detail Bukti Terima Barang
+		a.modal-close(ng-click="$dismiss()")
+			i.icon.icon--regular.fa.fa-close
+
+	.default-modal-content
+		form.form.form--primary.form--horizontal
+			.pd-bottom-15
+				h4.form-title Informasi BTB
+			.row.pd-bottom-30
+				.col-md-6.col-sm-6.pd-right-15
+					.form-group
+						label.form-label Nomor BTB
+						input.form-input(type="text", name="id", placeholder="Nomor BTB", ng-model="btbDetail.data.id", readonly)
+					.form-group
+						label.form-label Tanggal Pengiriman
+						input.form-input(type="text", name="date", placeholder="Tanggal Pengiriman", ng-model="btbDetail.data.date", readonly)
+					.form-group
+						label.form-label Jenis Pengiriman
+						input.form-input(type="text", name="type", placeholder="Jenis Pengiriman", ng-model="btbDetail.data.type.name", readonly)
+					.form-group
+						label.form-label Nomor Dokumen
+						input.form-input(type="text", name="document-id", placeholder="Nomor Dokumen", ng-model="btbDetail.data.type.no", readonly)
+
+				.col-md-6.col-sm-6.pd-left-15
+					.form-input-group
+						.form-group
+							label.form-label Nomor Kendaraan
+							input.form-input(type="text", name="id", placeholder="Nomor Kendaraan", ng-model="btbDetail.data.transport.number", readonly)
+						.form-group
+							label.form-label Nama Pengemudi
+							input.form-input(type="text", name="date", placeholder="Pengemudi", ng-model="btbDetail.data.transport.driver", readonly)
+						.form-group
+							label.form-label Asal Pengiriman
+							input.form-input(type="text", name="type", placeholder="Asal Pengiriman", ng-model="btbDetail.data.from", readonly)
+						.form-group
+							label.form-label Nomor Surat Jalan
+							input.form-input(type="text", name="document-id", placeholder="Nomor Surat Jalan", ng-model="btbDetail.data.order_id", readonly)
+								
+		.pd-bottom-15
+			h4 Daftar Barang
+		p.clr-passive(ng-if="!btbDetail.data.item") Tidak ada barang yang dikirim.
+		table-content(table-header="btbDetail.headings" table-body="btbDetail.data.item" table-column="btbDetail.column" type="'table-with-price'")
+		
+	.default-modal-footer
+		.flex-row.flex-end
+			button.button.button--base.button--success(ng-click="printBtb(btbDetail.data.id)")
+				i.fa.fa-print.icon.icon--large
+				| Cetak

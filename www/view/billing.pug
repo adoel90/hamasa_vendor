@@ -1,0 +1,50 @@
+include ./global/head.pug
+include ./parts/sidenav.pug
+main.main
+	include ./parts/main-header.pug
+	include ./parts/main-subheader.pug
+
+	.main_content(ng-cloak)
+		.page_header
+			h2= page.title
+		.page_content
+			.page_block
+				.row.flex-end
+					button.button.button--base.button--secondary(ng-click="exportToExcel()") Export
+				.row
+					include ./parts/billingFilter.pug
+			.shrink-table
+				table.table--striped
+					thead.thead--primary
+						tr
+							th(ng-repeat="heading in billing.headings", rowspan="{{heading.rowspan}}" colspan="{{heading.colspan}}" ng-bind="heading.name")
+						tr
+							th(ng-repeat="heading in billing.subheadings", rowspan="{{heading.rowspan}}" colspan="{{heading.colspan}}" ng-bind="heading.name")
+					tbody
+						tr(ng-repeat="item in billing.billingList")
+							td {{ item.c_name }}
+							td
+								p.m-bottom-15(ng-repeat="invoice in item.invoice") {{ invoice.id}}
+							td
+								p.m-bottom-15(ng-repeat="invoice in item.invoice") {{ invoice.total }}
+							td
+								p.m-bottom-15(ng-repeat="invoice in item.invoice") {{ invoice.due_date }}
+							td {{ item.note }}
+							td
+								p.m-bottom-15(ng-repeat="invoice in item.payment") {{ invoice.method.name }}
+							td
+								p.m-bottom-15(ng-repeat="invoice in item.payment") {{ invoice.proof }}
+							td
+								p.m-bottom-15(ng-repeat="invoice in item.payment") {{ invoice.due_date }}
+							td
+								p.m-bottom-15(ng-repeat="invoice in item.payment") {{ invoice.total }}
+							td
+								p.m-bottom-15(ng-repeat="invoice in item.invoice")
+									button(style="color: #EA482E;" type="button", ng-click="openBillingDetail(invoice.id)")
+										i.fa.fa-pencil.icon.icon--small
+										
+			.page_block
+				.flex-row.flex-end
+					button.button.button--base.button--secondary(type="button" ng-click="doPrint()")
+						i.fa.fa-print.icon.icon--regular
+						| Print

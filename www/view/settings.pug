@@ -1,0 +1,30 @@
+include ./global/head.pug
+include ./parts/sidenav.pug
+main.main
+  include ./parts/main-header.pug
+  include ./parts/main-subheader.pug
+
+  .main_content(ng-cloak)
+    .page_header
+      h2(role="page-title") Settings
+    .page_content
+      form.form.form--horizontal(ng-submit="saveChanges()")
+        .page_block
+          .form-input-group
+            .row.pd-bottom-30
+              .col-lg-6.col-md-6.pd-right-15
+                .form-group
+                  label.form-label Full Name
+                  input.form-input(type="text", ng-model="settingsData.fullname", placeholder="Masukkan nama lengkap Anda", required)
+              .col-lg-6.col-md-6.pd-left-15
+                .form-group
+                  label.form-label New Password
+                  input.form-input(type="password", ng-model="settingsData.password", placeholder="Masukkan nama lengkap Anda", required)
+                .form-group
+                  label.form-label Confirm Password
+                  input.form-input(type="password", ng-model="settingsData.confPassword", placeholder="Masukkan nama lengkap Anda", required)
+                
+                .flex-row.flex-end
+                  button.button.button--large.button--primary(type="submit")
+                    i.fa.fa-floppy-o.icon.icon--regular
+                    | Simpan

@@ -1,0 +1,51 @@
+form.form(ng-submit="save()")
+    .page_block
+        .row
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+                .form-group
+                    label.form-label Tanggal PO
+                    .input-group
+                        datepicker(date-format="yyyy-MM-dd" date-set="{{requiredData.date}}")
+                            input.form-input(type="text" placeholder="Tanggal PO" ng-model="requiredData.date")
+                .form-group
+                    label.form-label Nomor SO
+                    input.form-input(type="text", placeholder="Nomor SO", ng-model="requiredData.so_id", readonly)
+                .form-group
+                    label.form-label Supplier
+                    ui-select(ng-model="requiredData.selectedSupplier", style="margin-right: 15px", on-select="changeSupplier($item)")
+                        ui-select-match
+                            span(ng-bind="$select.selected.name")
+                        ui-select-choices(repeat="supplier in (supplierList | filter: $select.search) track by $index")
+                            span(ng-bind="supplier.name")
+                    
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+                .form-group
+                    label.form-label Nama Customer
+                    input.form-input(type="text", ng-model="customerData.name", placeholder="Nama Customer", readonly)
+                .form-group
+                    label.form-label NPWP Customer
+                    input.form-input(type="text", ng-model="customerData.npwp", placeholder="NPWP Customer", readonly)
+                .form-group
+                    label.form-label Alamat Customer
+                    input.form-input(type="text", ng-model="customerData.address", placeholder="Alamat Customer", readonly)
+
+    .shrink-table(ng-show="requiredData.item.length > 0")
+        table
+            thead.thead--primary
+                tr
+                    th(ng-repeat="heading in headings" width="{{ heading.width }}") {{ heading.name }}
+            tbody
+                tr(ng-repeat="item in requiredData.item")
+                    td(ng-repeat="col in cols") {{ col.type == 'number' ? (item[col.name] | number: fractionSize) : item[col.name] }}
+
+    .page_block.m-top-15
+        .flex-row.flex-end
+            button.button.button--base.button--primary(type="submit") 
+                i.fa.fa-floppy-o.icon.icon--regular
+                | Simpan
+                
+
+
+                
+
+

@@ -1,0 +1,36 @@
+.alert {
+	@include relative;
+	@include margin(0);
+	@include padding(30px);
+	background-color: $clr-primary-light;
+	text-align: center;
+
+	.alert-header {
+		@include flexbox;
+		@include flex-direction(column);
+		@include align-items(center);
+		@include padding(20px 0 0 0);
+	}
+
+	.alert-content {
+		@include flexbox;
+		@include flex-direction(column);
+		@include align-items(center);
+		@include padding(40px 0);
+
+		.alert-title {
+			@include padding(15px 0);
+			text-transform: uppercase;
+			letter-spacing: 4px;
+		}
+	}
+
+	.alert-footer {
+		@include flexbox;
+		text-align: center;
+
+		> *:not(:last-child) {
+			@include margin-stack(right 10px);
+		}
+	}
+}

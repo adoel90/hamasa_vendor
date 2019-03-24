@@ -1,0 +1,106 @@
+//------------------------------------------------------------------------
+//
+//	##	T Y P O G R A P H Y . S C S S
+//
+//		Contains all base stylesheet to typography rules used throughout
+//		the project.
+//
+//------------------------------------------------------------------------
+//	#	Base
+//------------------------------------------------------------------------
+html,
+body {
+	font-family: $ff-primary;
+}
+
+//------------------------------------------------------------------------
+//	#	Headings
+//------------------------------------------------------------------------
+h1, h2,
+h3, h4,
+h5, h6, p {
+	@include margin(0);
+	@include padding(0);
+}
+
+//---------------------------------------------
+//	Text Transform
+//	Transform text in components with text capitalization classes.
+//
+h1 	{ @include font($fs-h1, $fw-semibold, $lh-base); }
+h2 	{ @include font($fs-h2, $fw-semibold, $lh-base); }
+h3 	{ @include font($fs-h3, $fw-semibold, $lh-base); }
+h4 	{ @include font($fs-h4, $fw-semibold, $lh-base); }
+h5 	{ @include font($fs-h5, $fw-semibold, $lh-base); }
+h6 	{ @include font($fs-h6, $fw-semibold, $lh-base); }
+p 	{ @include font($fs-base, $fw-regular, $lh-base); }
+
+//---------------------------------------------
+//	@name	Text Transform
+//	@abbTransform text in components with text capitalization classes.
+//
+.tt-uppercase {
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+
+//---------------------------------------------
+//	@name	Font Weight
+//	@abbr	.fw-*
+//	@desc	Quickly change the weight (boldness) of text.
+//
+.fw-regular 	{ @include font-weight(regular); }
+.fw-medium 		{ @include font-weight(medium); }
+.fw-semibold 	{ @include font-weight(semi-bold); }
+.fw-bold 		{ @include font-weight(bold); }
+
+//-------------------------------------------------------------------
+//	@name	Text Alignment
+//	@abbr	.ta-*
+//	@desc	Easily realign text to components with text alignment
+//			classes.
+//
+.ta-left 	{ text-align: left; }
+.ta-center 	{ text-align: center; }
+.ta-right 	{ text-align: right; }
+.ta-justify { text-align: jutsify; }
+
+
+//------------------------------------------------------------------------
+//	#	Descriptive List
+//------------------------------------------------------------------------
+dt {
+	@include font-weight(semi-bold);
+}
+
+
+dd {
+	@include margin-stack(bottom 15px);
+}
+
+//------------------------------------------------------------------------
+//	#	Links
+//------------------------------------------------------------------------
+a {
+	@include appearance(none);
+	cursor: pointer;
+	color: inherit;
+
+	&:hover {
+		text-decoration: none;
+		color: inherit;
+	}
+}
+
+
+//
+small {
+	font-size: 90%;
+}
+.font-size-20{
+	font-size: 20px;
+}
+
+.font-size-30{
+	font-size: 30px;
+}

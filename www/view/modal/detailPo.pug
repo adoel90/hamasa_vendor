@@ -1,0 +1,60 @@
+.default-modal
+   .default-modal-heading
+      h5.modal-title Detail PO
+      a.modal-close(ng-click="$dismiss()")
+         i.icon.icon--regular.fa.fa-times
+   .default-modal-content
+      .default-modal-block.pd-bottom-30
+         form.form.form--horizontal
+            h4.pd-bottom-15 Detail PO
+            .row.pd-bottom-15
+               .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+                  .form-group
+                     label.form-label Nomor PO
+                     input.form-input(type="text", ng-model="detailPo.data.id", readonly)
+                  .form-group
+                     label.form-label Tanggal PO
+                     input.form-input(type="text", ng-model="detailPo.data.date", readonly)
+                  .form-group
+                     label.form-label ID Gudang
+                     input.form-input(type="text", ng-model="detailPo.data.warehouse.id", readonly)
+                  .form-group
+                     label.form-label Gudang
+                     input.form-input(type="text", ng-model="detailPo.data.warehouse.name", readonly)
+               .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-15
+                  .form-group
+                     label.form-label ID Supplier
+                     input.form-input(type="text", ng-model="detailPo.data.supplier.id", readonly)
+                  .form-group
+                     label.form-label Supplier
+                     input.form-input(type="text", ng-model="detailPo.data.supplier.name", readonly)   
+                  .form-group
+                     label.form-label Alamat
+                     input.form-input(type="text", ng-model="detailPo.data.supplier.address", readonly)   
+                  .form-group
+                     label.form-label No Telepon
+                     input.form-input(type="text", ng-model="detailPo.data.supplier.phone", readonly)   
+                  .form-group
+                     label.form-label Contact Person
+                     input.form-input(type="text", ng-model="detailPo.data.supplier.contact_person", readonly)
+      .default-modal-block.pd-top-30
+         .table
+            table.table--striped
+               thead.thead--primary
+                  tr
+                     th(ng-repeat="heading in detailPo.headings", ng-class="{ 'small': heading.size == 'sm' }") {{ heading.name }}
+               tbody
+                  tr(ng-repeat="poItem in detailPo.data.item")
+                     td {{poItem.category.name}}
+                     td {{poItem.name}}
+                     td {{poItem.unit}}
+                     td {{poItem.grade}}
+                     td {{ poItem.quantity | number : fractionSize }}
+                     td {{ poItem.outstanding | number : fractionSize }}
+                     td {{ poItem.price | number : fractionSize }}
+   .default-modal-footer
+     .flex-row.flex-end
+       button.button.button--base.button--danger.m-right-15(ng-click="cancelPo(detailPo.data.id)" ng-show="detailPo.data.status.code !== -1" ng-hide=" (detailPo.data.status.code === 2 || detailPo.data.status.code === -1) && (detailPo.data.type.code === 0 || detailPo.data.type.code === 1)") Batal PO
+       button.button.button--base.button--secondary(ng-click="printPo(detailPo.data.id)")
+         i.icon.icon--large.fa.fa-print
+         | Print         

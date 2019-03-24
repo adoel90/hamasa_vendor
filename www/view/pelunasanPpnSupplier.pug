@@ -1,0 +1,50 @@
+include ./global/head.pug
+include ./parts/sidenav.pug
+main.main
+    include ./parts/main-header.pug
+    include ./parts/main-subheader.pug
+
+    .main_content(ng-cloak)
+        .page_header
+            h2(role="page-title")= page.title
+        .page_content
+            .page_block
+                form.form
+                    .row.flex-end
+                        button.button.button--base.button--secondary(ng-click="exportToExcel()") EXPORT
+                    .form-group
+                        .flex-justify-between
+                            label.form-label Cari Berdasarkan
+                        .row.m-top-15
+                            .col-lg-2.col-md-2.col-sm-2.col-xs-12
+                                label.form-label.m-right-15 Supplier
+                            .col-lg-5.col-md-5.col-sm-5.col-xs-12
+                                ui-select(ng-model="requiredData.selectedSupplier", on-select="changeSupplier($item)")
+                                    ui-select-match
+                                        span(ng-bind="$select.selected.name")
+                                    ui-select-choices(repeat="supplier in (supplierList | filter: $select.search) track by $index")
+                                        span(ng-bind="supplier.name")
+                            .col-lg-3.col-md-3.col-sm-3.col-xs-12
+                                button.button.button--secondary.button--base(ng-click="viewSupplierInvoice()") Cari
+            .shrink-table(ng-show="invoiceList.length > 0")
+                table.table--striped.table--hoverable
+                    thead.thead--primary
+                        tr
+                            th(ng-repeat="header in headings") {{header.name}}
+                    tbody
+                        tr(ng-repeat="data in invoiceList")
+                            td {{ data.id }}
+                            td {{ data.dpp | number: fractionSize }}
+                            td {{ data.ppn | number: fractionSize }}
+                            td {{ data.invpo_total | number: fractionSize }}
+                            td {{ data.total | number: fractionSize }}
+                            td
+                                .form-input-group
+                                    .textfield.textfield--primary
+                                        input.align-center(type="text", ng-model="data.paid")
+                            td
+                                .form-input-group
+                                    .textfield.textfield--primary
+                                        input.align-center(type="text", ng-model="data.keterangan")
+                            td
+                                button.button.button--small.button--danger.button--stick(ng-click="saveDataPo(data)") Lunaskan

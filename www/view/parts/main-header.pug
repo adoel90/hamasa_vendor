@@ -1,0 +1,18 @@
+header.main-header
+	.main-header_container(style="padding: 0;")
+		.col-lg-9.flex-align-item-center
+			a.icon.icon--base.fa.fa-bars.pd-5(role="menu-icon", main-menu, ng-click="menuAction()")
+			h5(role="master-logo") PT. MASAKWARTA SEJATI
+		.col-lg-3.flex-row.flex-end
+			div(style="position: relative;")
+				button(role="menu-icon" class="fa fa-bell" style="position: relative;" ng-click="showNotification()" ng-cloak)
+					div.badge-custom(ng-show="totalNotification > 0") {{totalNotification}}
+				ul(class="notification" id="notif-scroll")
+					li
+						a.notification-header Notifications
+					li
+						a(ng-repeat="notif in notificationList" ng-class="{'new-notif' : notif.read == 0}") {{notif.name}}
+							p {{notif.date}}
+					li(ng-show="reachEndOfData == false")
+						a.show_all(ng-click="loadMoreNotifications()") Show all
+								

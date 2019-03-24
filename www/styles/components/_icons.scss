@@ -1,0 +1,26 @@
+.icon {
+	&.icon--regular {
+		@include font($icon-base, $fw-regular, $lh-base);
+	}
+
+	&.icon--large {
+		@include font($icon-large, $fw-regular, $lh-base);
+	}
+
+	&.icon--titan {
+		@include font($icon-titan, $fw-regular, $lh-base);
+	}
+
+	&.icon--colossal {
+		@include font($icon-colossal, $fw-regular, $lh-base);
+	}
+
+	//
+	&.icon--success {
+		color: $clr-secondary;
+	}
+
+	&.icon--danger {
+		color: $clr-primary-danger;
+	}
+}

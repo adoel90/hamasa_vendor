@@ -1,0 +1,63 @@
+form.form.form--horizontal(ng-submit="save()")
+  .page_block
+    .row.pd-bottom-30
+      .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-30
+        .form-group.row
+          label.form-label Nomor SO
+          input.form-input(type="text", ng-model="salesOrderDetail.id", readonly)
+            
+        .form-group.row
+          label.form-label Tanggal SO
+          input.form-input(type="text", ng-model="salesOrderDetail.date", readonly)
+        
+        .form-group.row
+          label.form-label Status SO
+          input.form-input(type="text", ng-model="salesOrderDetail.status.name", readonly)
+        
+      .col-lg-6.col-md-6.col-sm-6.pd-left-30
+        .form-group.row
+          label.form-label ID Customer
+          input.form-input(type="text", ng-model="salesOrderDetail.customer.id", readonly)
+        
+        .form-group.row
+          label.form-label Nama Customer
+          input.form-input(type="text", ng-model="salesOrderDetail.customer.name", readonly)
+            
+        .form-group.row
+          label.form-label NPWP Customer
+          input.form-input(type="text", ng-model="salesOrderDetail.customer.npwp", readonly)
+            
+    .default-modal-block
+      .pd-bottom-15
+        h4 Daftar Barang
+      .table
+        table.table--stripped
+          thead.thead--primary
+            tr
+              th(ng-repeat="heading in salesOrderDetail.headings", ng-class="{ 'large': heading.size == 'lg'}") {{heading.name}}
+          tbody
+            tr(ng-repeat="item in salesOrderDetail.item")
+              td {{item.category.name}}
+              td {{item.name}}
+              td {{item.unit}}
+              td {{item.grade}}
+              td {{item.price}}
+              td
+                .form-input-group
+                  .textfield.textfield--primary
+                    input.align-center(type="text", ng-model="item.sell_price", currency-input)
+                      
+              td {{item.quantity}}
+              td {{item.warehouse.name}}
+              td(ng-class="{ 'clr-passive': !item.note.length }") {{item.note ? item.note : 'No description added'}}
+              
+    .flex-row.flex-end
+      .pd-right-15
+        button.button.button--base.button--danger(type="button" ng-click="goBack()") Kembali
+      button.button.button--base.button--primary(type="submit") 
+        i.fa.fa-floppy-o.icon.icon--regular
+        | Simpan
+        
+      
+              
+          

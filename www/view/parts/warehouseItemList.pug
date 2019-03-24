@@ -1,0 +1,61 @@
+div(class="row-custom" ng-show="requiredDataForWarehouseItem.warehouse_id != ''")
+   label CARI BERDASARKAN
+   
+div(class="row-custom" ng-show="requiredDataForWarehouseItem.warehouse_id != ''")
+   div(class="col-cust-50")
+      select(class="combobox-filter" ng-model="filterBy")
+         option(value="itemName") NAMA BARANG
+         option(value="categoryName") KATEGORI BARANG
+      
+      input(type="text" class="input-filter" ng-show="filterBy == 'itemName'" placeholder="INPUT NAMA BARANG" ng-model="requiredDataForWarehouseItem.name")
+      input(type="text" class="input-filter" ng-show="filterBy == 'categoryName'" placeholder="INPUT KATEGORI BARANG" ng-model="requiredDataForWarehouseItem.category")
+      button(class="flat-button" ng-click="searchBasedOnFilter()") CARI
+br
+table(ng-show="requiredDataForWarehouseItem.warehouse_id != ''")
+   tr
+      th
+         label KATEGORI
+      th
+         label NAMA BARANG
+      th
+         label GRADE
+      th
+         label STOK PLANNING
+      th
+         label STOK AKTUAL
+      th(ng-show="route.warehouseinventory == '"+ page.route + "'")
+         label STOK MAXIMUM
+      th(ng-show="route.warehouseinventory == '"+ page.route + "'")
+         label ROP
+      th
+         label ACTION
+         
+   tr(ng-repeat="warehouseItem in listWarehouseItem")
+      td
+         label {{warehouseItem.category.name}}
+      td
+         label {{warehouseItem.name}}
+      td
+         label {{warehouseItem.grade}}
+      td
+         label {{warehouseItem.plan}}
+      td
+         label {{warehouseItem.actual}}
+              
+      td(style="text-align: center;" ng-show="route.warehouseinventory == '"+ page.route + "'")
+         label(ng-show="!warehouseItem.editMode") {{warehouseItem.stock_max}}
+         input(type="text" ng-show="warehouseItem.editMode" ng-model="warehouseInventoryData.maximum")
+      td(style="text-align: center;" ng-show="route.warehouseinventory == '"+ page.route + "'")
+         label(ng-show="!warehouseItem.editMode") {{warehouseItem.stock_min}}
+         input(type="text" style="width: 80px;" ng-show="warehouseItem.editMode" ng-model="warehouseInventoryData.minimum")
+            
+      td(style="text-align: center;")
+         button(class="flat-button" ng-show="!warehouseItem.editMode && route.warehouseinventory == '"+ page.route + "'" style="background-color: #D6C12B;" ng-click="warehouseItem.editMode = true") EDIT
+         button(class="flat-button" ng-show="!warehouseItem.editMode && route.adjustmentstock == '"+ page.route + "'" style="background-color: #D6C12B;" ng-click="openEditAdjustmentStockModal(warehouseItem)") EDIT
+         button(class="flat-button" ng-show="warehouseItem.editMode" style="background-color: #0F6FB7;" ng-click="updateStock(warehouseItem)") SAVE
+br
+div(style="text-align: center;" ng-show="requiredDataForWarehouseItem.warehouse_id != ''")
+   div(class="pagination")
+      a(href="#" ng-show="showSymbolPageBefore" ng-click="showBeforePaginationAndData()") &laquo;
+      a(href="" ng-repeat="x in paginationList" ng-class="{'active-pagination' : x.active}" ng-show="x.show" ng-click="getListOfWarehouseItemBasedOnPagination(x)") {{x.numb}} 
+      a(href="#" ng-show="showSymbolNextPage" ng-click="showNextPaginationAndData()") &raquo;

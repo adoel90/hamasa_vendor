@@ -1,0 +1,124 @@
+form.form(ng-submit="saveChanges()")
+	.page_block
+		.row.pd-bottom-30
+			.col-lg-6.col-md-6.col-sm-6.col-xs-6.pd-right-15
+				.form-group
+					label.form-label Nomor Kontrak
+					input.form-input(type="text", ng-model="requiredData.contract_id", placeholder="Masukkan nomor kontrak penjualan" required)
+				.form-group
+					label.form-label Tanggal Mulai Kontrak
+					.input-group
+						.input-group-extra
+							i.icon.fa.fa-calendar.icon.icon--small.clr-passive
+						datepicker(date-format="yyyy-MM-dd" date-set="{{requiredData.contract_start}}")
+							input.form-input(type="text" ng-model="requiredData.contract_start", placeholder="YYYY-MM-DD", required)
+							
+				.form-group
+					label.form-label Akhir Kontrak
+					.input-group
+						.input-group-extra
+							i.icon.fa.fa-calendar.icon.icon--small.clr-passive
+						datepicker(date-format="yyyy-MM-dd")
+							input.form-input(type="text" ng-model="requiredData.contract_end", placeholder="YYYY-MM-DD", required)
+				
+				.form-group
+					label.form-label Nilai Kontrak
+					.input-group
+						.input-group-extra 
+							small.clr-passive.fw-medium.tt-uppercase Rp.
+						input.form-input(type="text", ng-model="requiredData.dp", currency-input, placeholder="Masukkan uang muka (DP) kontrak", required)
+				
+				.form-group
+					label.form-label Potongan Uang Muka
+					.input-group
+						input.form-input(type="text", ng-model="requiredData.percentage", placeholder="Masukkan potongan uang muka")
+						.input-group-extra
+							small.clr-passive.fw-medium.tt-uppercase %
+				
+				.form-group
+					label.form-label Tonase
+					.input-group
+						input.form-input(type="text", ng-model="requiredData.tonase", currency-input, placeholder="Masukkan tonase")
+						.input-group-extra
+							small.clr-passive.fw-medium.tt-uppercase kg
+
+			.col-lg-6.col-md-6.col-sm-6.col-xs-6.pd-left-15
+				.form-group
+					label.form-label Nama Customer
+					ui-select(ng-model="selectedCustomer", on-select="changeCustomer($item)")
+						ui-select-match
+							span(ng-bind="$select.selected.name")
+						ui-select-choices(repeat="customer in (customerList | filter: $select.search) track by $index")
+							span(ng-bind="customer.name")
+
+				.form-group
+					label.form-label NPWP Customer
+					input.form-input(type="text", ng-model="customerDetail.npwp", readonly)
+
+		.flex-row.flex-justify-between
+			button.button.button--base.button--danger.m-right-15(type="button" ng-click="goBack()")
+				i.fa.fa-chevron-left.icon.icon--small
+				| Kembali
+					
+	.page_block
+		.row
+			.col-lg-4
+				item-category(data="requiredData")
+			.col-lg-6.flex-row
+				button.button.button--base.button--secondary.m-right-15(type="button" ng-click="generateByCategory()")
+					i.fa.fa-plus.icon.icon--regular
+					| by Category
+					
+				button.button.button--base.button--primary(type="button", show-item-master-list api-accessed="'priceList'")
+					i.fa.fa-plus.icon.icon--regular
+					| Item dari DB
+
+	.page_block(ng-hide="requiredData.item.length")
+		.flex-row.flex-align-center
+			p.clr-passive Klik 'Tambah Barang' untuk mulai menambah barang.
+
+	.shrink-table(ng-show="requiredData.item.length > 0")
+		table.table--striped
+			thead.thead--primary
+				tr
+					th(ng-repeat="heading in item.headings", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+			tbody
+				tr(ng-repeat="item in requiredData.item | filter: searchFilter.value")
+					td {{item.serial ? item.serial : '-'}}
+					td {{item.category}}
+					td {{item.name}}
+					td {{item.weight ? item.weight: '-'}}
+					td
+						input.ta-center.form-input(type="text", placeholder="Masukkan jumlah", ng-model="item.quantity", required)
+					td
+						input.ta-center.form-input(type="text", placeholder="Masukkan jumlah", ng-model="item.total", ng-value="item.total = item.quantity * item.weight", readonly)
+					td
+						.input-group
+							.input-group-extra 
+								small.clr-passive.fw-medium.tt-uppercase Rp
+							input.form-input.ta-center(type="text", placeholder="Masukkan harga", ng-model="item.priceKg", ng-blur="item.priceKg = numberWithCommas(item.priceKg)", ng-focus="item.priceKg = numberWithNoCommas(item.priceKg)", ng-readonly="item.weight == null" required)
+					
+					td(ng-if="item.weight == null")
+						.input-group
+							.input-group-extra 
+								small.clr-passive.fw-medium.tt-uppercase Rp
+							input.form-input.ta-center(type="text", placeholder="Masukkan harga", ng-model="item.price", ng-blur="item.price = numberWithCommas(item.price)", ng-focus="item.price = numberWithNoCommas(item.price)", ng-required="item.weight == null")
+					
+					td(ng-if="item.weight")
+						.input-group
+							.input-group-extra 
+								small.clr-passive.fw-medium.tt-uppercase Rp
+							input.form-input.ta-center(type="text", placeholder="Masukkan harga", ng-model="item.price", ng-blur="item.price = numberWithCommas(item.price)", ng-focus="makeSureThatPriceKgIsFilled(item)", ng-required="item.weight")
+					td(ng-click="$event.stopPropagation()")
+						.flex-row.flex-align-center
+							button.small-button.button--success.pd-10.button-tooltip(type="button" ng-click="doCalculate(item)" ng-disabled="item.weight == null")
+								i.fa.fa-calculator.icon.icon--regular
+								span.tooltiptext Hitung
+							button.small-button.button--danger.m-left-5.pd-10.button-tooltip(type="button" ng-click="deleteItem($index)")
+								i.fa.fa-trash.icon.icon--regular
+								span.tooltiptext Hapus	
+	.page_block(ng-show="requiredData.item.length")
+		.flex-row.flex-end
+			button.button.button--large.button--primary(type="submit") 
+				i.fa.fa-floppy-o.icon.icon--regular
+				| Simpan

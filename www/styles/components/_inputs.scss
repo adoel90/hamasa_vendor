@@ -1,0 +1,232 @@
+.bigLetter{
+	text-transform: uppercase;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+::-webkit-input-placeholder { text-transform: none; } ::-moz-placeholder { text-transform: none; } :-ms-input-placeholder { text-transform: none; } input:-moz-placeholder { text-transform: none; }
+
+input,
+textarea {
+	@include appearance(none);
+	background: transparent;
+	border: 0;
+	outline: none;
+
+}
+
+input[type="number"] {
+	&::-webkit-inner-spin-button,
+	&::-webkit-outer-spin-button {
+		@include appearance(none);
+		margin: 0;
+	}
+}
+
+.small-input{
+	min-width: 50px;
+}
+.textfield {
+	@include relative;
+	@include flexbox;
+	@include flex-direction(column);
+	@include margin-stack(bottom 15px);
+
+	.textfield-label {
+		@include font($fs-small, $fw-semibold, $lh-base);
+		@include margin(0 0 2.5px 0);
+		color: $clr-gray;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+	}
+
+	&.textfield--primary {
+		@include relative;
+
+		.textfield-input {
+			@include flexbox;
+			@include align-items(center);
+			overflow: hidden;
+			padding: 0;
+
+			.textfield-input-addon {
+				@include padding(15px 5px);
+				// border: solid 1px $clr-gray-light;
+				// @include border-radius($border-radius-small);
+				color: $clr-gray;
+
+				&:first-child {
+					@include margin-stack(right 2.5px);
+				}
+
+				&:last-child {
+					@include margin-stack(left 2.5px);
+				}
+			}
+		}
+
+		input {
+			@include transition(all 250ms $transition-bouncy);
+			@include border-radius($border-radius-small);
+			@include padding(0 15px);
+			@include size(height 50px);
+			@include font($fs-base, $fw-regular, $lh-base);
+			@include background($clr-primary-light);
+			@include size(width 100%);
+			border: solid 1px tint($clr-gray-light, 32%);
+
+			@include placeholder {
+				color: $clr-gray-light;
+			}
+
+			&:focus {
+				border: solid 1px $clr-gray-light;
+			}
+
+			&[readonly] {
+				@include background($clr-gray-lightest);
+			}
+		}
+	}
+}
+
+
+
+.textarea {
+	@include relative;
+	@include flexbox;
+	@include flex-direction(column);
+
+	.textarea-label {
+		@include font($fs-small, $fw-semibold, $lh-base);
+		@include margin(0 0 2.5px 0);
+		color: $clr-gray;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+	}
+
+	&.textarea--primary {
+		textarea {
+			@include transition(all 250ms $transition-bouncy);
+			@include padding(15px);
+			@include size(height 100px);
+			@include border-radius($border-radius-small);
+			@include font($fs-base, $fw-regular, $lh-base);
+			@include background($clr-primary-light)
+			@include size(width 100%);
+			border: solid 1px tint($clr-gray-light, 32%);
+
+			@include placeholder {
+				color: $clr-gray-light;
+			}
+
+			&:focus {
+				border: solid 1px $clr-gray-light;
+			}
+
+			&[readonly] {
+				@include background($clr-gray-lightest);
+			}
+
+		}
+	}
+}
+
+.checkbox {
+	@include relative;
+	@include size(height 25px width 25px);
+	@include border-radius($border-radius);
+	@include transition(all 250ms ease-in-out);
+	display: inline-block;
+	background-color: $clr-primary-light;
+	border: solid 1px $clr-gray-light;
+	cursor: pointer;
+	overflow: hidden;
+
+	&:before {
+		@include absolute(top 0 left 0 right 0 bottom 0);
+		@include flexbox;
+		@include align-items(center);
+		@include justify-content(center);
+		font-family: 'FontAwesome';
+		background-color: $clr-secondary;
+		content: "\f00c";
+		color: $clr-primary-light;
+		// font-size: 14px;
+		border: none;
+		visibility: hidden;
+	}
+
+	&:checked {
+		&:before {
+			visibility: visible;
+		}
+	}
+}
+
+.ui-select-container {
+	.ui-select-match {
+		> span {
+			@include flexbox;
+			@include align-items(center);
+			@include padding(0 10px);
+			@include size(height 50px width 100%);
+		}
+	}
+
+	.ui-select-search {
+		@include flexbox;
+		@include align-items(center);
+		@include padding(0 10px);
+		@include size(height 50px width 100%);
+	}
+
+	.ui-select-choices-row {
+		.ui-select-choices-row-inner {
+			@include padding(15px);
+		}
+
+		&.active {
+			> span {
+				background-color: $clr-secondary;
+			}
+		}
+	}
+}

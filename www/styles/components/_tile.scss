@@ -1,0 +1,131 @@
+.tile {
+	@include relative;
+	@include transition(all 250ms $transition-bouncy);
+	@include flexbox;
+	@include flex-direction(column);
+	@include min-size(height 100px);
+	@include margin(5px);
+	@include border-radius($border-radius-small);
+	overflow: hidden;
+	.clr-secondary{
+		color: $clr-secondary;
+	}
+	//	Child Element
+	.tile_content {
+		@include flexbox;
+		@include flex-direction(column);
+		@include align-items(center);
+		@include justify-content(center);
+		@include size(width 100% height 100%);
+		@include absolute(top 0 left 0);
+		@include padding(15px);
+		// background-color: red;
+		text-align: center;
+		z-index: 1;
+
+		i.icon {
+			@include transition(all 250ms $transition-bouncy);
+		}
+
+		.tile_main {
+			@include flexbox;
+			@include flex-direction(column);
+			@include align-items(center);
+			@include justify-content(center);
+			@include flex(1 1 100%);
+		}
+	}
+
+	.tile_addon {
+		@include flexbox;
+		@include size(width 100%);
+		@include padding(15px);
+		@include justify-content(center);
+		@include align-items(center);
+		background-color: $clr-primary-light;
+		color: $clr-primary-dark;
+		text-align: center;
+		z-index: 1;
+
+		> i.icon {
+			@include margin-stack(right 15px);
+		}
+	}
+
+	//	Color Modifier
+	&.tile--default {
+		background-color: $clr-primary-light;
+
+		.tile_content {
+			color: $clr-secondary;
+		}
+	}
+
+	&.tile--completed {
+		background-color: $clr-primary-completed;
+
+		.tile_content {
+			color: $clr-primary-dark;
+		}
+	}
+
+	&.tile--primary {
+		background-color: $clr-primary-default;
+
+		.tile_content {
+			color: $clr-primary-light;
+		}
+	}
+
+	&.tile--active {
+		background-color: $clr-primary-active;
+
+		.tile_content {
+			color: $clr-primary-dark;
+		}
+	}
+
+	&.tile--muted {
+		background-color: $clr-primary-muted;
+
+		.tile_content {
+			color: $clr-primary-dark;
+		}
+	}
+
+	&.tile--danger {
+		background-color: $clr-primary-danger;
+
+		.tile_content {
+			color: $clr-primary-dark;
+		}
+	}
+
+	&.tile--secondary{
+		background-color: $clr-secondary;
+		
+		.tile_content {
+			color: $clr-primary-dark;
+		}
+	}
+
+	//	Other Modifiers
+	&.tile--equal {
+		padding-top: 100% !important;
+	}
+
+	&.tile--selectable {
+		cursor: pointer;
+
+		&:hover {
+			@include transform(translateY(-10px) scale(1.05));
+			box-shadow: 0 6px 15px rgba(36, 37, 38, 0.1);
+			z-index: 500;
+
+			i.icon {
+				@include margin-stack(bottom 5px);
+			}
+		}
+	}
+
+}

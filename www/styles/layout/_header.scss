@@ -1,0 +1,38 @@
+.main-header {
+	@include fixed;
+	@include size(height 50px width 100%);
+	background-color: $clr-secondary;
+	z-index: 3000;
+
+	.main-header_container {
+		@include flexbox;
+		@include size(height 100%);
+		@include align-items(center);
+		color: $clr-primary-light;
+	}
+
+
+	[role="menu-icon"] {
+		@include margin(0 15px);
+	}
+
+	[role="master-logo"] {
+		text-transform: uppercase;
+		letter-spacing: 2px;
+	}
+}
+
+.main-subheader {
+	@include fixed(top 50px);
+	@include size(height 50px width 100%);
+	background-color: $clr-primary-light;
+	border-bottom: solid 1px shade($clr-primary-light, 2.5%);
+	// background-color: shade($clr-secondary, 5%);
+	z-index: 1000;
+
+	.main-subheader_container {
+		@include flexbox;
+		@include size(height 100%);
+		@include align-items(center);
+	}
+}

@@ -1,0 +1,68 @@
+.page_block
+   form.form.form--horizontal
+      .form-input-group
+         .textfield.textfield--primary
+            label.textfield-label.col-md-3.col-sm-3.col-xs-3(for="surat_jalan") NO SO
+            .flex-row
+              .col-md-6.col-sm-6.col-xs-6
+                 input(type="text", name="surat_jalan", placeholder="Masukkan No SO", ng-model="spkData.so_id", required)
+              .col-md-3.col-sm-3.col-xs-3
+                 button.button.button--secondary.button--base(type="button" style="margin-left: 10px;" ng-click="showCustomerDataBySoNumb(spkData.so_id)") CARI
+         .textfield.textfield--primary
+            label.textfield-label.col-md-3.col-sm-3.col-xs-3(for="customer") CUSTOMER
+            .col-md-9.col-sm-9.col-xs-9
+               input(type="text", name="customer", placeholder="Customer", ng-model="customerData.name", readonly)
+         .textfield.textfield--primary
+            label.textfield-label.col-md-3.col-sm-3.col-xs-3(for="address") NPWP
+            .col-md-9.col-sm-9.col-xs-9
+               input(type="text", name="address", placeholder="NPWP", ng-model="customerData.npwp", readonly)
+         .flex-row
+            button.button.button--danger.button--base(type="button" ng-click="goBack()")
+              i.fa.fa-chevron-left.icon.icon--small
+              | Kembali
+              
+.page_block(ng-show="customerData != null")
+   form.form.form--horizontal
+      .form-heading.pd-bottom-15
+         h4.form-title Barang yang Akan Dipotong
+      .form-input-group.pd-bottom-15
+         .textfield.textfield--primary
+            label.textfield-label.col-md-3.col-sm-3.col-xs-3(for="serial") NO SERI
+            .flex-row
+              .col-md-6.col-sm-6.col-xs-6
+                 input(type="text", name="serial", placeholder="No Seri", ng-model="itemToBeCut.serial", readonly)
+              .col-md-3.col-sm-3.col-xs-3
+                 button.button.button--base.button--primary(type="button" style="margin-left: 10px;" ng-click="showItemListToBeCut(spkData.so_id)") 
+                    i.icon.fa.fa-plus
+                    |TAMBAH BARANG
+         .textfield.textfield--primary
+            label.textfield-label.col-md-3.col-sm-3.col-xs-3(for="name") NAMA BARANG
+            .col-md-9.col-sm-9.col-xs-9
+               input(type="text", name="name", placeholder="Nama Barang", ng-model="itemToBeCut.name", readonly)
+         .textfield.textfield--primary
+            label.textfield-label.col-md-3.col-sm-3.col-xs-3(for="name") Berat
+            .col-md-9.col-sm-9.col-xs-9
+               input(type="text", name="weight", placeholder="Berat Barang", ng-model="itemToBeCut.weight", readonly)
+         .textfield.textfield--primary
+            label.textfield-label.col-md-3.col-sm-3.col-xs-3(for="name") Keterangan
+            .col-md-9.col-sm-9.col-xs-9
+               input(type="text", name="note", placeholder="Keterangan", ng-model="itemToBeCut.note", readonly)
+         .textfield.textfield--primary
+            label.textfield-label.col-md-3.col-sm-3.col-xs-3(for="quantity") Quantity
+            .col-md-9.col-sm-9.col-xs-9      
+               input(type="text", name="quantity", placeholder="Quantity", ng-model="spkData.quantity", required)
+                  
+.page_block(ng-show="itemToBeCut != null")
+   form.form.form--horizontal
+      .form-input-group.pd-bottom-15
+         .textfield.textfield--primary
+           .flex-row
+            .col-md-2.col-sm-2.col-xs-2
+               h4.form-title Hasil Potong
+            .col-md-10.col-sm-10.col-xs-10.flex-row.flex-end
+               button.button.button--base.button--primary.m-right-15(style="margin-left: 10px;" show-item-master-list api-accessed="'itemList'")
+                  i.icon.fa.fa-plus
+                  | Item dari DB
+               button.button.button--base.button--primary(style="margin-left: 10px;" ng-click="addItemManually()")
+                  i.icon.fa.fa-plus
+                  | Item input manual

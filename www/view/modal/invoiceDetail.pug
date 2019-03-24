@@ -1,0 +1,132 @@
+.default-modal(id="modal")
+	.default-modal-heading
+		h5.modal-title Detail Invoice
+		a.modal-close(ng-click="$dismiss()")
+			i.icon.icon--regular.fa.fa-times
+	.default-modal-content
+		form.form
+			.default-modal-block.pd-bottom-30
+				.row(ng-show="!onEdit")
+					.col-lg-6.col-md-6.col-sm-6.col-xs-12
+						dt.tt-uppercase.fw-medium.col-lg-4.col-md-4.col-sm-4.col-xs-12 No. Seri Pajak
+						dd.col-lg-8.col-md-8.col-sm-8.col-xs-8 {{invoiceDetail.tax_serial}}
+
+					.col-lg-6.col-md-6.col-sm-6.col-xs-12
+						dt.tt-uppercase.fw-medium.col-lg-4.col-md-4.col-sm-4.col-xs-12 No. Invoice
+						dd.col-lg-8.col-md-8.col-sm-8.col-xs-8 {{invoiceDetail.id}}
+
+				.row(ng-show="onEdit")
+					.col-lg-6.col-md-6.col-sm-6.col-xs-12
+						.row(style="display: flex; align-items: center;")
+							.col-lg-3.col-md-3.col-sm-3.col-xs-12
+								label.form-label No. Seri Pajak
+							.col-lg-9.col-md-9.col-sm-9.col-xs-12
+								.row(style="display: flex; align-items: center;")
+									.col-lg-2.col-md-2.col-sm-2.col-xs-3
+										input.form-input(type="text" ng-model="invToEdit.tax_front")
+									.col-lg-2.col-md-2.col-sm-2.col-xs-2(style="padding-left: 10px;")
+										input.form-input(type="text" ng-model="invToEdit.tax_after_front")
+									.col-lg-2.col-md-2.col-sm-2.col-xs-2(style="padding-left: 10px;")
+										input.form-input(type="text" ng-model="invToEdit.tax_middle1")
+									.col-lg-2.col-md-2.col-sm-2.col-xs-2(style="padding-left: 10px;")
+										input.form-input(type="text" ng-model="invToEdit.tax_middle2")
+									.col-lg-3.col-md-3.col-sm-3.col-xs-12(style="padding-left: 10px;")
+										input.form-input(type="text" ng-model="invToEdit.tax_dynamic")
+						
+						
+					.col-lg-6.col-md-6.col-sm-6.col-xs-12
+						.row.flex-end(style="display: flex; align-items: center;")
+							.col-lg-4.col-md-4.col-sm-4.col-xs-12
+								label.form-label Tanggal Invoice
+							.col-lg-4.col-md-4.col-sm-4.col-xs-12
+								.input-group
+									datepicker(date-format="yyyy-MM-dd" date-set="{{invToEdit.inv_date}}")
+										input.form-input(type="text" ng-model="invToEdit.inv_date")
+								
+
+						
+			.default-modal-block.pd-bottom-30
+				.pd-bottom-15
+					h4 Pengusaha Kena Pajak
+				
+				.row(style="width: 50%")
+					dt.tt-uppercase.fw-medium.col-lg-4.col-md-4.col-sm-4.col-xs-12 Nama
+					dd.col-lg-8.col-md-8.col-sm-8.col-xs-12 {{invoiceDetail.company.name}}
+					
+					dt.tt-uppercase.fw-medium.col-lg-4.col-md-4.col-sm-4.col-xs-12 Alamat
+					dd.col-lg-8.col-md-8.col-sm-8.col-xs-12 {{invoiceDetail.company.address}}
+					
+					dt.tt-uppercase.fw-medium.col-lg-4.col-md-4.col-sm-4.col-xs-12 NPWP
+					dd.col-lg-8.col-md-8.col-sm-8.col-xs-12 {{invoiceDetail.company.npwp}}
+					
+			.default-modal-block.pd-bottom-30
+				.pd-bottom-15
+					h4 Pembeli Kena Pajak
+				
+				.row(style="width: 50%")
+					dt.tt-uppercase.fw-medium.col-lg-4.col-md-4.col-sm-4.col-xs-12 Nama
+					dd.col-lg-8.col-md-8.col-sm-8.col-xs-12 {{invoiceDetail.customer.name_on_so}}
+					
+					dt.tt-uppercase.fw-medium.col-lg-4.col-md-4.col-sm-4.col-xs-12 Alamat
+					dd.col-lg-8.col-md-8.col-sm-8.col-xs-12 {{invoiceDetail.customer.address[0].address_on_so}}
+					
+					dt.tt-uppercase.fw-medium.col-lg-4.col-md-4.col-sm-4.col-xs-12 NPWP
+					dd.col-lg-8.col-md-8.col-sm-8.col-xs-12 {{invoiceDetail.customer.npwp}}
+			
+			.default-modal-block
+				.table
+					table.table--responsive.table--striped
+						thead.thead--primary
+							tr
+								th(ng-repeat="heading in invoiceDetail.headings", ng-class="{ 'small': heading.size == 'sm' }") {{heading.name}}
+						tbody
+							tr(ng-repeat="item in invoiceDetail.item track by $index")
+								td {{$index + 1}}
+								td {{item.name}}
+								td {{item.quantity}}
+								td {{item.unit}}
+								td {{ item.price | number: fractionSize }}
+							tr
+								td.align-left(colspan="2") Harga Jual/Penggantian
+								td
+								td
+								td {{ invoiceDetail.total | number: fractionSize }}
+							tr
+								td.align-left(colspan="2") Dikurangi Potongan Harga
+								td
+								td
+								td 0
+							tr
+								td.align-left(colspan="2") Dikurangi Uang Muka (DP)
+								td
+								td
+								td {{ invoiceDetail.dp | number: fractionSize }}
+							tr
+								td.align-left(colspan="2") Dasar Pengenaan Pajak
+								td
+								td
+								td {{ invoiceDetail.before_tax | number: fractionSize }}
+							tr
+								td.align-left(colspan="2") PPN = 10% * Dasar Pengenaan Pajak
+								td
+								td
+								td {{ invoiceDetail.ppn | number: fractionSize }}
+							tr
+								td.align-left(colspan="2") Materai
+								td
+								td
+								td {{ invoiceDetail.stamp | number: fractionSize }}
+							tr
+								td.align-left(colspan="2") Jumlah
+								td
+								td
+								td {{ invoiceDetail.payment_total | number: fractionSize }}
+							
+	.default-modal-footer
+		.flex-row.flex-end
+			button.button.button--base.button--success.m-right-15(ng-click="saveInvoice(invToEdit)" ng-show="onEdit") Save Invoice
+			button.button.button--base.button--success.m-right-15(ng-click="editInvoice(invoiceDetail.id)" ng-show="!onEdit") Edit Invoice
+			button.button.button--base.button--danger.m-right-15(ng-click="cancelEditInvoice()" ng-show="onEdit") Cancel
+			button.button.button--base.button--success(ng-click="printInvoice(invoiceDetail)" ng-show="!onEdit")
+				i.fa.fa-print.icon.icon--large
+				| Print

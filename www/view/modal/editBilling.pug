@@ -1,0 +1,94 @@
+.default-modal
+	form.form(ng-submit="saveChanges()")
+		.default-modal-heading
+			h5.modal-title Ubah Penagihan
+			a.modal-close(ng-click="$dismiss()")
+				i.icon.icon--regular.fa.fa-times
+		.default-modal-content
+			.default-modal-block.pd-bottom-30
+				.row
+					.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+						.form-group
+							label.form-label ID Customer
+							input.form-input(type="text", ng-model="billingDetail.customer.id", readonly)
+						.form-group
+							label.form-label Nama Customer
+							input.form-input(type="text", ng-model="billingDetail.customer.name", readonly)
+						.form-group
+							label.form-label NPWP
+							input.form-input(type="text", ng-model="billingDetail.customer.npwp", readonly)
+						.form-group
+							label.form-label Alamat Customer
+							textarea.form-input(rows="3", ng-model="billingDetail.customer.address.address", readonly)
+						.form-group
+							label.form-label Nomor Telepon
+							input.form-input(type="text", ng-model="billingDetail.customer.phone", readonly)
+						.form-group
+							label.form-label Total Tagihan
+							.input-group
+								.input-group-extra
+									small.clr-passive.tt-uppercase.fw-semibold Rp
+								input.form-input(type="text", ng-value="billingDetail.invoice.total | number: fractionSize", readonly)
+					
+					.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-15
+						.form-group.flex-row
+							.col-lg-4
+								label.form-label Surat Jalan
+								input.form-check(type="checkbox" ng-model="editBilling.requiredData.suratJalanStatus", ng-disabled="editBilling.requiredData.suratJalanStatus", ng-click="generateSuratJalanDate(editBilling.requiredData.suratJalanStatus)")
+							.col-lg-8
+								.input-group
+									.input-group-extra
+										small.clr-passive.tt-uppercase.fw-semibold Tgl
+									input.form-input(type="text" placeholder="Tanggal Terima Surat Jalan", ng-model="editBilling.requiredData.sj" disabled)
+						.form-group.flex-row
+							.col-lg-4
+								label.form-label E-Faktur
+								input.form-check(type="checkbox" ng-model="editBilling.requiredData.eInvoiceStatus" ng-disabled="editBilling.requiredData.eInvoiceStatus" ng-click="generateEFakturDate(editBilling.requiredData.eInvoiceStatus)")
+							.col-lg-8
+								.input-group
+									.input-group-extra
+										small.clr-passive.tt-uppercase.fw-semibold.flex-row Tgl
+									input.form-input(type="text" placeholder="Tanggal Terima E-Faktur", ng-model="editBilling.requiredData.efaktur" disabled)
+							
+						.form-group
+							label.form-label Nomor Nota Tukar
+							input.form-input(type="text", ng-model="editBilling.requiredData.note")
+						.form-group
+							label.form-label Metode Pembayaran
+							ui-select(ng-model="editBilling.requiredData.selectedPaymentMethod", on-select="changePaymentMethod($item)")
+								ui-select-match
+									span(ng-bind="$select.selected.name")
+								ui-select-choices(repeat="paymentMethod in (paymentMethodList | filter: $select.search) track by $index")
+									span(ng-bind="paymentMethod.name")
+						.form-group
+							label.form-label Jumlah Pembayaran
+							.input-group
+								.input-group-extra
+									small.clr-passive.tt-uppercase.fw-semibold Rp
+								input.form-input(type="text", ng-model="editBilling.requiredData.total", placeholder="Masukkan total pembayaran", currency-input)
+						.form-group(ng-show="editBilling.requiredData.pay_method > 0")
+							label.form-label Bank
+							ui-select(ng-model="editBilling.requiredData.selectedBank", on-select="changeBank($item)")
+								ui-select-match
+									span(ng-bind="$select.selected.bank")
+								ui-select-choices(repeat="bank in (bankList | filter: $select.search) track by $index")
+									span(ng-bind="bank.bank")
+						.form-group(ng-show="editBilling.requiredData.pay_method > 0")
+							label.form-label Nomor Bukti Pembayaran
+							input.form-input(type="text", ng-model="editBilling.requiredData.proof", placeholder="Masukkan nomor bukti pembayaran.")
+						.form-group(ng-show="editBilling.requiredData.pay_method > 1")
+							label.form-label Tanggal Jatuh Tempo
+							datepicker.datepicker--top(selector="form-input", date-format="dd-MM-yyyy")
+								.input-group
+									input.form-input(type="text", ng-model="editBilling.requiredData.due_date", placeholder="Masukkan tanggal batas akhir pembayaran")
+									.input-group-extra
+										i.fa.fa-calendar.icon.icon--regular.clr-passive
+						.form-group
+							label.form-label Keterangan
+							input.form-input(type="text", ng-model="editBilling.requiredData.info", placeholder="Masukkan keterangan")
+		
+		.default-modal-footer
+			.flex-row.flex-end
+				button.button.button--large.button--primary(type="submit")
+					i.fa.fa-floppy-o.icon.icon--regular
+					| Simpan				

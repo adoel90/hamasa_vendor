@@ -1,0 +1,67 @@
+include ./global/head.pug
+include ./parts/sidenav.pug
+main.main
+  include ./parts/main-header.pug
+  include ./parts/main-subheader.pug
+  
+  .main_content(ng-cloak)
+    .page_header
+      h2= page.title
+    .page_content
+      .page_block
+        form.form
+          .form-group
+            .flex-justify-between
+              label.form-label Cari Berdasarkan
+              button.button.button--primary.button--base(ng-show="listReportData.length > 0" ng-click="exportToExcel()") EXPORT
+            .row.m-top-15
+              .col-lg-2.col-md-2.col-sm-2.col-xs-12.align-right
+                label.form-label.m-right-15 Tanggal Awal
+              .col-lg-5.col-md-5.col-sm-5.col-xs-12
+                datepicker(date-format="yyyy-MM-dd" date-set="{{requiredData.date}}")
+                  input.form-input(type="text", ng-model="requiredData.date", placeholder="Masukkan tanggal")
+              .col-lg-3.col-md-3.col-sm-3.col-xs-12.pd-left-15    
+                button.button.button--secondary.button--base(ng-click="viewReport()") Cari
+      .page_block(ng-show="listReportData.length == 0" style="text-align: center;")
+        label There is no data
+        
+      .shrink-table(ng-show="listReportData.length > 0")
+        table.table--striped
+            thead.thead--primary
+                tr
+                    th(ng-repeat="heading in headings", ng-class="{ 'large': heading.size == 'lg' }") {{ heading.name }}
+            tbody
+                tr(ng-repeat="reportData in listReportData")
+                    td {{ reportData.so_id }}
+                    td {{ reportData.customer.name }}
+                    td {{ reportData.sales }}
+                    td
+                      p.m-bottom-15(ng-repeat="item in reportData.newItem") {{ item.i_name }}
+                    td
+                      p.m-bottom-15(ng-repeat="item in reportData.newItem") {{ item.so_quantity | number: fractionSize }}
+                    td
+                      p.m-bottom-15(ng-repeat="item in reportData.newItem") {{ item.so_sell_price | number: fractionSize }}
+                    td
+                      p.m-bottom-15(ng-repeat="item in reportData.newItem") {{ item.subtotal | number: fractionSize }}
+                    td {{ reportData.so_total | number: fractionSize }}
+                    td {{ reportData.cash | number: fractionSize }}
+                    td {{ reportData.trf | number: fractionSize }}
+                    td {{ reportData.giro | number: fractionSize }}
+                    td {{ reportData.remain | number: fractionSize }}
+                tr
+                    td(colspan="6") {{ " Total "}}
+                    td {{ totalSubtotal | number: fractionSize }} 
+                    td {{ totalTotal | number: fractionSize }} 
+                    td {{ totalCash | number: fractionSize }} 
+                    td {{ totalTrf | number: fractionSize }} 
+                    td {{ totalGiro | number: fractionSize }} 
+                    td {{ totalRemain | number: fractionSize }}
+
+
+
+
+                    
+
+
+                          
+                          

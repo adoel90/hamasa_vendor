@@ -1,0 +1,40 @@
+.default-modal
+   .default-modal-heading
+      h5.modal-title Daftar Barang
+   .default-modal-content
+      .row.pd-bottom-15
+         form.form
+            .form-input-group
+               label(role="form-label") Cari Berdasarkan
+               .row
+                  .col-md-4.pd-right-15
+                     ui-select(ng-model="selectedFilter.item")
+                        ui-select-match
+                           span(ng-bind="$select.selected.name")
+                        ui-select-choices(repeat="filter in (searchFilters | filter: $select.search) track by $index")
+                           span(ng-bind="filter.name")
+                  .col-md-4
+                     .textfield.textfield--primary(style="margin-right: 15px")
+                        .textfield-input
+                           input(type="text", ng-model="searchVal", placeholder="{{selectedFilter.item.placeholder}}", ng-show="selectedFilter.item.by === 'name'")
+                           input(type="text", ng-model="searchVal", placeholder="{{selectedFilter.item.placeholder}}", ng-show="selectedFilter.item.by === 'category'")
+                           input(type="text", ng-model="searchVal", placeholder="{{selectedFilter.item.placeholder}}", ng-show="selectedFilter.item.by === 'supplier'")
+                  .col-md-4
+                     .flex-row
+                        button.button.button--secondary.button--base(ng-click="doSearchFilter(searchVal, selectedFilter.item.by)") Cari
+      .table
+         .table-wrapper
+            table.table--selectable
+               thead
+                  tr
+                     th(ng-repeat="heading in spkItemResultHeadings", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+               tbody
+                  tr(ng-repeat="itemResult in itemCuttingResultList" ng-click="selectItem(itemResult)")
+                     td {{itemResult.name}}
+                     td {{itemResult.category.name}}
+                     td {{itemResult.unit}}
+                     
+      .page-block(style="text-align: center")
+         pagination(total-rows="totalRows", data="requiredData")
+                     
+                              

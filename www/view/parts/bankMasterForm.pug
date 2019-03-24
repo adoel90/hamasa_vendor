@@ -1,0 +1,17 @@
+form.form(ng-submit="save()")
+  .row
+    .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+      .form-group
+        label.form-label Nama Bank
+        input.form-input(type="text", ng-model="requiredData.bank", placeholder="Masukkan nama bank", required)
+    .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-15
+      .form-group
+        label.form-label Account
+        input.form-input(type="text", ng-model="requiredData.account", placeholder="Masukkan akun bank", ng-readonly="purpose === 'Update Bank'" required)
+  .flex-row.flex-justify-between
+    button.button.button--base.button--danger(type="button" ng-click="goBack()")
+      i.fa.fa-chevron-left.icon.icon--small
+      | Kembali
+    button.button.button--base.button--primary
+      i.fa.fa-floppy-o.icon.icon--regular
+      | Simpan                            

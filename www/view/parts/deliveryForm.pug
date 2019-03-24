@@ -1,0 +1,97 @@
+.page_block
+   label.form-label EXPORT TO EXCEL
+   .row
+      .col-lg-4.col-md-4.col-sm-4.col-xs-12.pd-right-15
+         ui-select(ng-model="selectedFilter.item")
+            ui-select-match
+               span(ng-bind="$select.selected.name")
+            ui-select-choices(repeat="filter in (searchFilters | filter: $select.search) track by $index")
+               span(ng-bind="filter.name")
+      .col-lg-8.col-md-8.col-sm-8.col-xs-12.pd-right-15
+         .input-group
+            datepicker(date-format="yyyy-MM-dd" style="margin-right: 5px;")
+               input.form-input(type="text", ng-model="deliveryFormData.s_date", placeholder="Masukkan Tanggal Awal")
+            datepicker(date-format="yyyy-MM-dd")
+               input.form-input(type="text", ng-model="deliveryFormData.e_date", placeholder="Masukkan Tanggal Akhir")
+            button.button.button--secondary.button--base(ng-click="exportToExcel()") EXPORT
+            
+.page_block   
+   .form.form--horizontal.m-top-10
+      .form-input-group
+         .textfield.textfield--primary
+            label.textfield-label.col-md-2.col-sm-2.col-xs-2(for="group") No DO
+            .col-md-7.col-sm-7.col-xs-7.flex-row
+               input(type="text", name="doNumb", placeholder="No Do", ng-model="deliveryFormData.do_id")
+               button.button.button--base.button--primary.m-left-15(ng-click="viewCustomerAndItemByDoDetail(deliveryFormData.do_id)") TAMPILKAN
+               
+
+.page_block(ng-show="customerData != null")
+   .form.form--horizontal
+      .form-heading.pd-bottom-15
+         h4.form-title Detail Customer
+      .form-input-group.pd-bottom-15
+         .textfield.textfield--primary
+            label.textfield-label.col-md-2.col-sm-2.col-xs-2(for="custName") Customer
+            .col-md-10.col-sm-10.col-xs-10
+               input(type="text", name="custName", ng-model="customerData.name", placeholder="Customer", readonly)
+         .textfield.textfield--primary
+            label.textfield-label.col-md-2.col-sm-2.col-xs-2(for="custNpwp") NPWP
+            .col-md-10.col-sm-10.col-xs-10
+               input(type="text", name="custNpwp", ng-model="customerData.npwp", placeholder="NPWP", readonly)
+         .textfield.textfield--primary
+            label.textfield-label.col-md-2.col-sm-2.col-xs-2 Alamat
+            .col-md-8.col-sm-8.col-xs-8.flex-row
+               input(type="text", ng-model="customerData.address" placeholder="Alamat", required)
+               button.button.button--base.button--primary.m-left-15(type="button" style="margin-left: 15px;" ng-click="openCustomerAddressList()") Cari
+            
+.page_block(ng-show="itemList != null")
+   .form-heading.pd-bottom-15
+      h4.form-title Detail Barang
+      br
+      label Total Berat Barang Keseluruhan {{total_weight}} KG              
+   .table(ng-show="itemList != null")
+      .table-wrapper(drag-scroll="")
+         table.table--selectable
+            thead
+               tr
+                  th(ng-repeat="heading in headings", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+            tbody
+               tr(ng-repeat="item in itemList")
+                  td {{item.category.name}}               
+                  td {{item.name}}
+                  td {{item.unit}}
+                  td {{item.grade}}
+                  td {{item.weight}}
+                  td {{item.quantity}}
+               
+.page_block(ng-show="customerData != null")
+   .form.form--horizontal
+      .form-heading.pd-bottom-15
+         h4.form-title Detail Jenis Pengiriman
+      .form-input-group.pd-bottom-15
+         .textfield.textfield--primary
+            label.textfield-label.col-md-2.col-sm-2.col-xs-2 Jenis Kendaraan
+            .col-md-8.col-sm-8.col-xs-8.flex-row
+               input(type="text", ng-model="deliveryData.vehicle", placeholder="Jenis Kendaraan", required)
+               button.button.button--base.button--primary.m-left-15(type="button" ng-click="openDeliveryPriceList()") Cari
+               
+         .textfield.textfield--primary
+            label.textfield-label.col-md-2.col-sm-2.col-xs-2(for="deliveryName") Nama Tujuan
+            .col-md-10.col-sm-10.col-xs-10
+               input(type="text", name="deliveryName", ng-model="deliveryData.name", placeholder="Nama Tujuan", readonly)
+         .textfield.textfield--primary
+            label.textfield-label.col-md-2.col-sm-2.col-xs-2(for="capacity") Kapasitas
+            .col-md-10.col-sm-10.col-xs-10
+               input(type="text", name="capacity", ng-value="numberWithCommas(deliveryData.capacity)", placeholder="Kapasitas", readonly)
+         .textfield.textfield--primary
+            label.textfield-label.col-md-2.col-sm-2.col-xs-2(for="capacity") Harga
+            .col-md-10.col-sm-10.col-xs-10
+               input(type="text", name="capacity", ng-model="deliveryFormData.delivery_price", placeholder="Harga", currency-input)
+
+.page_block(ng-show="itemList.length > 0") 
+   .flex-row.flex-end
+     .pd-right-15
+       button.button.button--base.button--danger(type="button" ng-click="goBack()") Kembali
+     button.button.button--base.button--primary(type="submit") 
+       i.fa.fa-floppy-o.icon.icon--regular
+       | Simpan 

@@ -1,0 +1,15 @@
+.default-modal
+  .default-modal-heading
+    h5.modal-title {{ modalName }}
+    a.modal-close(ng-click="$dismiss()")
+      i.icon.icon--regular.fa.fa-times
+  .default-modal-content
+    .row.pd-bottom-15
+      div(ng-if="searchFilters")
+        include ../parts/filter.pug
+            
+    table-content(table-header="modalHeadings" table-body="listModalData" table-column="modalCols" type="modalTableType")
+              
+    div(style="text-align: center")
+      pagination(total-rows="totalRows", data="requiredData")
+              

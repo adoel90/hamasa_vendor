@@ -1,0 +1,56 @@
+.flex-row {
+	@include flexbox;
+	@include flex-direction(row);
+}
+.flex-align-item-center{
+	@include flexbox;
+	@include flex-direction(row);
+	@include align-items(center);
+}
+.flex-column {
+	@include flexbox;
+	@include flex-direction(column);
+}
+
+.flex-align-center {
+	@include flexbox;
+	@include justify-content(center);
+}
+
+.flex-justify-between {
+	@include flexbox;
+	@include justify-content(space-between);
+}
+
+.flex-end {
+	@include flexbox;
+	@include justify-content(flex-end);
+}
+.flex-center-center{
+	@include flexbox;
+	@include flex-direction(row);
+	@include justify-content(center);
+	@include align-items(center);
+}
+
+
+
+// .flex-col-20 {
+// 	@include flex(1 1 50%);
+//
+// 	@include phone {
+// 		@include flex(1 1 33%);
+// 	}
+//
+// 	@include tablet {
+// 		@include flex(1 1 25%);
+// 	}
+//
+// 	@include desktop {
+// 		@include flex(1 1 20%);
+// 	}
+// }
+//
+// .flex-col-33 {
+// 	@include flex(1 1 25%);
+// }

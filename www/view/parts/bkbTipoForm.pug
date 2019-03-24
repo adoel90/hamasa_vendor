@@ -1,0 +1,60 @@
+.page_block
+   .form-input-group.pd-bottom-15
+      .textfield.textfield--primary
+         label.textfield-label.col-md-3.col-sm-3.col-xs-3 Nomor DO TIPO
+         .flex-row
+           .col-md-7.col-sm-7.col-xs-7
+              input(type="text", ng-model="bkbTipoData.dotipo_id", placeholder="Masukkan Nomor DO")
+           .col-md-2.col-sm-2.col-xs-2.pd-left-15
+              button.button.button--secondary.button--base(ng-click="searchByDoTipoId(bkbTipoData.dotipo_id)")
+                i.fa.fa-search.icon
+                | Cari
+      .flex-row
+        button.button.button--danger.button--base(type="button" ng-click="goBack()")
+          i.fa.fa-chevron-left.icon.icon--small
+          | Kembali
+.page_block(ng-show="customerData != null")
+   .form-heading.pd-bottom-15
+      h4.form-title Detail Customer
+   .form-input-group
+      .textfield.textfield--primary
+         label.textfield-label.col-md-3.col-sm-3.col-xs-3(for="customer_name") Nama CUSTOMER
+         .col-md-9.col-sm-9.col-xs-9
+            input(type="text", name="customer_name", ng-model="customerData.name", placeholder="Nama Customer", readonly)
+      .textfield.textfield--primary
+         label.textfield-label.col-md-3.col-sm-3.col-xs-3(for="customer_npwp") NPWP
+         .col-md-9.col-sm-9.col-xs-9
+            input(type="text", name="customer_npwp", ng-model="customerData.npwp", placeholder="ID Customer", readonly)
+
+.page_block(ng-show="customerData != null")
+   .form-input-group
+      .textfield.textfield--primary
+         label.textfield-label.col-md-3.col-sm-3.col-xs-3(for="driver") Nama Pengemudi
+         .col-md-9.col-sm-9.col-xs-9
+            input(type="text", name="driver", ng-model="bkbTipoData.driver", placeholder="Nama Pengemudi", required)
+      .textfield.textfield--primary
+         label.textfield-label.col-md-3.col-sm-3.col-xs-3(for="vehicle") Nomor Kendaraan
+         .col-md-9.col-sm-9.col-xs-9
+            input(type="text", name="vehicle", ng-model="bkbTipoData.transport_number", placeholder="Nomor Kendaraan", required)
+               
+.table(ng-show="bkbTipoData.item.length > 0")
+   .table-wrapper
+      table
+         thead
+            tr
+               th(ng-repeat="heading in headings", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+         tbody
+            tr(ng-repeat="item in bkbTipoData.item")
+               td {{item.category}}
+               td {{item.name}}
+               td {{item.quantityToTake}}
+               td
+                  .form-button-group
+                     .textfield.textfield--primary
+                        input.align-center(type="text", ng-model="item.quantity", required)
+   
+                                 
+         
+            
+               
+            

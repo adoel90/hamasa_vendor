@@ -1,0 +1,28 @@
+.legend{
+  width: 30px;
+  height: 30px;
+}
+.grey-legend{
+  @extend .legend;
+  background-color: $clr-primary-muted;
+}
+
+.red-legend{
+  @extend .legend;
+  background-color: $clr-primary-danger;
+}
+
+.yellow-legend{
+  @extend .legend;
+  background-color: $clr-primary-active;
+}
+
+.green-legend{
+  @extend .legend;
+  background-color: $clr-primary-completed;
+}
+
+.orange-legend{
+  @extend .legend;
+  background-color: $clr-secondary;
+}

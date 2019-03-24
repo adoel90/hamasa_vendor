@@ -1,0 +1,36 @@
+.page_block
+   .form-heading.pd-bottom-15
+      h4.form-title Detail Surat Jalan
+   .form-input-group
+      .textfield.textfield--primary
+         label.textfield-label.col-md-3.col-sm-3.col-xs-3(for="surat_jalan") NO SURAT JALAN
+         .col-md-9.col-sm-9.col-xs-9
+            input(type="text", name="surat_jalan", ng-model="tipoData.surat_jalan", placeholder="Masukkan No Surat Jalan", required)
+      .textfield.textfield--primary
+         label.textfield-label.col-md-3.col-sm-3.col-xs-3(for="driver") NAMA SUPIR
+         .col-md-9.col-sm-9.col-xs-9
+            input(type="text", name="driver", ng-model="tipoData.driver", placeholder="Masukkan Nama Supir", required)
+      .textfield.textfield--primary
+         label.textfield-label.col-md-3.col-sm-3.col-xs-3(for="transport_number") NO KENDARAAN
+         .col-md-9.col-sm-9.col-xs-9
+            input(type="text", name="transport_number", ng-model="tipoData.transport_number", placeholder="Masukkan No Kendaraan", required)
+      .flex-row
+        button.button.button--danger.button--base(type="button" ng-click="goBack()")
+          i.fa.fa-chevron-left.icon.icon--small
+          | Kembali
+.page_block
+   .form-heading.pd-bottom-15
+      h4.form-title Detail Customer
+   .form-input-group
+      .textfield.textfield--primary
+         label.textfield-label.col-md-3.col-sm-3.col-xs-3(for="customer_id") ID CUSTOMER
+         .flex-row
+           .col-md-7.col-sm-7.col-xs-7
+              input(type="text", name="customer_id", ng-model="tipoData.customer_id", placeholder="Masukkan ID Customer", required, ng-disabled="true")              
+           .col-md-3.col-sm-3.col-xs-3.pd-left-15
+             button.button.button--base.button--primary(type="button" ng-click="addCustomer()") Pilih Customer
+                            
+      .textfield.textfield--primary
+         label.textfield-label.col-md-3.col-sm-3.col-xs-3(for="customer_name") CUSTOMER
+         .col-md-9.col-sm-9.col-xs-9
+            input(type="text", name="customer_name", ng-model="tipoData.customer_name", placeholder="Masukkan Nama Customer", required, ng-disabled="true")

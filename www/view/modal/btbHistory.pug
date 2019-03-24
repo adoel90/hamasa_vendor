@@ -1,0 +1,33 @@
+.default-modal
+  .default-modal-heading
+    h5.modal-title History BTB
+    a.modal-close(ng-click="$dismiss()")
+      i.icon.icon--regular.fa.fa-close
+  .default-modal-content
+    .page_block(ng-repeat="btbHistory in btbHistoryList")
+      form.form.form--primary.form--horizontal
+        .row
+          .col-md-6.col-sm-6.pd-right-15
+            .form-group
+              label.form-label Nomor BTB
+              input.form-input(type="text", ng-model="btbHistory.id" placeholder="Nomor BTB", readonly)
+            .form-group
+              label.form-label Tanggal BTB
+              input.form-input(type="text", ng-model="btbHistory.date" placeholder="Nomor BTB", readonly)
+      .table
+        table
+          thead
+            th(ng-repeat="heading in btbHistoryHeadings", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+          tbody
+            tr(ng-repeat="item in btbHistory.items")
+              td {{ item.serial ? item.serial : '-' }}
+              td {{ item.category.name }}
+              td {{ item.name }}
+              td {{ item.unit }}
+              td {{ item.weight }}
+              td {{ item.quantity }}
+        
+            
+            
+      
+        

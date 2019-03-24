@@ -1,0 +1,54 @@
+.default-modal
+	.default-modal-heading
+		h5.modal-title History Kontrak Penjualan
+		a.modal-close(ng-click="$dismiss()")
+			i.icon.icon--regular.fa.fa-times
+	.default-modal-content
+		form.form.form--primary.form--horizontal
+			.row.pd-bottom-30
+				.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+					.form-group
+						label.form-label Nomor Kontrak
+						input.form-input(type="text", ng-model="salesContractHistory.id" readonly)
+					.form-group
+						label.form-label Tanggal Kontrak
+						input.form-input(type="text", ng-model="salesContractHistory.date", readonly)
+					.form-group
+						label.form-label Akhir Kontrak
+						input.form-input(type="text", ng-model="salesContractHistory.end", readonly)
+					.form-group
+						label.form-label Uang Muka (DP)
+						.input-group
+							.input-group-extra
+								small.clr-passive.fw-medium.tt-uppercase Rp.
+							input.form-input(type="text", ng-value="numberWithCommas(salesContractHistory.dp)", readonly)
+				
+				.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-15
+					.form-group
+						label.form-label Tonase
+						input.form-input(type="text", ng-value="numberWithCommas(salesContractHistory.tonase)", readonly)
+					.form-group
+						label.form-label Sisa Tonase
+						input.form-input(type="text", ng-value="numberWithCommas( roundToTwoDecimalPlaces(salesContractHistory.tonase_remain) )", readonly)
+					.form-group
+						label.form-label Sisa Uang Muka (DP)
+						input.form-input(type="text", ng-value="numberWithCommas( roundToTwoDecimalPlaces(salesContractHistory.dp_remain) )", readonly)
+		
+		.row
+			p(ng-show="!salesContractHistory.history") Belum ada history kontrak penjualan
+			
+		.shrink-table(ng-show="salesContractHistory.history")
+			table.table--striped
+				thead.thead--primary
+					tr
+						th(ng-repeat="heading in salesContractHistory.headings", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+				tbody
+					tr(ng-repeat="item in salesContractHistory.history.data", ng-click="openItemDetail(item.ig_id)")
+						td {{item.so.id}}
+						td {{item.item.category.name}}
+						td {{item.item.name}}
+						td {{item.item.grade}}
+						td {{item.item.weight}}
+						td {{item.item.quantity}}
+						td {{ numberWithCommas(item.item.price) }}
+						td {{ numberWithCommas(item.item.total) }}

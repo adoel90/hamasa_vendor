@@ -1,0 +1,73 @@
+include ./global/head.pug
+include ./parts/sidenav.pug
+main.main
+	include ./parts/main-header.pug
+	include ./parts/main-subheader.pug
+
+	.main_content(ng-cloak)
+		.page_header
+			h2(role="page-title") Pencairan Cek/Giro
+		.page_content
+			form.form(ng-submit="settleDisbursement()")
+				.page_block
+					.row
+						.col-lg-4.col-md-4.col-sm-4.col-xs-12.pd-right-15
+							ui-select(ng-model="selectedFilter.item")
+								ui-select-match
+									span(ng-bind="$select.selected.name")
+								ui-select-choices(repeat="filter in (searchFilters | filter: $select.search) track by $index")
+									span(ng-bind="filter.name")
+						.col-lg-5.col-md-5.col-sm-5.col-xs-12.pd-right-15
+							.input-group
+								datepicker(date-format="yyyy-MM-dd" style="margin-right: 5px;")
+									input.form-input(type="text", ng-model="paymentProof.requiredData.s_date", placeholder="Masukkan Tanggal Awal")
+								datepicker(date-format="yyyy-MM-dd")
+									input.form-input(type="text", ng-model="paymentProof.requiredData.e_date", placeholder="Masukkan Tanggal Akhir")
+						.col-lg-3.col-md-3.col-sm-3.col-xs-12
+							button.button.button--base.button--secondary(type="button" ng-click="exportToExcel()") EXPORT
+				.page_block
+					.row
+						.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+							.form-group
+								label.form-label No. Bukti Pembayaran
+								.input-group
+									input.form-input(type="text", placeholder="Masukkan nomor bukti pembayaran",  ng-model="paymentProof.requiredData.proof", required)
+									button.button.button--base.button--secondary(type="button", ng-click="searchPaymentProof()") Cari
+							
+						
+						.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-15(ng-show="paymentProof.data")
+							.form-group
+								label.form-label Jenis Pembayaran
+								input.form-input(type="text", ng-model="paymentProof.data.pay_method.name" readonly)
+							.form-group
+								label.form-label Tanggal Jatuh Tempo
+								input.form-input(type="text", ng-model="paymentProof.data.due_date" readonly)
+									
+				.table(ng-show="paymentProof.data")
+					table.table--striped
+						thead.thead--primary
+							tr
+								th(ng-repeat="heading in paymentProof.headings") {{ heading.name }}
+						tbody
+							tr(ng-repeat="item in paymentProof.data.invoice track by $index")
+								td {{item.id}}
+								td {{item.date}}
+								td {{item.pay_method.name}}
+								td {{item.total | currency: 'Rp'}}
+								td {{item.paid | currency: 'Rp'}}
+			
+				.page_block(ng-show="paymentProof.data")
+					.row
+						.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+							.form-group
+								label.form-label Bank Tujuan Pencairan								
+								ui-select(ng-model="paymentProof.requiredData.selectedBank", on-select="changeBank($item)")
+									ui-select-match
+										span(ng-bind="$select.selected.bank")
+									ui-select-choices(repeat="bank in (bankList | filter: $select.search) track by $index")
+										span(ng-bind="bank.bank")
+													
+					.flex-row.flex-end
+						button.button.button--base.button--primary 
+							i.fa.fa-check.icon.icon--regular
+							| Lunaskan

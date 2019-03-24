@@ -1,0 +1,54 @@
+.default-modal
+	.default-modal-heading
+		h5.modal-title Detail TIPO
+		a.modal-close(ng-click="$dismiss()")
+			i.icon.icon--regular.fa.fa-times
+	.default-modal-content
+		.default-modal-block.pd-bottom-15
+			form.form.form--horizontal
+				.row.pd-bottom-15
+					.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+						h4 Detail TIPO
+						.form-group
+							label.form-label Nomor TIPO
+							input.form-input(type="text", ng-model="tipoDetail.id", readonly)
+								
+						.form-group
+							label.form-label Tanggal
+							input.form-input(type="text", ng-model="tipoDetail.date", readonly)
+							small.clr-passive Tanggal TIPO diisukan.
+						
+						h4.pd-top-15 Info Perjalanan
+						.form-group
+							label.form-label Nomor Surat Jalan
+							input.form-input(type="text", ng-model="tipoDetail.surat_jalan", readonly)
+								
+						.form-group
+							label.form-label Nama Supir
+							input.form-input(type="text", ng-model="tipoDetail.driver", readonly)
+								
+						.form-group
+							label.form-label No. Kendaraan
+							input.form-input(type="text", ng-model="tipoDetail.transport_number", readonly)
+
+					.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-15
+						h4 Data Customer
+						.form-group
+							label.form-label ID Customer
+							input.form-input(type="text", ng-model="tipoDetail.customer.id", readonly)
+
+						.form-group
+							label.form-label Nama Customer
+							input.form-input(type="text", ng-model="tipoDetail.customer.name", readonly)
+		
+		.default-modal-block
+			.pd-bottom-15
+				h4 Daftar Barang
+			p.clr-passive(ng-hide="tipoDetail.item.length") Tidak terdapat daftar barang pada TIPO ini.
+			table-content(type="'table-with-price'" table-header="tipoDetail.headings" table-body="tipoDetail.item" table-column="tipoDetail.cols" ng-show="tipoDetail.item.length > 0")
+							
+	.default-modal-footer
+		.flex-row.flex-end
+			button.button.button--base.button--secondary(type="button" ng-click="printBtbTipo(tipoDetail.id)")
+				i.fa.fa-print.icon.icon--regular
+				| Print

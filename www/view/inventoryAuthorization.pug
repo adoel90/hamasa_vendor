@@ -1,0 +1,38 @@
+include ./global/head.pug
+include ./parts/sidenav.pug
+main.main
+  include ./parts/main-header.pug
+  include ./parts/main-subheader.pug
+  
+  .main_content(ng-cloak)
+    .page_header
+      h2 List Otorisasi Inventory
+    .page_content
+      .page_block
+        form.form
+          .form-group
+            label.form-label Cari Berdasarkan
+            .row
+              .col-lg-4.col-md-4.pd-right-15
+                ui-select(ng-model="selectedFilter.item")
+                  ui-select-match
+                    span(ng-bind="$select.selected.name")
+                  ui-select-choices(repeat="filter in (searchFilters | filter: $select.search) track by $index")
+                    span(ng-bind="filter.name")
+              .col-lg-5.col-md-5.col-sm-5.col-xs-12.pd-right-15
+                .input-group
+                  datepicker(date-format="yyyy-MM-dd")
+                    input.form-input(type="text", ng-model="searchVal", placeholder="{{selectedFilter.item.placeholder}}")
+                  button.button.button--base.button--secondary(ng-click="doSearchFilter(searchVal, selectedFilter.item.by)") Cari
+      .table
+        table.table--striped.table--hoverable
+          thead.thead--primary
+            tr
+              th(ng-repeat="heading in headings") {{heading.name}}
+          tbody
+            tr(ng-repeat="inventoryAuth in inventoryAuthList" ng-click="viewInventoryAuthDetail(inventoryAuth)")
+              td {{ inventoryAuth.date }}
+              td {{ inventoryAuth.type.name }}
+                            
+      .page-block(style="text-align: center")
+        pagination(total-rows="totalRows", data="requiredData")

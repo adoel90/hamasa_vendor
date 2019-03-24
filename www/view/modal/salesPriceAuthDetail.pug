@@ -1,0 +1,27 @@
+.default-modal
+  .default-modal-heading
+    h5.modal-title Detail Perubahan Harga
+    a.modal-close(ng-click="$dismiss()")
+      i.icon.icon--regular.fa.fa-times
+  .default-modal-content
+    .table
+      table.table--stripped.table--hoverable
+        thead.thead--primary
+          tr
+            th(ng-repeat="heading in salesPriceAuth.headings", ng-class="{ 'large': heading.size == 'lg'}") {{heading.name}}
+        tbody
+          tr(ng-repeat="item in salesPriceAuth.item")
+            td {{item.price.name}}
+            td {{item.serial}}
+            td {{item.category.name}}
+            td {{item.name}}
+            td {{item.unit}}
+            td {{item.weight}}
+            td {{item.grade}}
+            td {{item.brand}}
+            td {{ numberWithCommas(item.before) }}
+            td {{ numberWithCommas(item.after) }}
+
+    .flex-row.flex-end(ng-show="purpose == 'Approval for Master Price Adjustment' && soAuthStatus == 0")
+      button.pd-right-15.button.button--base.button--secondary.m-right-15(ng-click="approvePriceMasterUpdate()") Accept
+      button.button.button--base.button--danger(ng-click="rejectPriceMasterUpdate()") Reject

@@ -1,0 +1,44 @@
+.default-modal
+  .default-modal-heading
+    h5.modal-title Detail Pembayaran
+    a.modal-close(ng-click="$dismiss()")
+      i.icon.icon--regular.fa.fa-times
+  .default-modal-content
+    form.form.form--primary.form--horizontal
+      .row.pd-bottom-30
+        .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+          .form-group
+            label.form-label Supplier
+            input.form-input(type="text", ng-model="poPaymentDetail.supplier.name", readonly)
+          .form-group
+            label.form-label Alamat
+            input.form-input(type="text", ng-model="poPaymentDetail.supplier.address", readonly)
+          .form-group
+            label.form-label NPWP
+            input.form-input(type="text", ng-model="poPaymentDetail.supplier.npwp", readonly)
+        .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+          .form-group
+            label.form-label Total Pelunasan
+            input.form-input(type="text", ng-model="poPaymentDetail.total", readonly)
+          .form-group
+            label.form-label Metode Pembayaran
+            input.form-input(type="text", ng-model="poPaymentDetail.method.name", readonly)
+          .form-group
+            label.form-label No Bukti Pembayaran
+            input.form-input(type="text", ng-model="poPaymentDetail.proof", readonly)
+          .form-group
+            label.form-label Tgl Jatuh Tempo
+            input.form-input(type="text", ng-model="poPaymentDetail.due_date", readonly)
+    .table
+      table.table--striped
+        thead.thead--primary
+          tr
+            th(ng-repeat="heading in paymentDetailHeadings") {{heading.name}}
+        tbody
+          tr(ng-repeat="invoice in poPaymentDetail.invoice")
+            td {{ invoice.id }}
+            td {{ invoice.po }}
+            td {{ numberWithCommas(invoice.total) }}
+            td {{ numberWithCommas(invoice.paid) }}
+            
+            

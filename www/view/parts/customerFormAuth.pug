@@ -1,0 +1,118 @@
+form.form.form--horizontal(ng-submit="saveChanges()")
+	.page_block
+		.form-input-group
+			.row.pd-bottom-30
+				.col-lg-6.col-md-6.pd-right-15
+					.form-group
+						label.form-label Jenis Perusahaan
+						ui-select(ng-model="requiredData.selectedCompanyType", on-select="changeCompany($item)", ng-disabled="true")
+							ui-select-match
+								span(ng-bind="$select.selected.name")
+							ui-select-choices(repeat="company in (listCompanyType | filter: $select.search) track by $index")
+								span(ng-bind="company.name")
+									
+					.form-group
+						label.form-label Nama Customer
+						input.form-input(type="text", ng-model="requiredData.name", placeholder="Masukkan nama customer", readonly)
+					
+					.form-group
+						label.form-label NPWP Customer
+						input.form-input(type="text", ng-model="requiredData.npwp", placeholder="Masukkan NPWP customer", readonly)
+					
+					div(ng-repeat="address in requiredData.address track by $index")
+						.form-group
+							label.form-label Alamat {{requiredData.address.length > 1 ? $index + 1 : ''}}
+							textarea.form-input(rows="3", ng-model="address.address", placeholder="Masukkan alamat", readonly)
+								
+						.form-group
+							label.form-label Provinsi {{requiredData.address.length > 1 ? $index + 1 : '' }}
+							ui-select(ng-model="address.selectedProvince", on-select="changeProvince($item, $index)", ng-disabled="true")
+								ui-select-match
+									span(ng-bind="$select.selected.name")
+								ui-select-choices(repeat="province in (address.listProvince | filter: $select.search) track by $index")
+									span(ng-bind="province.name")
+												
+						.form-group
+							label.form-label Kota {{requiredData.address.length > 1 ? $index + 1 : '' }}
+							ui-select(ng-model="address.selectedCity", on-select="changeCity($item, $index)", ng-click="validateCity($index)", ng-disabled="true")
+								ui-select-match
+									span(ng-bind="$select.selected.name")
+								ui-select-choices(repeat="city in (address.listCities | filter: $select.search) track by $index")
+									span(ng-bind="city.name")
+						
+						.form-group
+							label.form-label Kecamatan {{requiredData.address.length > 1 ? $index + 1 : '' }}
+							ui-select(ng-model="address.selectedDistrict", on-select="changeDistrict($item, $index)", ng-click="validateDistrict($index)", ng-disabled="true")
+								ui-select-match
+									span(ng-bind="$select.selected.name")
+								ui-select-choices(repeat="district in (address.listDistrict | filter: $select.search) track by $index")
+									span(ng-bind="district.name")
+						
+						.form-group
+							label.form-label Kelurahan {{requiredData.address.length > 1 ? $index + 1 : '' }}
+							ui-select(ng-model="address.selectedUrban", on-select="changeUrban($item, $index)", ng-click="validateUrban($index)", ng-disabled="true")
+								ui-select-match
+									span(ng-bind="$select.selected.name")
+								ui-select-choices(repeat="urban in (address.listUrban | filter: $select.search) track by $index")
+									span(ng-bind="urban.name")
+						
+						.form-group
+							label.form-label Kode Pos
+							input.form-input(type="text", ng-model="address.postal_code", placeholder="Masukkan kode pos", readonly)
+								
+					div(ng-repeat="phone in requiredData.phone track by $index")
+						.form-group
+							label.form-label Nomor Telepon {{requiredData.phone.length > 1 ? $index + 1 : ''}}
+							input.form-input(type="text", ng-model="phone.phone", placeholder="Masukkan nomor telepon", readonly)
+						
+						.form-group
+							label.form-label CP (Contract Person) {{requiredData.phone.length > 1 ? $index + 1 : ''}}
+							input.form-input(type="text", ng-model="phone.contact_person", placeholder="Masukkan Contact Person", readonly)
+					
+				.col-lg-6.col-md-6.pd-left-15
+					.form-group
+						label.form-label Nomor FAX (Optional)
+						input.form-input(type="text", ng-model="requiredData.fax", placeholder="Masukkan nomor FAX", readonly)
+					
+					.form-group
+						label.form-label ID Induk Customer
+						ui-select(ng-model="requiredData.selectedParent", on-select="changeParent($item)", ng-disabled="true")
+							ui-select-match
+								span(ng-bind="$select.selected.name")
+							ui-select-choices(repeat="parent in (parents | filter: $select.search) track by $index")
+								span(ng-bind="parent.name")
+						
+					.form-group
+						label.form-label Status Kredit?
+						ui-select(ng-model="requiredData.selectedCreditStatus", on-select="changeCreditStatus($item)")
+							ui-select-match
+								span(ng-bind="$select.selected.name")
+							ui-select-choices(repeat="credit in (listCreditStatus | filter: $select.search) track by $index")
+								span(ng-bind="credit.name")
+									
+					.form-group(ng-show="requiredData.credit")
+						label.form-label Limit Kredit
+						.input-group
+							.input-group-extra
+								small.clr-passive.fw-medium.tt-uppercase Rp
+							input.form-input(type="text", ng-model="requiredData.credit_limit", placeholder="Masukkan batas kredit customer", ng-required="requiredData.credit", ng-blur="requiredData.credit_limit = numberWithCommas(requiredData.credit_limit)", ng-focus="requiredData.credit_limit = numberWithNoCommas(requiredData.credit_limit)")
+										
+					.form-group(ng-show="requiredData.credit")
+						label.form-label Hari Penagihan
+						.input-group
+							.input-group-extra
+								small.tt-uppercase.fw-medium.clr-passive hari
+							input.form-input(type="text", ng-model="requiredData.charge_day", placeholder="Masukkan hari penagihan", ng-required="requiredData.credit")
+						
+					.form-group(ng-show="requiredData.credit")
+						label.form-label Hari Pembayaran
+						.input-group
+							.input-group-extra
+								small.tt-uppercase.fw-medium.clr-passive hari
+							input.form-input(type="text", ng-model="requiredData.pay_day", placeholder="Masukkan hari pembayaran", ng-required="requiredData.credit")
+							
+			.flex-row.flex-end
+				button.button.button--large.button--primary(type="submit")
+					i.fa.fa-floppy-o.icon.icon--regular
+					| Simpan
+				

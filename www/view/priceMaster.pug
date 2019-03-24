@@ -1,0 +1,89 @@
+include ./global/head.pug
+include ./parts/sidenav.pug
+main.main
+	include ./parts/main-header.pug
+	include ./parts/main-subheader.pug
+	
+	.main_content(ng-cloak)
+		.page_header
+			h2(role="page-title") Master Harga Barang
+		.page_content
+			.page_block
+				.row
+					form.form
+						.form_input-area
+							label(role="form-label") Cari Berdasarkan
+							.row
+								.col-md-10
+								.col-md-2
+									button.button.button--secondary.button--base(style="margin-left:20px;" ng-click="exportPriceListDocReport()") EXPORT REPORT
+							br
+							.row
+								.col-md-4
+									ui-select(ng-model="firstSelectedFilter.item", style="margin-right: 15px")
+										ui-select-match
+											span(ng-bind="$select.selected.name")
+										ui-select-choices(repeat="filter in (firstSearchFilters | filter: $select.search) track by $index")
+											span(ng-bind="filter.name")
+								.col-md-4
+									.textfield.textfield--primary(style="margin-right: 15px")
+										input(type="text", ng-model="firstSearchVal", placeholder="{{firstSelectedFilter.item.placeholder}}")
+								.col-md-4
+									.flex-row
+										button.button.button--secondary.button--base(ng-click="doSearchFilter(firstSearchVal, firstSelectedFilter.item.by, secondSearchVal, secondSelectedFilter.item.by)") Cari
+							.row.m-top-15
+								.col-md-4
+									ui-select(ng-model="secondSelectedFilter.item", style="margin-right: 15px")
+										ui-select-match
+											span(ng-bind="$select.selected.name")
+										ui-select-choices(repeat="filter in (secondSearchFilters | filter: $select.search) track by $index")
+											span(ng-bind="filter.name")
+								.col-md-4
+									.textfield.textfield--primary(style="margin-right: 15px")
+										input(type="text", ng-model="secondSearchVal", placeholder="{{secondSelectedFilter.item.placeholder}}")
+				br
+				.row
+					.col-md-8
+					.col-md-4
+						.flex-row
+							form(enctype="multipart/form-data" accept-charset="utf-8")
+								label(class="button button--secondary button--base") IMPORT XLS 
+									input(type="file" id="fileUpload" accept=".xls,.xlsx" style="display: none")
+							button.button.button--secondary.button--base(style="margin-left:10px;" ng-click="exportPriceListDoc()") EXPORT XLS
+			br
+			.shrink-table
+				.table-wrapper
+					table
+						thead
+							tr
+								th(ng-repeat="heading in headings", ng-class="{'large': heading.size == 'lg'}") {{heading.name}}
+						tbody
+							tr(ng-repeat="priceMaster in priceMasterList")
+								td {{priceMaster.id}}
+								td {{priceMaster.serial ? priceMaster.serial : '-'}}
+								td {{priceMaster.category.name}}
+								td {{priceMaster.name}}
+								td {{priceMaster.grade}}
+								td 
+									.form-input-group
+										.textfield.textfield--primary
+											input.align-center(type="text", ng-value="numberWithCommas(priceMaster.price.cash_pabrik)", readonly)
+								td
+									.form-input-group
+										.textfield.textfield--primary
+											input.align-center(type="text", ng-value="numberWithCommas(priceMaster.price.cash_gudang)", readonly)
+								td
+									.form-input-group
+										.textfield.textfield--primary
+											input.align-center(type="text", ng-value="numberWithCommas(priceMaster.price.kredit_pabrik)", readonly)
+								td
+									.form-input-group
+										.textfield.textfield--primary
+											input.align-center(type="text", name="tes", ng-value="numberWithCommas(priceMaster.price.kredit_gudang)", readonly)
+								td.flex-align-items-center
+									button.small-button.button--success.button-tooltip.pd-10.m-left-15(ng-click="editPriceMaster(priceMaster)")
+										i.fa.fa-pencil.icon.icon--small
+										span.tooltiptext Ubah
+										
+			.page-block(style="text-align: center")
+				pagination(total-rows="totalRows", data="requiredData")

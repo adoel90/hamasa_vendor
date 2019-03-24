@@ -1,0 +1,84 @@
+form.form.form--horizontal(ng-submit="savePoInvoice()" novalidate)
+  .page_block
+    .form-input-group
+      .textfield.textfield--primary
+        label.textfield-label.col-md-2.col-sm-2.col-xs-2(for="group") No Invoice
+        .col-md-5.col-sm-5.col-xs-5
+          input(type="text", placeholder="Masukkan no invoice", ng-model="poInvoice.id", required)
+      .textfield.textfield--primary
+        label.textfield-label.col-md-2.col-sm-2.col-xs-2(for="group") Tgl Invoice
+        .col-md-5.col-sm-5.col-xs-5
+          .input-group
+            .input-group-extra
+              i.icon.fa.fa-calendar.icon.icon--small.clr-passive
+            datepicker(date-format="yyyy-MM-dd")
+              input.form-input(type="text", placeholder="Masukkan tanggal invoice", ng-model="poInvoice.date", required)
+      .textfield.textfield--primary
+        label.textfield-label.col-md-2.col-sm-2.col-xs-2(for="group") Tgl Jatuh Tempo
+        .col-md-5.col-sm-5.col-xs-5
+          .input-group
+            .input-group-extra
+              i.icon.fa.fa-calendar.icon.icon--small.clr-passive
+            datepicker(date-format="yyyy-MM-dd")
+              input.form-input(type="text", placeholder="Masukkan tanggal jatuh tempo", ng-model="poInvoice.due_date", required)
+      .textfield.textfield--primary
+        label.textfield-label.col-md-2.col-sm-2.col-xs-2(for="group") No Seri Pajak
+        .col-md-5.col-sm-5.col-xs-5
+          input(type="text", placeholder="Masukkan no invoice", ng-model="poInvoice.tax_invoice", required)
+            
+  .page_block
+    .row
+      .col-lg-12.col-md-12.col-sm-12.col-xs-12
+        .form-input-group
+          .textfield.textfield--primary
+            label.col-lg-1.col-md-1.col-sm-1.col-xs-12.form-label Supplier
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12.flex-row
+              ui-select(ng-model="poInvoice.selectedSupplier", style="margin-right: 15px; width: 100%;", on-select="changeSupplier($item)")
+                ui-select-match
+                  span(ng-bind="$select.selected.name")
+                ui-select-choices(repeat="supplier in (supplierList | filter: $select.search) track by $index")
+                  span(ng-bind="supplier.name")
+              button.button.button--base.button--secondary(type="button" ng-click="viewPoItem()") Pilih Item
+              
+  
+  .shrink-table(ng-show="poInvoice.item.length > 0")
+    table
+      thead.thead--primary
+        tr
+          th(ng-repeat="heading in itemHeadings" width="{{heading.width}}") {{heading.name}}
+      tbody
+        tr(ng-repeat="item in poInvoice.item")
+          td {{ item.po_id }}
+          td {{ item.serial ? item.serial : '-' }}
+          td {{ item.categoryName }}
+          td {{ item.name }}
+          td
+            input.form-input.ta-center(type="text", placeholder="Masukkan qty", ng-model="item.quantity", currency-input, required)
+          td {{ item.weight }}
+          td
+            input.form-input.ta-center(type="text", placeholder="Masukkan harga", ng-model="item.priceKg", currency-input, ng-readonly="item.weight == null", ng-required="item.weight")
+          td
+            input.form-input.ta-center(type="text", placeholder="Masukkan harga", ng-model="item.price", currency-input, required)
+                
+          td.flex-row
+            button.small-button.button--success.pd-10.button-tooltip(type="button" ng-click="doCalculate(item)" ng-disabled="item.weight == null")
+              i.fa.fa-calculator.icon.icon--regular
+              span.tooltiptext Hitung  
+            button.small-button.button--success.pd-10.m-left-5.button-tooltip(type="button" ng-click="deleteItem(item)")
+              i.fa.fa-trash.icon.icon--regular
+              span.tooltiptext Hapus
+            button.small-button.button--success.pd-10.m-left-5.button-tooltip(type="button" ng-click="showHistory(item.po_id)")
+              i.fa.fa-history.icon.icon--regular
+              span.tooltiptext Histori
+                
+                              
+  .page_block(ng-show="poInvoice.item")
+    .flex-row.flex-justify-between
+      button.button.button--base.button--danger(type="button" ng-click="goBack()")
+        i.fa.fa-chevron-left.icon.icon--small
+        | Kembali
+        
+      button.button.button--base.button--primary(type="submit") 
+        i.fa.fa-floppy-o.icon.icon--regular
+        | Simpan
+      

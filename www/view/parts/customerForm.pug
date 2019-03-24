@@ -1,0 +1,143 @@
+form.form.form--horizontal(ng-submit="saveChanges()")
+	.page_block
+		.form-input-group
+			.row.pd-bottom-30
+				.col-lg-6.col-md-6.pd-right-15
+					.form-group
+						label.form-label Jenis Perusahaan
+						ui-select(ng-model="requiredData.selectedCompanyType", on-select="changeCompany($item)")
+							ui-select-match
+								span(ng-bind="$select.selected.name")
+							ui-select-choices(repeat="company in (listCompanyType | filter: $select.search) track by $index")
+								span(ng-bind="company.name")
+									
+					.form-group
+						label.form-label Nama Customer
+						input.form-input(type="text", ng-model="requiredData.name", placeholder="Masukkan nama customer", required)
+					
+					.form-group
+						label.form-label NIK
+						input.form-input(type="text", ng-model="requiredData.nik", placeholder="Masukkan NIK customer")
+							
+					.form-group
+						label.form-label NPWP Customer
+						input.form-input(type="text", ng-model="requiredData.npwp", placeholder="Masukkan NPWP customer")
+					
+					div(ng-repeat="address in requiredData.address track by $index")
+						.form-group
+							label.form-label Alamat {{requiredData.address.length > 1 ? $index + 1 : ''}}
+							textarea.form-input(rows="3", ng-model="address.address", placeholder="Masukkan alamat")
+								
+						.form-group
+							label.form-label Provinsi {{requiredData.address.length > 1 ? $index + 1 : '' }}
+							ui-select(ng-model="address.selectedProvince", on-select="changeProvince($item, $index)")
+								ui-select-match
+									span(ng-bind="$select.selected.name")
+								ui-select-choices(repeat="province in (address.listProvince | filter: $select.search) track by $index")
+									span(ng-bind="province.name")
+												
+						.form-group
+							label.form-label Kota {{requiredData.address.length > 1 ? $index + 1 : '' }}
+							ui-select(ng-model="address.selectedCity", on-select="changeCity($item, $index)", ng-click="validateCity($index)")
+								ui-select-match
+									span(ng-bind="$select.selected.name")
+								ui-select-choices(repeat="city in (address.listCities | filter: $select.search) track by $index")
+									span(ng-bind="city.name")
+						
+						.form-group
+							label.form-label Kecamatan {{requiredData.address.length > 1 ? $index + 1 : '' }}
+							ui-select(ng-model="address.selectedDistrict", on-select="changeDistrict($item, $index)", ng-click="validateDistrict($index)")
+								ui-select-match
+									span(ng-bind="$select.selected.name")
+								ui-select-choices(repeat="district in (address.listDistrict | filter: $select.search) track by $index")
+									span(ng-bind="district.name")
+						
+						.form-group
+							label.form-label Kelurahan {{requiredData.address.length > 1 ? $index + 1 : '' }}
+							ui-select(ng-model="address.selectedUrban", on-select="changeUrban($item, $index)", ng-click="validateUrban($index)")
+								ui-select-match
+									span(ng-bind="$select.selected.name")
+								ui-select-choices(repeat="urban in (address.listUrban | filter: $select.search) track by $index")
+									span(ng-bind="urban.name")
+						
+						.form-group
+							label.form-label Kode Pos
+							input.form-input(type="text", ng-model="address.postal_code", placeholder="Masukkan kode pos")
+								
+					.pd-bottom-15.flex-row.flex-end
+						button.button.button--small.button--secondary.align-right(type="button", ng-click="addMoreAddress()", ng-disabled="requiredData.address.length > 3")
+							i.icon.fa.fa-plus
+							| Tambah Alamat
+							
+					div(ng-repeat="phone in requiredData.phone track by $index")
+						.form-group
+							label.form-label Nomor Telepon {{requiredData.phone.length > 1 ? $index + 1 : ''}}
+							input.form-input(type="text", ng-model="phone.phone", placeholder="Masukkan nomor telepon")
+						
+						.form-group
+							label.form-label CP (Contract Person) {{requiredData.phone.length > 1 ? $index + 1 : ''}}
+							input.form-input(type="text", ng-model="phone.contact_person", placeholder="Masukkan Contact Person")
+					
+					.pd-bottom-15.flex-row.flex-end
+						button.button.button--small.button--secondary.align-right(type="button", ng-click="addMoreContact()", ng-disabled="requiredData.phone.length > 3")
+							i.icon.fa.fa-plus
+							| Tambah Kontak
+							
+							
+				.col-lg-6.col-md-6.pd-left-15
+					.form-group
+						label.form-label Nomor FAX (Optional)
+						input.form-input(type="text", ng-model="requiredData.fax", placeholder="Masukkan nomor FAX")
+							
+					.form-group
+						label.form-label Customer Region
+						customer-region(data="requiredData")
+					
+					.form-group
+						label.form-label ID Induk Customer
+						ui-select(ng-model="requiredData.selectedParent", on-select="changeParent($item)")
+							ui-select-match
+								span(ng-bind="$select.selected.name")
+							ui-select-choices(repeat="parent in (parents | filter: $select.search) track by $index")
+								span(ng-bind="parent.name")
+						
+					.form-group
+						label.form-label Status Kredit
+						ui-select(ng-model="requiredData.selectedCreditStatus", on-select="changeCreditStatus($item)")
+							ui-select-match
+								span(ng-bind="$select.selected.name")
+							ui-select-choices(repeat="credit in (listCreditStatus | filter: $select.search) track by $index")
+								span(ng-bind="credit.name")
+									
+					.form-group
+						label.form-label Limit Kredit
+						.input-group
+							.input-group-extra
+								small.clr-passive.fw-medium.tt-uppercase Rp
+							input.form-input(type="text", ng-model="requiredData.credit_limit", placeholder="Masukkan batas kredit customer", ng-required="requiredData.credit", currency-input)
+										
+					.form-group
+						label.form-label Hari Penagihan
+						ui-select.form-input(multiple sortable="true" ng-model="requiredData.charge_day" close-on-select="false")
+							ui-select-match(placeholder="Hari tagih bisa multiple")
+								span(ng-bind="$item")
+							ui-select-choices(repeat="day in (listDay | filter: $select.search) track by $index")
+								span(ng-bind="day")
+						
+					.form-group
+						label.form-label Hari Pembayaran
+						ui-select.form-input(multiple sortable="true" ng-model="requiredData.pay_day" close-on-select="false")
+							ui-select-match(placeholder="Hari bayar bisa multiple")
+								span(ng-bind="$item")
+							ui-select-choices(repeat="day in (listDay | filter: $select.search) track by $index")
+								span(ng-bind="day")
+									
+			.flex-row.flex-justify-between
+				button.button.button--danger.button--base(type="button" ng-click="goBack()")
+					i.fa.fa-chevron-left.icon.icon--small
+					| Kembali
+				
+				button.button.button--large.button--primary(type="submit")
+					i.fa.fa-floppy-o.icon.icon--regular
+					| Simpan
+				

@@ -1,0 +1,133 @@
+.sidenav-hidden{
+	width: 0;
+	height: 100%;
+	// @include size(height 100% width 0);
+	overflow: hidden;
+	z-index: 100;
+	background-color: $clr-gray-lightest;
+}
+.sidenav-open{
+	width: 250px;
+	height: 100%;
+	// @include size(height 100% width 250px);
+	background-color: $clr-primary-dark;
+}
+.sidenav {
+	@include transition(all 250ms $transition-bouncy);
+	@include fixed(top 0 left 0);
+
+
+	.sidenav__container {
+		@include flexbox;
+		@include flex-direction(column);
+		@include size(height 100% width 100%);
+		overflow-y: auto;
+	}
+
+	.sidenav__header {
+		@include flexbox;
+		@include flex-direction(column);
+		@include align-items(center);
+		@include justify-content(space-between);
+		@include flex(1 0 250px);
+		text-align: center;
+		background-color: tint($clr-primary-dark, 5%);
+	}
+
+	.sidenav__userinfo {
+		@include flexbox;
+		@include flex-direction(column);
+		@include flex(1 1 100%);
+		@include align-items(center);
+		@include justify-content(center);
+
+		> * {
+			@include margin-stack(bottom 10px);
+		}
+	}
+
+	.sidenav__links {
+		@include size(width 100%);
+
+		ul {
+			@include flexbox;
+			border-top: solid 1px tint($clr-primary-dark, 10%);
+			color: $clr-primary-light;
+
+			li {
+				@include transition(all 250ms $transition-bouncy);
+				@include flexbox;
+				@include flex(1 1 100%);
+				@include font($fs-smallest, $fw-regular, $lh-base);
+				@include justify-content(center);
+				text-transform: uppercase;
+				letter-spacing: 1px;
+
+				a {
+					@include padding(15px);
+				}
+
+				&:hover {
+					background-color: tint($clr-primary-dark, 10%);
+				}
+
+				&:first-child {
+					border-right: solid 1px tint($clr-primary-dark, 10%);
+				}
+			}
+		}
+	}
+
+	.sidenav_navigation {
+		@include flex(1 1 100%);
+
+		ul.sidenav_item-list {
+			> li.sidenav_item {
+				@include align-items(center);
+				@include transition(all 250ms $transition-bouncy);
+				background-color: $clr-primary-dark;
+				border-bottom: solid 1px tint($clr-primary-dark, 2.5%);
+
+				> a {
+					@include flexbox;
+					@include align-items(center);
+					@include flex(1 1 100%);
+					@include font($fs-small, $fw-medium, $lh-base);
+					@include padding(12.5px 15px);
+					text-transform: uppercase;
+					letter-spacing: 2px;
+					color: $clr-primary-light;
+
+					&:hover {
+						background-color: shade($clr-primary-dark, 20%);
+					}
+					&.menu-child{
+						display: block;
+						@include padding(12.5px 15px 12.5px 50px);
+					}
+					&.menu-child--is-active{
+						color: $clr-secondary;
+						@include padding(12.5px 15px 12.5px 60px);
+					}
+				}
+
+				i.icon {
+					@include size(width 35px);
+					color: $clr-secondary;
+				}
+
+				&.sidenav_item--is-active {
+					background-color: shade($clr-primary-dark, 20%);
+					border-right: solid 6px $clr-secondary;
+
+					> a {
+						@include padding(12.5px 25px)
+						color: $clr-secondary;
+					}
+				}
+
+
+			}
+		}
+	}
+}

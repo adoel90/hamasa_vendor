@@ -1,0 +1,52 @@
+.default-modal
+  .default-modal-heading
+    h5.modal-title Detail Delivery Invoice
+    a.modal-close(ng-click="$dismiss()")
+      i.icon.icon--regular.fa.fa-times
+  .default-modal-content
+    .default-modal-block.pd-bottom-15
+      form.form.form--horizontal
+        .row.pd-bottom-15
+          .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+            h4 Detail DO
+            .form-group
+              label.form-label Nomor DO
+              input.form-input(type="text", ng-model="deliveryDetail.do.id", readonly)
+            .form-group
+              label.form-label Nomor Ex DO
+              input.form-input(type="text", ng-model="deliveryDetail.do.ex_do", readonly)
+          .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-15
+            h4 Detail Pengiriman
+            .form-group
+              label.form-label Nama Tujuan
+              input.form-input(type="text", ng-model="deliveryDetail.type.name", readonly)
+            .form-group
+              label.form-label Jenis Kendaraan
+              input.form-input(type="text", ng-model="deliveryDetail.type.vehicle", readonly)
+            .form-group
+              label.form-label Kapasitas
+              input.form-input(type="text", ng-value="numberWithCommas(deliveryDetail.type.capacity)", readonly)
+            .form-group
+              label.form-label Harga
+              input.form-input(type="text", ng-value="numberWithCommas(deliveryDetail.type.price)", readonly)
+    .default-modal-block
+      .table
+        table.table--striped
+          thead.thead--primary
+            tr
+              th(ng-repeat="heading in deliveryDetail.headings") {{heading.name}}
+          tbody
+            tr(ng-repeat="item in deliveryDetail.item")      
+              td {{ item.serial }}
+              td {{ item.category.name }}
+              td {{ item.name }}
+              td {{ item.grade }}
+              td {{ numberWithCommas(item.quantity) }}
+  .default-modal-footer
+    .flex-row.flex-end
+      button.button.button--base.button--secondary.m-right-15(ng-click="printDelivery(deliveryDetail.id)")
+        i.icon.icon--large.fa.fa-print
+        | Print Surat Jalan
+      button.button.button--base.button--secondary(ng-click="printDeliveryInvoice(deliveryDetail.id)")
+        i.icon.icon--large.fa.fa-print
+        | Print Invoice

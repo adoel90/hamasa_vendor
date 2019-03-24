@@ -1,0 +1,51 @@
+include ./global/head.pug
+include ./parts/sidenav.pug
+main.main
+  include ./parts/main-header.pug
+  include ./parts/main-subheader.pug
+  
+  .main_content(ng-cloak)
+    .page_header
+      h2(role="page-title") User Management
+    .page_content
+      .page_block
+        form.form
+          .form-group
+            label.form-label Cari Berdasarkan
+            .row
+              .col-lg-4.col-md-4.col-sm-4.col-xs-12
+                ui-select(ng-model="selectedFilter.item", style="margin-right: 15px")
+                  ui-select-match
+                    span(ng-bind="$select.selected.name")
+                  ui-select-choices(repeat="filter in (searchFilters | filter: $select.search) track by $index")
+                    span(ng-bind="filter.name")
+              .col-lg-5.col-md-5.col-sm-5.col-xs-12
+                .input-group
+                  input.form-input(type="text", ng-model="searchVal", placeholder="{{selectedFilter.item.placeholder}}")
+                  button.button.button--base.button--primary(ng-click="doSearchFilter(searchVal, selectedFilter.item.by)") Cari
+              .col-lg-3.col-md-3.col-sm-3.col-xs-12
+                a.button.button--primary.button--base(href="/usermanagement/createnewuser" style="margin-left: 15px")
+                  i.fa.fa-plus.icon.icon--regular(role="button-icon")
+                  | Tambah User
+      .table
+        table.table--striped.table--hoverable
+          thead.thead--primary
+            tr
+              th(ng-repeat="heading in headings", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+          tbody
+            tr(ng-repeat="userManagement in userManagementList")
+              td {{userManagement.username}}
+              td {{userManagement.name}}
+              td {{userManagement.access.name}}
+              td {{userManagement.warehouse.name ? userManagement.warehouse.name : '-'}}
+              td
+                .flex-row.flex-align-center
+                  button.button.button--small.button--success.button--stick(ng-click="resetUserPassword(userManagement.id)")
+                    i.fa.fa-recycle.icon.icon--small
+                    | Reset Password
+                  button.button.button--small.button--danger.button--stick(ng-click="redirectTo('/usermanagement/updateuserdata/' + userManagement.id)")
+                    i.fa.fa-pencil.icon.icon--small
+                    | Ubah
+            
+      .page-block(style="text-align: center")
+        pagination(total-rows="totalRows", data="requiredData")

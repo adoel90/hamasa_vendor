@@ -1,0 +1,89 @@
+.default-modal
+	.default-modal-heading
+		h5.modal-title Detail Delivery Order
+		a.modal-close(ng-click="$dismiss()")
+			i.icon.icon--regular.fa.fa-times
+	.default-modal-content
+		.default-modal-block
+			form.form.form--horizontal
+				.row.pd-bottom-30
+					.pd-bottom-15
+						h4 Detail Delivery Order
+					.col-lg-6.col-md-6.col-sm-12.col-xs-12.pd-right-15
+						.form-group
+							label.form-label Nomor DO
+							input.form-input(type="text", ng-model="deliveryOrderDetail.id", readonly)
+								
+						.form-group
+							label.form-label Tanggal DO
+							input.form-input(type="text", ng-model="deliveryOrderDetail.date", readonly)
+								
+						.form-group
+							label.form-label Status DO
+							input.form-input(type="text", ng-model="deliveryOrderDetail.status.name", readonly)
+						
+						.form-group
+							label.form-label Nomor EX DO
+							input.form-input(type="text", ng-model="deliveryOrderDetail.ex_do", readonly)
+								
+						.form-group
+							label.form-label Nama Gudang
+							input.form-input(type="text", ng-model="deliveryOrderDetail.warehouse.name", readonly)
+						
+						.form-group
+							label.form-label Nomor BKB
+							input.form-input(type="text", ng-model="deliveryOrderDetail.bkb.id", readonly)
+								
+						.form-group
+							label.form-label Nama Supir
+							input.form-input(type="text", ng-model="deliveryOrderDetail.bkb.driver", readonly)
+					
+										
+					.col-lg-6.col-md-6.col-sm-12.col-xs-12.pd-left-15
+						.form-input-group
+							.form-group
+								label.form-label ID Customer
+								input.form-input(type="text", ng-model="deliveryOrderDetail.customer.id", readonly)
+							
+							.form-group
+								label.form-label Nama Customer
+								input.form-input(type="text", ng-model="deliveryOrderDetail.customer.name", readonly)
+							
+							.form-group
+								label.form-label NPWP Customer
+								input.form-input(type="text", ng-model="deliveryOrderDetail.customer.npwp", readonly)
+	
+		.table
+			.pd-bottom-15
+				h4 Daftar Barang
+			.pd-bottom-15
+				p Total Berat Item adalah {{deliveryOrderDetail.total_weight + ' kg '}}
+			table
+				thead
+					tr
+						th(ng-repeat="heading in deliveryOrderDetail.headings") {{ heading.name }}
+				tbody
+					tr(ng-repeat="item in deliveryOrderDetail.item")
+						td {{item.category.name}}
+						td {{item.name}}
+						td {{item.unit}}
+						td {{item.grade}}
+						td {{ numberWithCommas(item.quantity) }}
+						
+		.flex-row.flex-end(ng-show=" (purpose == 'Request for DO Reprint' || purpose == 'Approval DO Print if Invoice Not Paid') && soAuthStatus == 0")
+			button.pd-right-15.button.button--base.button--secondary.m-right-15(ng-click="acceptDoPrintRequest()") Accept
+			button.button.button--base.button--danger(ng-click="rejectDoPrintRequest()") Reject
+			
+	.default-modal-footer
+		.flex-row.flex-end(ng-hide="purpose == 'Request for DO Reprint' || purpose == 'Approval DO Print if Invoice Not Paid' ")
+			button.button.button--base.button--danger.m-right-15(ng-disabled="deliveryOrderDetail.status.code == 2" ng-click="cancelDo(deliveryOrderDetail.id)") Batalkan DO
+			button.button.button--base.button--danger.m-right-15(ng-click="doResume(deliveryOrderDetail.id)") 
+				i.fa.fa-print.icon.icon--large
+				| Resume DO
+			button.button.button--base.button--success(ng-disabled="deliveryOrderDetail.status.code == 2 || deliveryOrderDetail.status.code == 3" ng-click="printDo(deliveryOrderDetail.id)")
+				i.fa.fa-print.icon.icon--large
+				| Print DO
+		.flex-row.flex-end(ng-show="purpose == 'Request for DO Reprint' || purpose == 'Approval DO Print if Invoice Not Paid'")
+			button.button.button--base.button--success(ng-click="printDo()")
+				i.fa.fa-print.icon.icon--large
+				| Print DO

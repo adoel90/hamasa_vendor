@@ -1,0 +1,6 @@
+ui-select(ng-model="data.selectedBank", on-select="changeBank($item)")
+  ui-select-match
+    span(ng-bind="$select.selected.bank")
+  ui-select-choices(repeat="bank in (bankList | filter: $select.search) track by $index")
+    span(ng-bind="bank.bank")
+  

@@ -1,0 +1,246 @@
+.shrink-table{
+	@include border-radius($border-radius-small);
+	background-color: $clr-primary-light;
+	overflow-y: hidden;
+
+	table {
+		width: 100%;
+		@include min-size(width 100%);
+
+
+		thead {
+			border-bottom: solid 5px $clr-gray-lightest;
+			background-color: $clr-secondary;	// temp
+			color: $clr-primary-light;
+
+			tr {
+				th {
+					@include font($fs-base, $fw-semibold, $lh-base);
+					@include padding(15px 5px);
+					text-align: center;
+					vertical-align: middle;
+					border: none;
+				}
+			}
+
+			&.thead--primary {
+				background-color: $clr-secondary;
+				color: $clr-primary-light;
+			}
+
+		}
+		td{
+			padding: 10px 5px;
+		}
+
+		tbody {
+			border: solid 1px $clr-gray-lightest;
+
+			> tr {
+				border-bottom: solid 1px $clr-gray-lightest;
+				cursor: pointer;
+
+				td {
+					@include font($fs-base, $lh-base);
+					@include min-size(width 50px);
+					text-align: center;
+					vertical-align: middle;
+					border-bottom: solid 1px $clr-gray-lightest;
+				}
+			}
+		}
+
+		&.table--striped {
+			tbody {
+				tr {
+					&:nth-of-type(2n+2) {
+						background-color: shade($clr-primary-light, 3%);
+					}
+				}
+			}
+		}
+
+		//------------------------------------------
+		//	@name	Hoverable Rows
+		//	@desc	Adds hover state to table rows with .table where this class
+		//			is appended.
+		//
+		&.table--hoverable {
+			tbody {
+				> tr {
+					@include transition(all 250ms $transition-bouncy);
+
+					&:hover {
+						background-color: shade($clr-primary-light, 16%);
+					}
+				}
+			}
+		}
+	}
+}
+// .vertical--scroll{
+// 	table {
+//     width: 100%;
+//     display: block;
+// 	}
+// 	thead, tbody{
+// 	    display:block;
+// 	}
+// 	tbody {
+// 	    overflow-y: scroll;
+// 	    overflow-x: hidden;
+// 	    height: 400px;
+// 	}
+// 	td, th {
+// 	  min-width: 100px;
+// 	}
+// }
+.vertical--scroll{
+	thead{
+		display:table;
+		width:100%;
+		table-layout:fixed;/* even columns width , fix width of table too*/
+	}
+
+	tbody{
+		display: block;
+		overflow-y: auto;
+		max-height: 350px;
+		&::-webkit-scrollbar { display: none; }
+		tr{
+			display:table;
+			width:100%;
+			table-layout:fixed;/* even columns width , fix width of table too*/
+		}
+		th{
+			text-align: center;
+		}
+		td {
+			text-align: center;
+		}
+	}
+}
+
+.vertical--scroll-200{
+	thead{
+		display:table;
+		width:100%;
+		table-layout:fixed;/* even columns width , fix width of table too*/
+	}
+
+	tbody{
+		display: block;
+		overflow-y: auto;
+		max-height: 190px;
+		&::-webkit-scrollbar { display: none; }
+		tr{
+			display:table;
+			width:100%;
+			table-layout:fixed;/* even columns width , fix width of table too*/
+		}
+		th{
+			text-align: center;
+		}
+		td {
+			text-align: center;
+		}
+	}
+}
+.table {
+	@include border-radius($border-radius-small);
+	background-color: $clr-primary-light;
+	overflow-y: hidden;
+
+	table {
+		@include min-size(width 100%);
+
+		thead {
+			border-bottom: solid 5px $clr-gray-lightest;
+			background-color: $clr-secondary;	// temp
+			color: $clr-primary-light;			// temp
+
+			&.thead--primary {
+				background-color: $clr-secondary;
+				color: $clr-primary-light;
+			}
+
+			tr {
+				th {
+					@include font($fs-base, $fw-semibold, $lh-base);
+					@include padding(15px);
+					text-align: center;
+					vertical-align: middle;
+					border: none;
+
+					&.small {
+						@include size(width 25px);
+					}
+
+					&.large {
+						@include min-size(width 300px);
+					}
+
+				}
+			}
+
+		}
+
+		tbody {
+			border: solid 1px $clr-gray-lightest;
+
+			> tr {
+				border-bottom: solid 1px $clr-gray-lightest;
+				cursor: pointer;
+
+				td {
+					@include font($fs-base, $lh-base);
+					@include padding(15px 10px);
+					@include min-size(width 150px);
+					text-align: center;
+					vertical-align: middle;
+					border-bottom: solid 1px $clr-gray-lightest;
+				}
+			}
+
+			&.vertical--scroll{
+				display: block;
+				overflow: auto;
+				width: 100%;
+				height: 400px;
+			}
+		}
+
+		// thead, tbody tr {
+	  //   display:table;
+	  //   width:100%;
+	  //   table-layout:fixed;/* even columns width , fix width of table too*/
+		// }
+
+		&.table--striped {
+			tbody {
+				tr {
+					&:nth-of-type(2n+2) {
+						background-color: shade($clr-primary-light, 3%);
+					}
+				}
+			}
+		}
+
+		//------------------------------------------
+		//	@name	Hoverable Rows
+		//	@desc	Adds hover state to table rows with .table where this class
+		//			is appended.
+		//
+		&.table--hoverable {
+			tbody {
+				> tr {
+					@include transition(all 250ms $transition-bouncy);
+
+					&:hover {
+						background-color: shade($clr-primary-light, 16%);
+					}
+				}
+			}
+		}
+	}
+}

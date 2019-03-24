@@ -1,0 +1,26 @@
+include ./global/head.pug
+include ./parts/sidenav.pug
+main.main
+    include ./parts/main-header.pug
+    include ./parts/main-subheader.pug
+
+    .main_content(ng-cloak)
+        .page_header
+            h2(role="page-title")= page.title
+        .page_content
+            .page_block
+                form.form
+                    .form-group
+                        .flex-justify-between
+                            label.form-label Export Berdasarkan
+                        .row.m-top-15
+                            .col-lg-2.col-md-2.col-sm-2.col-xs-12
+                                label.form-label.m-right-15 Bank
+                            .col-lg-5.col-md-5.col-sm-5.col-xs-12
+                                ui-select(ng-model="requiredData.selectedBank", on-select="changeBank($item)")
+                                    ui-select-match
+                                        span(ng-bind="$select.selected.bank")
+                                    ui-select-choices(repeat="bank in (bankList | filter: $select.search) track by $index")
+                                        span(ng-bind="bank.bank")
+                            .col-lg-3.col-md-3.col-sm-3.col-xs-12
+                                button.button.button--secondary.button--base(ng-click="exportToExcel()") Export

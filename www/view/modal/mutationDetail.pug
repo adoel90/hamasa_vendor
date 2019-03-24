@@ -1,0 +1,92 @@
+.default-modal
+	.default-modal-heading
+		h5.modal-title Detail Mutasi
+		a.modal-close(ng-click="$dismiss()")
+			i.icon.icon--regular.fa.fa-times
+	.default-modal-content
+		.default-modal-block.pd-bottom30
+			form.form
+				.row.pd-bottom-30
+					.pd-bottom-15
+						h4 Informasi Mutasi
+					.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+						.form-group
+							label.form-label Nomor Mutasi
+							input.form-input(type="text", ng-model="mutationDetail.id", readonly)
+						.form-group
+							label.form-label Tanggal Mutasi
+							.input-group
+								.input-group-extra
+									i.fa.fa-calendar.icon.icon--regular.clr-passive
+								input.form-input(type="text", ng-model="mutationDetail.date", readonly)
+					
+					.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-15
+						.form-group
+							label.form-label Nomor DO
+							input.form-input(type="text", ng-model="mutationDetail.do.id", readonly)
+						.form-group
+							label.form-label Nomor BTB
+							input.form-input(type="text", ng-model="mutationDetail.btb.id", readonly)
+							
+										
+				//- Informasi Gudang
+				.row.pd-bottom-30
+					.pd-bottom-15
+						h4.form-title Informasi Gudang
+					.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+						.form-group
+							label.form-label ID Gudang Asal
+							input.form-input(type="text", ng-model="mutationDetail.from.warehouse.id", readonly)
+						.form-group
+							label.form-label Nama Gudang Asal
+							input.form-input(type="text", ng-model="mutationDetail.from.warehouse.name", readonly)
+					
+					.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-15
+						.form-group
+							label.form-label ID Gudang Tujuan
+							input.form-input(type="text", ng-model="mutationDetail.to.warehouse.id", readonly)
+						.form-group
+							label.form-label Nama Gudang Tujuan
+							input.form-input(type="text", ng-model="mutationDetail.to.warehouse.name", readonly)
+								
+			.flex-row.flex-end(ng-show="mutationDetail.status.code == -1")
+				button.button.button--base.button--danger.m-right-15(ng-click="closeWithAdjustment(mutationDetail.id)") Tutup dengan Adjustment
+				button.button.button--base.button--danger(ng-click="closeWithCreateInvoice(mutationDetail.id)") Tutup dengan Pembuatan Faktur
+				
+		.default-modal-block.pd-bottom-15(ng-show="mutationDetail.status.code == -2")
+			h4(style="color: grey;") Mutasi ditutup dengan faktur
+			form.form.form--primary.form--horizontal.m-top-15
+				.row
+					.col-lg-10.col-sm-10.col-md-10
+						.form-input-group
+							.textfield.textfield--primary
+								label.textfield-label.col-md-4.col-sm-4.col-xs-4 No SO
+								.col-md-8.col-sm-8.col-xs-8.flex-row
+									input.form-input(type="text", ng-model="soId", placeholder="Penutupan mutasi dengan faktur perlu memasukkan No SO")
+									button.button.button--base.button--secondary(type="button" ng-click="closeMutationAndValidate(mutationDetail.id, soId)") Submit
+									
+		.table
+			.pd-bottom-15
+				h4 Detail Barang
+			.table-wrapper
+				table
+					thead
+						tr
+							th(ng-repeat="heading in itemHeadings", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+					tbody
+						tr(ng-repeat="item in mutationDetail.item")
+							td {{ item.category.name }}
+							td {{ item.name }}
+							td {{ item.unit }}
+							td {{ item.grade }}
+							td {{ item.quantity }}
+										
+	.default-modal-footer
+		.flex-row.flex-end
+			a.button.button--base.button--secondary.m-right-15(ng-click="printMutation(mutationDetail.id)")
+				i.icon.icon--large.fa.fa-print
+				| Print Mutasi
+			a.button.button--base.button--secondary(ng-click="printDo(mutationDetail.do.id)")
+				i.icon.icon--large.fa.fa-print
+				| Print DO
+			

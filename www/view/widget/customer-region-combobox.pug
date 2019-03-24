@@ -1,0 +1,5 @@
+ui-select(ng-model="data.selectedCustRegion", on-select="changeCustRegion($item)")
+  ui-select-match
+    span(ng-bind="$select.selected.name")
+  ui-select-choices(repeat="custRegion in (custRegionList | filter: $select.search) track by $index")
+    span(ng-bind="custRegion.name")

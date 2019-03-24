@@ -1,0 +1,11 @@
+.default-modal
+	.default-modal-heading
+		h5.modal-title Informasi Gudang
+		a.modal-close(ng-click="$dismiss()")
+			.icon.icon--large.fa.fa-times
+	.default-modal-content
+		form.form.form--horizontal
+			.form-input-group
+				.textfield.textfield--primary(ng-repeat="field in listFields")
+					label.textfield-label.col-md-4.col-sm-4.col-xs-4(for="id") {{ field.name }}
+					input(type="text", name="id", ng-model="field.value" placeholder="{{ field.name }}" readonly)

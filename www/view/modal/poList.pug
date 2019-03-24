@@ -1,0 +1,35 @@
+.default-modal
+  .default-modal-heading
+    h5.modal-title Daftar Barang
+    a.modal-close(ng-click="$dismiss()")
+      i.icon.icon--regular.fa.fa-times
+  .default-modal-content
+    .row.pd-bottom-15
+      form.form
+        .form-group
+          label.form-label Cari Berdasarkan
+          .row
+            .col-lg-4.col-md-4.col-sm-4.col-xs-12
+              ui-select(ng-model="selectedFilter.item", style="margin-right: 15px")
+                ui-select-match
+                  span(ng-bind="$select.selected.name")
+                ui-select-choices(repeat="filter in (searchFilters | filter: $select.search) track by $index")
+                  span(ng-bind="filter.name")
+            .col-lg-5.col-md-5.col-sm-5.col-xs-12.pd-right-15
+              .input-group
+                input.form-input(type="text", ng-model="searchVal", placeholder="{{selectedFilter.item.placeholder}}")
+                button.button.button--base.button--secondary(ng-click="doSearchFilter(searchVal, selectedFilter.item.by)") Cari
+    .shrink-table
+      table.table--hoverable.table--striped
+        thead.thead--primary
+          tr
+            th(ng-repeat="heading in poHeadings") {{heading.name}}
+        tbody
+          tr(ng-repeat="po in poList" ng-click="choosePo(po.id)")
+            td {{po.id}}
+            td {{po.date}}
+            td {{po.supplier.name}}
+            
+    .page-block(style="text-align: center")
+      pagination(total-rows="totalRows", data="requiredData")
+      

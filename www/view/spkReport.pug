@@ -1,0 +1,43 @@
+include ./global/head.pug
+include ./parts/sidenav.pug
+main.main
+  include ./parts/main-header.pug
+  include ./parts/main-subheader.pug
+  .main_content(ng-cloak)
+    .page_header
+      h2(role="page-title")= page.title
+    .page_content
+      form.form.form--horizontal(ng-submit="save()")
+        .page_block
+          include ./parts/spkFields.pug
+        .page_block
+          h4 Barang Hasi Potong Sebelumnya
+        table-content(table-header="tableHeadings", table-body="requiredData.item", table-column="tableCols", type="'edited-table'" ng-show="requiredData.item.length > 0")
+        .page_block.m-top-15
+          h4 Hasil Potong Tambahan
+          .flex-row.flex-end
+            button.button.button--base.button--primary.m-right-15(type="button" show-item-master-list api-accessed="'itemList'")
+              i.icon.fa.fa-plus
+              | Item dari DB
+            button.button.button--base.button--primary(type="button" ng-click="addItemManually()")
+              i.icon.fa.fa-plus
+              | Input Item Manual
+        table-content(table-header="tableHeadings", table-body="requiredData.nextItem", table-column="tableColsNextItem", type="'edited-table'" ng-show="requiredData.nextItem.length > 0")
+        .page_block
+          .flex-row.flex-end
+            button.button.button--base.button--success(type="submit")
+              i.icon.icon--large.fa.fa-floppy-o
+              | Simpan
+              
+            
+                      
+          
+              
+              
+              
+        
+                  
+              
+                  
+        
+          

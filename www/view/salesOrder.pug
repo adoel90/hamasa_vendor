@@ -1,0 +1,55 @@
+include ./global/head.pug
+include ./parts/sidenav.pug
+main.main
+	include ./parts/main-header.pug
+	include ./parts/main-subheader.pug
+
+	.main_content(ng-cloak)
+		.page_header
+			h2 Sales Order
+		.page_content
+			.page_block
+				.row.flex-end
+					button.button.button--base.button--secondary(ng-click="exportToExcel()") EXPORT
+
+				.row
+					form.form
+						.form-group
+							label.form-label Cari Berdasarkan
+							.row
+								.col-lg-4.col-md-4.col-sm-4.col-xs-12.pd-right-15
+									ui-select(ng-model="selectedFilter.item")
+										ui-select-match
+											span(ng-bind="$select.selected.name")
+										ui-select-choices(repeat="filter in (searchFilters | filter: $select.search) track by $index")
+											span(ng-bind="filter.name")
+								.col-lg-5.col-md-5.col-sm-5.col-xs-12.pd-right-15
+									.input-group(ng-show="selectedFilter.item.by !== 'range_date'")
+										input.form-input(type="text", ng-model="searchVal", placeholder="{{selectedFilter.item.placeholder}}")
+										button.button.button--secondary.button--base(ng-click="doSearchFilter(searchVal, selectedFilter.item.by)") Cari
+									.input-group(ng-show="selectedFilter.item.by === 'range_date'")
+										datepicker(date-format="yyyy-MM-dd" style="margin-right: 5px;")
+											input.form-input(type="text", ng-model="salesOrder.requiredData.s_date", placeholder="Masukkan Tanggal Awal")
+										datepicker(date-format="yyyy-MM-dd")
+											input.form-input(type="text", ng-model="salesOrder.requiredData.e_date", placeholder="Masukkan Tanggal Akhir")
+										button.button.button--secondary.button--base(ng-click="doSearchFilter(searchVal, selectedFilter.item.by)") Cari
+								.col-lg-3.col-md-3.col-sm-3.col-xs-12(ng-show="btnName")
+									a.button.button--primary.button--base(ng-click="redirectToCreateNewData()")
+										i.fa.fa-plus.icon.icon--regular
+										| {{ btnName }}
+			.table
+				table.table--striped.table--hoverable
+					thead.thead--primary
+						tr
+							th(ng-repeat="heading in salesOrder.headings") {{ heading.name }}
+					tbody
+						tr(ng-repeat="item in salesOrder.salesOrderList track by $index", ng-click="redirectTo('/sales/salesorder/salesorderinfo/' + encodeURIComponent(item.id))")
+							td {{item.id}}
+							td {{item.date}}
+							td {{item.customer.name}}
+							td {{ item.inv_total | number: fractionSize }}
+							td {{item.sales.name}}
+							td
+								.badge.tt-uppercase.fw-semibold(ng-class="{ 'badge--danger': item.status.code == 0, 'badge--success': item.status.code == 1, 'badge--passive': item.status.code == 2 }") {{item.status.name}}
+			.align-center
+				pagination(total-rows="salesOrder.totalRows", data="salesOrder.requiredData")

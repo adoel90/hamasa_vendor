@@ -1,0 +1,24 @@
+form.form.form--horizontal(ng-submit="save()")
+   .form-input-group
+      .textfield.textfield--primary
+         label.textfield-label.col-md-3.col-sm-3.col-xs-3(for="code") NAMA TUJUAN
+         .col-md-9.col-sm-9.col-xs-9
+            input(type="text", name="name", ng-model="priceDelivery.name", placeholder="Masukkan Tujuan Pengiriman", required)
+      
+      .textfield.textfield--primary
+         label.textfield-label.col-md-3.col-sm-3.col-xs-3(for="code") JENIS KENDARAAN
+         .col-md-9.col-sm-9.col-xs-9
+            input(type="text", name="vehicle", ng-model="priceDelivery.vehicle", placeholder="Masukkan Jenis Kendaraan", required)
+               
+      .textfield.textfield--primary
+         label.textfield-label.col-md-3.col-sm-3.col-xs-3(for="code") KAPASITAS
+         .col-md-9.col-sm-9.col-xs-9
+            input(type="text", name="capacity", ng-model="priceDelivery.capacity", ng-focus="priceDelivery.capacity = numberWithNoCommas(priceDelivery.capacity)", ng-blur="priceDelivery.capacity = numberWithCommas(priceDelivery.capacity)", placeholder="Masukkan Kapasitas Pengiriman", required, currency-input)
+               
+      .textfield.textfield--primary
+         label.textfield-label.col-md-3.col-sm-3.col-xs-3(for="code") HARGA
+         .col-md-9.col-sm-9.col-xs-9
+            input(type="text", name="price", ng-model="priceDelivery.price", ng-focus="priceDelivery.price = numberWithNoCommas(priceDelivery.price)", ng-blur="priceDelivery.price = numberWithCommas(priceDelivery.price)", placeholder="Masukkan Harga Pengiriman", required, currency-input)
+               
+   .form-button-group
+      button.button.button--base.button--primary Simpan

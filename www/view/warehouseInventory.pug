@@ -1,0 +1,80 @@
+include ./global/head.pug
+include ./parts/sidenav.pug
+main.main
+	include ./parts/main-header.pug
+	include ./parts/main-subheader.pug
+
+	.main_content(ng-cloak)
+		.page_header
+			h2(role="page-title") Inventory Gudang
+		.page_content
+			.page_block
+				form.form
+					.row.flex-end
+						button.button.button--base.button--secondary(ng-click="exportToExcel()") EXPORT
+					.row.pd-bottom-30
+						.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+							.form-group
+								label.form-label Gudang
+								ui-select(ng-model="requiredData.warehouse_data", on-select="changeWarehouse($item)")
+									ui-select-match
+										span(ng-bind="$select.selected.name")
+									ui-select-choices(repeat="warehouse in (warehouseList | filter: $select.search) track by $index")
+										span(ng-bind="warehouse.name")
+					
+						.col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-left-15
+							.form-group
+								label.form-label Alamat Gudang
+								textarea.form-input(rows="3", ng-model="warehouseInventory.detail.address", readonly)
+
+					.flex-row.flex-justify-between
+						button.button.button--base.button--danger(type="button" ng-click="goBack()") 
+							i.fa.fa-chevron-left.icon.icon--small
+							| Kembali
+			
+			.page_block(ng-show="warehouseInventory.detail")
+				form.form
+					.form-group
+						label.form-label Cari Berdasarkan
+						.row
+							.col-lg-4
+								ui-select(ng-model="selectedFilter.item", style="margin-right: 15px")
+									ui-select-match
+										span(ng-bind="$select.selected.name")
+									ui-select-choices(repeat="filter in (searchFilters | filter: $select.search) track by $index")
+										span(ng-bind="filter.name")
+							.col-lg-5
+								.input-group
+									input.form-input(type="text", ng-model="searchVal", placeholder="{{selectedFilter.item.placeholder}}")
+									button.button.button--secondary.button--base(ng-click="doSearchFilter(searchVal, selectedFilter.item.by)")
+										| Cari
+										
+			.table(ng-show="warehouseInventory.detail")
+				form.form
+					table
+						thead
+							tr
+								th(ng-repeat="heading in headings", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+						tbody
+							tr(ng-repeat="item in warehouseInventory.detail.item | filter: searchFilter.value", ng-click="openWarehouseDetail(warehouse)")
+								td {{item.category.name}}
+								td {{item.name}}
+								td {{item.grade}}
+								td {{item.stock.plan}}
+								td {{item.stock.actual}}
+								td 
+									.form-button-group
+										.textfield.textfield--primary
+											input.align-center(type="text", ng-value="numberWithCommas(item.stock.minimum)" readonly)
+								td 
+									.form-button-group
+										.textfield.textfield--primary
+											input.align-center(type="text", ng-value="numberWithCommas(item.stock.maximum)" readonly)
+								td
+									.form-button-group
+										button.button.button--base.button--success(ng-click="editItem(item)")
+											i.icon.icon--regular.fa.fa-pencil
+											| Edit
+			
+			.ta-center(ng-show="warehouseInventory.detail")
+				pagination(total-rows="warehouseInventory.detail.row", data="requiredData")

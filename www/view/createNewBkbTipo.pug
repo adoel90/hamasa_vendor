@@ -1,0 +1,20 @@
+include ./global/head.pug
+include ./parts/sidenav.pug
+main.main
+   include ./parts/main-header.pug
+   include ./parts/main-subheader.pug
+   
+   .main_content(ng-cloak)
+      .page_header
+         h2(role="page-title") Buat BKB Tipo
+      .page_content
+         form.form.form--horizontal(ng-submit="save()")
+            include ./parts/bkbTipoForm.pug
+            .page_block(ng-show="customerData != null")
+               .form-button-group
+                  .flex-row.flex-end
+                     button.button.button--base.button--success(type="submit")
+                        i.icon.icon--large.fa.fa-floppy-o
+                        | Simpan
+            
+      

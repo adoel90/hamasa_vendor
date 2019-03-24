@@ -1,0 +1,31 @@
+.button-tooltip{
+  position: relative;
+
+  .tooltiptext{
+    width: auto;
+    background-color: #555;
+    padding: 10px;
+    position: absolute;
+    bottom: 125%;
+    color: white;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 1s;
+    z-index: 1;
+  }
+
+  .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+  }
+
+  &:hover .tooltiptext{
+    visibility: visible;
+    opacity: 1;
+  }
+}

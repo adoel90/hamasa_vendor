@@ -1,0 +1,179 @@
+.main-subheader(ng-cloak)
+	.main-subheader_container
+		nav.breadcrumb
+			//-----------------
+			//-	Dashboard
+			//-----------------
+			
+			a.breadcrumb_item(href="/dashboard", ng-if="containsMenu('dashboard')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/dashboard')}") Dashboard
+			
+			//-----------------
+			//-	Sales
+			//-----------------
+			a.breadcrumb_item(href="/sales", ng-if="containsMenu('sales')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/sales')}") Penjualan
+			a.breadcrumb_item(href="/sales/customermaster", ng-if="containsMenu('customermaster')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/sales/customermaster')}") Customer Master
+			a.breadcrumb_item(href="/sales/customermaster/createnewcustomer", ng-if="containsMenu('createnewcustomer')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/sales/customermaster/createnewcustomer') }") Buat Customer Baru
+			a.breadcrumb_item(ng-href="/sales/customermaster/editcustomer/{{custId}}", ng-if="containsMenu('editcustomer')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/sales/customermaster/editcustomer/:id') }") Ubah Customer
+			a.breadcrumb_item(href="/sales/salescontract", ng-if="containsMenu('salescontract')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/sales/salescontract') }") Kontrak Penjualan
+			
+			a.breadcrumb_item(href="/sales/pricemaster", ng-if="containsMenu('pricemaster')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/sales/pricemaster') }") Master Harga Barang
+			
+			a.breadcrumb_item(href="/sales/pricedelivery", ng-if="containsMenu('pricedelivery')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/sales/pricedelivery') }") Master Harga Pengiriman
+			a.breadcrumb_item(href="/sales/pricedelivery/createnewpricedelivery", ng-if="containsMenu('createnewpricedelivery')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/sales/pricedelivery/createnewpricedelivery') }") Harga Pengiriman Baru
+			a.breadcrumb_item(ng-href="/sales/pricedelivery/editpricedelivery/{{priceDeliveryId}}", ng-if="containsMenu('editpricedelivery')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/sales/pricedelivery/editpricedelivery/:id') }") Edit Harga Pengiriman
+			
+			a.breadcrumb_item(href="/sales/delivery", ng-if="containsMenu('delivery')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/sales/delivery') }") Pengiriman
+			
+			
+			a.breadcrumb_item(href="/sales/cuttingcost", ng-if="containsMenu('cuttingcost')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/sales/cuttingcost') }") Pemotongan Item
+			
+			a.breadcrumb_item(href="/sales/salescontract/createnewsalescontract", ng-if="containsMenu('createnewsalescontract')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/sales/salescontract/createnewsalescontract') }") Buat Kontrak Penjualan
+			a.breadcrumb_item(ng-href="/sales/salescontract/amandemensalescontract/{{contractId}}", ng-if="containsMenu('amandemensalescontract')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/sales/salescontract/amandemensalescontract/:id') }") Amandemen Kontrak Penjualan
+			
+			a.breadcrumb_item(href="/sales/quotation", ng-if="containsPath('/sales/quotation')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/sales/quotation') }") Penawaran
+			a.breadcrumb_item(href="/sales/quotation/createnewquotation", ng-if="containsPath('/sales/quotation/createnewquotation')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/sales/quotation/createnewquotation') }") Buat Penawaran Baru
+			a.breadcrumb_item(href="/sales/salesorder", ng-if="containsMenu('salesorder')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/sales/salesorder') }") Sales Order
+			a.breadcrumb_item(href="/sales/salesorder/createnewsalesorder", ng-if="containsPath('/sales/salesorder/createnewsalesorder')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/sales/salesorder/createnewsalesorder') }") Buat Sales Order Baru
+			a.breadcrumb_item(ng-href="/sales/salesorder/salesorderinfo/{{soId}}", ng-if="containsMenu('salesorderinfo')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/sales/salesorder/salesorderinfo/:id') }") Informasi Sales Order
+			a.breadcrumb_item(ng-href="/sales/salesorder/salesorderinfo/{{soId}}/createnewdeliveryorder", ng-if="containsMenu('createnewdeliveryorder')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/sales/salesorder/salesorderinfo/:id/createnewdeliveryorder') }") Buat DO
+			
+			a.breadcrumb_item(href="/sales/tipo", ng-if="containsMenu('tipo')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/sales/tipo') }") TIPO
+			a.breadcrumb_item(ng-href="/sales/tipo/tipoinfo/{{tipoId}}", ng-if="containsMenu('tipoinfo')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/sales/tipo/tipoinfo/:id') }") Informasi TIPO
+			a.breadcrumb_item(ng-href="/sales/tipo/tipoinfo/{{tipoId}}/createnewdeliveryordertipo", ng-if="containsMenu('createnewdeliveryordertipo')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/sales/tipo/tipoinfo/:id/createnewdeliveryordertipo') }") Buat DO TIPO Baru
+			a.breadcrumb_item(ng-href="/sales/tipo/tipoinfo/{{tipoId}}/createnewsalesorder/{{custId}}", ng-if="containsPath( '/sales/tipo/tipoinfo/' + tipoId + '/createnewsalesorder/' + custId )", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/sales/tipo/tipoinfo/:id/createnewsalesorder/:cust_id') }") Buat Sales Order Baru
+			a.breadcrumb_item(ng-href="/sales/tipo/tipoinfo/{{tipoId}}/createnewspk", ng-if="containsMenu('createnewspk')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/sales/tipo/tipoinfo/:id/createnewspk') }") Buat Surat Perintah Kerja
+			//-----------------
+			//-	Inventory
+			//-----------------
+			a.breadcrumb_item(href="/inventory", ng-if="containsMenu('inventory')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/inventory') }") Inventory
+			a.breadcrumb_item(href="/inventory/itemmaster", ng-if="containsMenu('itemmaster')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/inventory/itemmaster')  }") Master Barang
+			a.breadcrumb_item(ng-href="/inventory/itemmaster/edititem/{{itemId}}", ng-if="containsMenu('edititem')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/inventory/itemmaster/edititem/:id') }") Ubah Barang
+			a.breadcrumb_item(href="/inventory/itemmaster/createnewitem", ng-if="containsMenu('createnewitem')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/inventory/itemmaster/createnewitem')  }") Tambah Barang Baru
+			
+			a.breadcrumb_item(href="/inventory/warehousemaster", ng-if="containsPath('/warehousemaster')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/inventory/warehousemaster') }") Master Gudang
+			a.breadcrumb_item(href="/inventory/warehousemaster/createnewwarehouse", ng-if="containsMenu('createnewwarehouse')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/inventory/warehousemaster/createnewwarehouse') }") Tambah Gudang
+			a.breadcrumb_item(ng-href="/inventory/warehousemaster/editwarehouse/{{warehouseId}}", ng-if="containsMenu('warehousemaster/editwarehouse')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/inventory/warehousemaster/editwarehouse/:id') }") Ubah Gudang
+
+			a.breadcrumb_item(href="/inventory/categorymaster", ng-if="containsMenu('categorymaster')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/inventory/categorymaster') }") Master Kategori Barang
+			a.breadcrumb_item(href="/inventory/categorymaster/createnewcategory", ng-if="containsMenu('createnewcategory')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/inventory/categorymaster/createnewcategory') }") Buat Kategori Baru
+			a.breadcrumb_item(ng-href="/inventory/categorymaster/editcategory/{{categoryId}}", ng-if="containsMenu('editcategory')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/inventory/categorymaster/editcategory/:id') }") Edit Kategori
+			
+			a.breadcrumb_item(href="/inventory/grademaster", ng-if="containsPath('/inventory/grademaster')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/inventory/grademaster') }") Master Grade
+			a.breadcrumb_item(href="/inventory/grademaster/createnewgrade", ng-if="containsPath('/inventory/grademaster/createnewgrade')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/inventory/grademaster/createnewgrade') }") Tambah Grade
+			a.breadcrumb_item(href="/inventory/grademaster/editgrade/{{gradeId}}", ng-if="containsPath('/inventory/grademaster/editgrade')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/inventory/grademaster/editgrade/:id') }") Edit Grade
+			
+			a.breadcrumb_item(href="/inventory/mutation", ng-if="containsMenu('mutation')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/inventory/mutation') }") Mutasi
+			a.breadcrumb_item(href="#", ng-if="containsMenu('createnewmutation')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/inventory/mutation/createnewmutation') }") Tambah Mutasi
+			a.breadcrumb_item(href="/inventory/conversion", ng-if="containsMenu('conversion')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/inventory/conversion') }") Konversi
+			a.breadcrumb_item(href="/inventory/conversion/createnewconversion", ng-if="containsMenu('createnewconversion')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/inventory/conversion/createnewconversion') }") Tambah Konversi
+			
+			a.breadcrumb_item(href="/inventory/btbtipo", ng-if="containsPathExactly('" + page.route + "', '/inventory/btbtipo') || containsPathExactly('" + page.route + "', '/inventory/btbtipo/createnewbtbtipo')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/inventory/btbtipo') }") BTB TIPO
+			a.breadcrumb_item(href="/inventory/btbtipo/createnewbtbtipo", ng-if="containsMenu('createnewbtbtipo')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/inventory/btbtipo/createnewbtbtipo') }") Buat BTB TIPO
+			
+			a.breadcrumb_item(href="/inventory/bkbtipo", ng-if="containsPathExactly('" + page.route + "', '/inventory/bkbtipo') || containsPathExactly('" + page.route + "', '/inventory/bkbtipo/createnewbkbtipo')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/inventory/bkbtipo') }") BKB TIPO
+			a.breadcrumb_item(href="/inventory/bkbtipo/createnewbkbtipo", ng-if="containsMenu('createnewbkbtipo')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/inventory/bkbtipo/createnewbkbtipo') }") Buat BKB TIPO
+			
+			a.breadcrumb_item(href="/inventory/btb", ng-if="containsPathExactly('" + page.route + "', '/inventory/btb') || containsPathExactly('" + page.route + "', '/inventory/btb/createnewbtb')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/inventory/btb') }") BTB
+			a.breadcrumb_item(href="/inventory/btb/createnewbtb", ng-if="containsPath('/btb/createnewbtb')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/inventory/btb/createnewbtb') }") Buat BTB
+
+			a.breadcrumb_item(href="/inventory/bkb", ng-if="containsPathExactly('" + page.route + "', '/inventory/bkb') || containsPathExactly('" + page.route + "', '/inventory/bkb/createnewbkb')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/inventory/bkb') }") BKB
+
+			a.breadcrumb_item(href="/inventory/bkb/createnewbkb", ng-if="containsPath('/bkb/createnewbkb')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/inventory/bkb/createnewbkb') }") Buat BKB
+			a.breadcrumb_item(href="/inventory/warehouseinventory", ng-if="containsMenu('warehouseinventory')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/inventory/warehouseinventory') }") Inventory Gudang
+			a.breadcrumb_item(href="/inventory/stockadjustment", ng-if="containsMenu('stockadjustment')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/inventory/stockadjustment') }") Stock Adjustment
+			a.breadcrumb_item(href="/inventory/spk", ng-if="containsPath('/inventory/spk')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/inventory/spk') }") SPK Report
+			a.breadcrumb_item(ng-href="/inventory/spk/editspk/{{spkId}}", ng-if="containsPath('/inventory/spk/editspk')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/inventory/spk/editspk/:id') }") Update SPK
+			//-----------------
+			//-	Finance
+			//-----------------
+			
+			a.breadcrumb_item(href="/finance", ng-if="containsMenu('finance')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/finance') }") Finance
+			a.breadcrumb_item(href="/finance/payment", ng-if="containsMenu('payment')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/finance/payment') }") Pelunasan Piutang
+			a.breadcrumb_item(href="/finance/payment/createnewpayment", ng-if="containsPath('/finance/payment/createnewpayment')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/finance/payment/createnewpayment') }") Buat Pelunasan Piutang
+			
+			a.breadcrumb_item(href="/finance/popayment", ng-if="containsPath('/finance/popayment')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/finance/popayment') }") Pelunasan Hutang
+			a.breadcrumb_item(href="/finance/popayment/createnewpayment", ng-if="containsPath('/finance/popayment/createnewpayment')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/finance/popayment/createnewpayment') }") Buat Pelunasan Hutang
+			
+			a.breadcrumb_item(href="/finance/billing", ng-if="containsMenu('billing')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/finance/billing') }") Penagihan
+			a.breadcrumb_item(href="/finance/printinvoice", ng-if="containsMenu('printinvoice')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/finance/printinvoice') }") Buat Faktur
+			a.breadcrumb_item(href="/finance/disbursement", ng-if="containsMenu('disbursement')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/finance/disbursement') }") Pencairan Cek/Giro
+			a.breadcrumb_item(href="/finance/cashout", ng-if="containsMenu('cashout')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/finance/cashout') }") Kas Keluar
+			a.breadcrumb_item(href="/finance/cashout/createnewcashout", ng-if="containsMenu('createnewcashout')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/finance/cashout/createnewcashout') }") Buat Kas Keluar
+			a.breadcrumb_item(href="/finance/cashin", ng-if="containsMenu('cashin')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/finance/cashin') }") Kas Masuk
+			a.breadcrumb_item(href="/finance/cashin/createnewcashin", ng-if="containsMenu('createnewcashin')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/finance/cashin/createnewcashin') }") Buat Kas Masuk
+			
+			a.breadcrumb_item(href="/finance/taxserialmaster", ng-if="containsMenu('taxserialmaster')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/finance/taxserialmaster') }") Master No. Serial Pajak
+			
+			a.breadcrumb_item(href="/finance/bankmaster", ng-if="containsMenu('bankmaster')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/finance/bankmaster') }") Master Bank
+			a.breadcrumb_item(href="/finance/bankmaster/createnewbank", ng-if="containsMenu('createnewbank')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/finance/bankmaster/createnewbank') }") Tambah Bank
+			a.breadcrumb_item(ng-href="/finance/bankmaster/editbank/{{bankId}}", ng-if="containsMenu('editbank')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/finance/bankmaster/editbank/:id') }") Edit Bank
+			
+			a.breadcrumb_item(href="/finance/einvoice", ng-if="containsMenu('einvoice')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/finance/einvoice') }") E-Faktur
+			
+			//-----------------
+			//-	Pembelian
+			//-----------------
+			
+			a.breadcrumb_item(href="/purchasing", ng-if="containsMenu('purchasing')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/purchasing')}") Purchasing
+			a.breadcrumb_item(href="/purchasing/purchasingcontract", ng-if="containsPath('/purchasing/purchasingcontract')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/purchasing/purchasingcontract')}") Kontrak Pembelian
+			a.breadcrumb_item(href="/purchasing/purchasingcontract/createnewpurchasingcontract", ng-if="containsMenu('createnewpurchasingcontract')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/purchasing/purchasingcontract/createnewpurchasingcontract')}") Buat Kontrak Pembelian
+			a.breadcrumb_item(ng-href="/purchasing/purchasingcontract/amandemenpurchasingcontract/{{contractId}}", ng-if="containsMenu('amandemenpurchasingcontract')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/purchasing/purchasingcontract/amandemenpurchasingcontract/:id') }") Amandemen Kontrak Pembelian
+			
+			a.breadcrumb_item(href="/purchasing/po", ng-if="containsMenu('po')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/purchasing/po')}") List PO
+			a.breadcrumb_item(href="/purchasing/po/createnewpo", ng-if="containsMenu('createnewpo')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/purchasing/po/createnewpo')}") Buat PO
+			
+			a.breadcrumb_item(href="/purchasing/bpb", ng-if="containsMenu('bpb')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/purchasing/bpb')}") List BPB
+			a.breadcrumb_item(href="/purchasing/bpb/createnewbpb", ng-if="containsMenu('createnewbpb')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/purchasing/bpb/createnewbpb')}") Buat BPB
+
+			a.breadcrumb_item(href="/purchasing/poinvoice", ng-if="containsPath('/purchasing/poinvoice')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/purchasing/poinvoice')}") List PO Invoice
+			a.breadcrumb_item(href="/purchasing/poinvoice/createpoinvoice", ng-if="containsPath('/purchasing/poinvoice/createpoinvoice')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/purchasing/poinvoice/createpoinvoice')}") Buat PO Invoice
+			a.breadcrumb_item(ng-href="/purchasing/poinvoice/editpoinvoice/{{poInvoiceId}}", ng-if="containsPath('/purchasing/poinvoice/editpoinvoice')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/purchasing/poinvoice/editpoinvoice/:id')}") Edit PO Invoice
+			
+			a.breadcrumb_item(href="/purchasing/supplier", ng-if="containsMenu('supplier')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/purchasing/supplier')}") List supplier
+			a.breadcrumb_item(href="/purchasing/supplier/createnewsupplier", ng-if="containsMenu('createnewsupplier')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/purchasing/supplier/createnewsupplier')}") Tambah supplier
+			a.breadcrumb_item(ng-href="/purchasing/supplier/editsupplier/{{supplierId}}", ng-if="containsMenu('editsupplier')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/purchasing/supplier/editsupplier/:id')}") Edit supplier
+			
+			//-----------------
+			//-	Otorisasi
+			//-----------------
+			
+			a.breadcrumb_item(href="/authorization", ng-if="containsMenu('authorization')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/authorization')}") Otorisasi
+			a.breadcrumb_item(href="/authorization/salesauth", ng-if="containsMenu('salesauth')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/authorization/salesauth')}") Penjualan
+			a.breadcrumb_item(ng-href="/authorization/salesauth/salesorderauth/{{salesId}}", ng-if="containsMenu('salesorderauth')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/authorization/salesauth/salesorderauth/:id')}") Edit Sales Order
+			a.breadcrumb_item(href="/authorization/financeauth", ng-if="containsMenu('financeauth')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/authorization/financeauth')}") Finance
+			a.breadcrumb_item(ng-href="/authorization/financeauth/customerauthorization/{{custId}}", ng-if="containsMenu('customerauthorization')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/authorization/financeauth/customerauthorization/:id')}") Edit Customer
+			a.breadcrumb_item(href="/authorization/purchasingauth", ng-if="containsMenu('purchasingauth')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/authorization/purchasingauth')}") Pembelian
+			a.breadcrumb_item(href="/authorization/inventoryauth", ng-if="containsMenu('inventoryauth')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/authorization/inventoryauth')}") Inventori
+			
+			//-----------------
+			//-	Reporting
+			//-----------------
+			
+			a.breadcrumb_item(href="/salesreport", ng-if="containsMenu('salesreport')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/salesreport')}") Report Penjualan
+			a.breadcrumb_item(href="/salesreport/dooutstanding", ng-if="containsMenu('dooutstanding')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/salesreport/dooutstanding')}") Lap. DO Outstanding
+			a.breadcrumb_item(href="/salesreport/creditinvoice", ng-if="containsMenu('creditinvoice')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/salesreport/creditinvoice')}") Lap. Faktur Kredit
+			a.breadcrumb_item(href="/salesreport/so", ng-if="containsMenu('so')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/salesreport/so')}") Lap. Sales Order
+			a.breadcrumb_item(href="/salesreport/quotation", ng-if="containsPath('/salesreport/quotation')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/salesreport/quotation')}") Lap. Quotation
+			a.breadcrumb_item(href="/salesreport/accountreceivables", ng-if="containsPath('/salesreport/accountreceivables')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/salesreport/accountreceivables')}") Lap. Piutang Customer
+			a.breadcrumb_item(href="/salesreport/itemsold", ng-if="containsPath('/salesreport/itemsold')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/salesreport/itemsold')}") Lap. Stok Terjual
+			
+			a.breadcrumb_item(href="/purchasingreport", ng-if="containsMenu('purchasingreport')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/purchasingreport')}") Report Pembelian
+			a.breadcrumb_item(href="/purchasingreport/purchasingcontract", ng-if="containsPath('/purchasingreport/purchasingcontract')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/purchasingreport/purchasingcontract')}") Lap. Kontrak Pembelian
+			a.breadcrumb_item(href="/purchasingreport/warehousereorder", ng-if="containsPath('/purchasingreport/warehousereorder')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/purchasingreport/warehousereorder')}") Lap. Reorder Gudang
+			a.breadcrumb_item(href="/purchasingreport/purchaseorder", ng-if="containsPath('/purchasingreport/purchaseorder')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/purchasingreport/purchaseorder')}") Lap. Pembelian
+					
+			a.breadcrumb_item(href="/inventoryreport", ng-if="containsMenu('inventoryreport')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/inventoryreport')}") Report Inventori
+			a.breadcrumb_item(href="/inventoryreport/warehousestockminus", ng-if="containsMenu('warehousestockminus')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/inventoryreport/warehousestockminus')}") Lap. Stock Minus
+			a.breadcrumb_item(href="/inventoryreport/warehouseactivity", ng-if="containsMenu('warehouseactivity')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/inventoryreport/warehouseactivity')}") Lap. Aktivitas Gudang
+			a.breadcrumb_item(href="/inventoryreport/warehousestock", ng-if="containsMenu('warehousestock')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/inventoryreport/warehousestock')}") Lap. Stock Gudang
+			
+			a.breadcrumb_item(href="/financereport", ng-if="containsMenu('financereport')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/financereport')}") Report Finance
+			a.breadcrumb_item(href="/financereport/income", ng-if="containsMenu('income')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/financereport/income')}") Lap. Penerimaan Kas
+			a.breadcrumb_item(href="/financereport/piutangcustomer", ng-if="containsMenu('piutangcustomer')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/financereport/piutangcustomer')}") Lap. Piutang Customer
+			a.breadcrumb_item(href="/financereport/agingpiutang", ng-if="containsMenu('agingpiutang')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/financereport/agingpiutang')}") Lap. Umur Piutang
+			a.breadcrumb_item(href="/financereport/paymentdisbursement", ng-if="containsMenu('paymentdisbursement')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/financereport/paymentdisbursement')}") Lap. Pencairan Cek/Giro
+			
+			a.breadcrumb_item(href="/user/settings", ng-if="containsMenu('settings')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/user/settings')}") Settings
+			a.breadcrumb_item(href="/usermanagement", ng-if="containsMenu('usermanagement')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/usermanagement')}") User Management
+			a.breadcrumb_item(href="/usermanagement/createnewuser", ng-if="containsMenu('createnewuser')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/usermanagement/createnewuser')}") Tambah User Baru
+			a.breadcrumb_item(ng-href="/usermanagement/updateuserdata/{{userId}}", ng-if="containsMenu('updateuserdata')", ng-class="{ 'breadcrumb_item--is-active': containsPathExactly('" + page.route + "', '/usermanagement/updateuserdata/:id')}") Update User Data

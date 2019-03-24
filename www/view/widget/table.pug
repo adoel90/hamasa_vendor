@@ -1,0 +1,60 @@
+.shrink-table
+  table.table--striped.table--hoverable
+    thead.thead--primary
+      tr
+        th(ng-repeat="header in tableHeader") {{header.name}}
+        
+    tbody(ng-show="type == 'non-edited-table'")
+      tr(ng-repeat="content in tableBody", ng-click="openDetailData(content)")
+        td(ng-repeat="col in tableColumn") {{ content[col] }}
+        
+    tbody(ng-show="type == 'master-table-with-price'")
+      tr(ng-repeat="content in tableBody", ng-click="openDetailData(content)")
+        td(ng-repeat="col in tableColumn")
+          span(ng-if="col.type == 'number'") {{ content[col.name] | number: fractionSize}}
+          span(ng-if="col.type == 'text'") {{ content[col.name] }}
+        td(ng-click="$event.stopPropagation()")
+          .flex-row.flex-align-center
+            button.button.button--small.button--success.button--stick(ng-click="editData(content)")
+              i.fa.fa-pencil.icon.icon--small
+              | Ubah
+            button.button.button--small.button--danger.button--stick(ng-click="deleteData(content)")
+              i.fa.fa-trash.icon.icon--small
+              | Hapus
+              
+    tbody(ng-show="type == 'table-badge'")
+      tr(ng-repeat="content in tableBody", ng-click="openDetailData(content)")
+        td(ng-repeat="col in tableColumn")
+          span(ng-if="col.type == 'text'") {{ content[col.name] }}
+          span.badge.tt-uppercase.fw-semibold(ng-if="col.type == 'badge'" ng-class="{ 'badge--danger': content[col.name] == -1, 'badge--success': content[col.name] == 0, 'badge--passive': content[col.name] == 1 }") {{ (content[col.name] == 0) ? 'Waiting approval' : (content[col.name] == 1) ? 'Approved' :  'Rejected' }} 
+              
+    tbody(ng-show="type == 'table-with-price'")
+      tr(ng-repeat="content in tableBody", ng-click="openDetailData(content)")
+        td(ng-repeat="col in tableColumn")
+          span(ng-if="col.type == 'number'") {{ content[col.name] | number: fractionSize}}
+          span(ng-if="col.type == 'text'") {{ content[col.name] }}
+          
+    tbody(ng-show="type == 'edited-table'")
+      tr(ng-repeat="content in tableBody", ng-click="openDetailData(content)")
+        td(ng-repeat="col in tableColumn")
+          .form-button-group
+            .textfield.textfield--primary
+              input.align-center(type="text", ng-model="content[col.name]" ng-readonly="col.disabled" required)
+        td.flex-align-center
+          .form-button-group
+            button.button.button--base.button--primary(type="button" ng-click="deleteItem($index)")
+              i.icon.icon--regular.fa.fa-trash
+              | Hapus
+              
+    tbody(ng-show="type == 'master-table'")
+      tr(ng-repeat="content in tableBody", ng-click="openDetailData(content)")
+        td(ng-repeat="col in tableColumn") {{ content[col] }}
+        td(ng-click="$event.stopPropagation()")
+          .flex-row.flex-align-center
+            button.button.button--small.button--success.button--stick(ng-click="editData(content)")
+              i.fa.fa-pencil.icon.icon--small
+              | Ubah
+            button.button.button--small.button--danger.button--stick(ng-click="deleteData(content)")
+              i.fa.fa-trash.icon.icon--small
+              | Hapus
+    

@@ -1,0 +1,126 @@
+/**
+*	UI Bootstrap Modal Overrides
+*	A set of stylesheet to override UI Bootstrap Modal default stylesheet.
+*/
+body.modal-open {
+	overflow: hidden;
+}
+
+.modal {
+	@include fixed(top 0 left 0 right 0 bottom 0);
+
+	&.fade {
+		@include transition(250ms all $transition-bouncy);
+		@include transform(translateY(100%));
+
+		> .modal-dialog {
+			@include absolute(top 50% left 50%);
+			@include transform(translate(-50%, -50%));
+			@include border-radius($border-radius);
+			@include margin(0);
+			overflow: hidden;
+
+			&.modal-sm {
+				@include size(width 100% height 100%);
+
+				@include phone {
+					@include size(width 90% height auto);
+				}
+
+				@include tablet {
+					@include size(width 650px height auto);
+					@include max-size(width 90% height auto);
+				}
+			}
+
+			&.modal-lg {
+				@include size(width 100% height 100%);
+
+				@include phone {
+					@include size(height auto width 90%);
+				}
+
+				@include tablet {
+					@include size(height auto width 1400px);
+					@include max-size(height auto width 90%);
+				}
+			}
+
+			.modal-content {
+				@include relative;
+				@include size(height 100% width 100%);
+				@include border-radius($border-radius-small);
+				overflow: hidden;
+				-webkit-box-shadow: none;
+				box-shadow: none;
+				border: 0;
+				background: transparent;
+			}
+		}
+	}
+
+	&.in {
+		@include transform(translateY(0));
+	}
+}
+
+.modal-backdrop {
+	@include fixed(top 0 left 0 right 0 bottom 0);
+	@include size(height 100vh width 100vw);
+
+	&.fade {
+		@include transition(200ms all $transition-bouncy);
+		opacity: 0;
+	}
+
+	&.in {
+		opacity: 0.8;
+	}
+}
+
+.default-modal {
+	@include relative;
+	@include flexbox;
+	@include flex-direction(column);
+	@include size(height 100%);
+	overflow: hidden;
+
+	.default-modal-heading {
+		@include relative;
+		@include flex(0 0 auto);
+		@include padding(20px);
+		background-color: $clr-secondary;
+		color: $clr-primary-light;
+		text-align: center;
+
+		.modal-title {
+			@include font($fs-base, $fw-semibold, $lh-base);
+			text-transform: uppercase;
+			letter-spacing: 2px;
+		}
+
+		.modal-close {
+			@include absolute(right 15px top 50%);
+			@include transform(translateY(-50%));
+		}
+	}
+
+	.default-modal-content {
+		@include flex(1 1 auto);
+		@include padding(30px);
+		@include min-size(height 400px);
+		@include max-size(height 540px);
+		background-color: $clr-primary-light;
+		overflow: auto;
+	}
+
+	.default-modal-block {
+	}
+
+	.default-modal-footer {
+		@include flex(0 0 auto);
+		@include padding(15px);
+		background-color: $clr-primary-light;
+	}
+
+}

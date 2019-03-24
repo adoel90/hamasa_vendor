@@ -1,0 +1,26 @@
+form.form(ng-submit="displayEInvoice()")
+  .page_block
+    .row
+      .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+        .form-group
+          label.form-label Tanggal Awal
+          datepicker(date-format="yyyy-MM-dd")
+            input.form-input(type="text" ng-model="requiredData.start_date" placeholder="Masukkan Tanggal Awal")
+        .form-group
+          label.form-label Tanggal Akhir
+          datepicker(date-format="yyyy-MM-dd")
+            input.form-input(type="text" ng-model="requiredData.end_date" placeholder="Masukkan Tanggal Akhir")
+        .form-group
+          label.form-label Nomor Invoice
+          input.form-input(type="text", placeholder="Masukkan Nomor Invoice", ng-model="requiredData.invoice")
+        .form-group
+          label.form-label Tax
+          input.form-input(type="text", placeholder="Masukkan Tax", ng-model="requiredData.tax")
+            
+    .flex-row.flex-justify-between.m-top-15
+      button.button.button--base.button--danger(type="button" ng-click="goBack()")
+        i.fa.fa-chevron-left.icon.icon--small
+        | Kembali
+      button.button.button--base.button--primary(type="submit") 
+        i.fa.fa-floppy-o.icon.icon--regular
+        | Download CSV

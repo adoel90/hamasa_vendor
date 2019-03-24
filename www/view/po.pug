@@ -1,0 +1,56 @@
+include ./global/head.pug
+include ./parts/sidenav.pug
+
+main.main
+   include ./parts/main-header.pug
+   include ./parts/main-subheader.pug
+   
+   .main_content(ng-cloak)
+      .page_header
+         h2 List PO
+      .page_content
+         .page_block
+            .row.flex-end
+               button.button.button--base.button--secondary(ng-click="exportToExcel()") EXPORT
+            .row
+               form.form
+                  .form-group
+                     label.form-label Cari Berdasarkan
+                     .row
+                        .col-lg-4.col-md-4.col-sm-4.col-xs-12.pd-right-15
+                           ui-select(ng-model="selectedFilter.item", style="margin-right: 15px")
+                              ui-select-match
+                                 span(ng-bind="$select.selected.name")
+                              ui-select-choices(repeat="filter in (searchFilters | filter: $select.search) track by $index")
+                                 span(ng-bind="filter.name")
+                        .col-lg-4.col-md-4.col-sm-4.col-xs-12.pd-right-15
+                           .input-group(ng-show="selectedFilter.item.by !== 'range_date'")
+                             input.form-input(type="text", ng-model="searchVal", placeholder="{{selectedFilter.item.placeholder}}")
+                             button.button.button--secondary.button--base(ng-click="doSearchFilter(searchVal, selectedFilter.item.by)") Cari
+                           .input-group(ng-show="selectedFilter.item.by === 'range_date'")
+                             datepicker(date-format="yyyy-MM-dd" style="margin-right: 5px;")
+                              input.form-input(type="text", ng-model="requiredData.s_date", placeholder="Masukkan Tanggal Awal")
+                             datepicker(date-format="yyyy-MM-dd")
+                              input.form-input(type="text", ng-model="requiredData.e_date", placeholder="Masukkan Tanggal Akhir")
+                             button.button.button--secondary.button--base(ng-click="doSearchFilter(searchVal, selectedFilter.item.by)") Cari
+                        .col-lg-4.col-md-4.col-sm-4.col-xs-12.pd-right-15
+                           a.button.button--primary.button--base(href="/purchasing/po/createnewpo", style="margin-left: 15px")
+                             i.fa.fa-plus.icon.icon--regular
+                             | Buat PO
+         .table
+            table.table--striped
+               thead.thead--primary
+                  tr
+                     th(ng-repeat="heading in headings", ng-class="{ 'large': heading.size == 'lg' }") {{heading.name}}
+               tbody
+                  tr(ng-repeat="po in poList" ng-click="openDetailPo(po.id)")
+                     td {{po.date}}
+                     td {{po.id}}
+                     td {{po.btb.id}}
+                     td {{po.supplier.name}}
+                     td {{po.type.name}}
+                     td
+                       .badge.tt-uppercase.fw-semibold(ng-class="{ 'badge--danger': po.status.code == -1, 'badge--success': po.status.code == 1, 'badge--passive': po.status.code == 2 }") {{po.status.name}}
+                                 
+         .page-block(style="text-align: center")
+            pagination(total-rows="totalRows", data="requiredData")

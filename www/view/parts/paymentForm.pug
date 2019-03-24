@@ -1,0 +1,93 @@
+form.form(validate-payment data="paymentData" purpose="soPayment")
+   .page_block
+      .row
+         .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+            .form-group
+               label.form-label Tanggal Pelunasan Piutang
+               .input-group
+                  datepicker(date-format="yyyy-MM-dd" date-set="{{paymentData.date}}")
+                    input.form-input(type="text" ng-model="paymentData.date")
+            .form-group
+               label.form-label Customer
+               .flex-row
+                  input.form-input(type="text", ng-model="customerData.name", placeholder="Nama Customer", readonly)
+                  button.button.button--primary.button--base.m-left-15(type="button" customer-list cust-id="paymentData.customer_id") Pilih Customer
+                    
+            .form-group
+               label.form-label Alamat
+               input.form-input(type="text", ng-model="customerData.address", placeholder="Alamat Customer", readonly)
+            .form-group
+               label.form-label Npwp
+               input.form-input(type="text", ng-model="customerData.npwp", placeholder="NPWP Customer", readonly)
+      .flex-row
+        button.button.button--base.button--danger(type="button" ng-click="goBack()")
+          i.fa.fa-chevron-left.icon.icon--small
+          | Kembali
+                
+   .shrink-table.vertical--scroll(ng-show="paymentData.listInvoice.length > 0")
+      table.table--hoverable
+         thead.thead--primary
+            tr
+               th(ng-repeat="heading in headings") {{heading.name}}
+         tbody
+            tr(ng-repeat="invoice in paymentData.listInvoice")
+               td {{ invoice.type | uppercase }}
+               td {{ invoice.id }}
+               td {{ invoice.date }}
+               td {{ invoice.dpp | number: fractionSize }}
+               td {{ numberWithCommas(invoice.totalMustPay) }}
+               td
+                  .form-input-group
+                     .textfield.textfield--primary
+                        input.align-center(type="text", ng-model="invoice.paid", calculate-paid-changed , data="paymentData", paid-invoice="invoice.paid", currency-input, ng-readonly="!invoice.check")
+               td
+                  input.align-center(type="checkbox", class="checkbox", ng-model="invoice.check" copy-total-to-pay invoice-data="invoice" data="paymentData")
+               td
+                  input.align-center(type="checkbox", class="checkbox", ng-model="invoice.stamp" add-invoice-stamp invoice-data="invoice" data="paymentData" ng-disabled="invoice.type !== 'so'")
+          
+   .page_block(ng-show="paymentData.listInvoice.length > 0")
+      .row(ng-show="custSaldo > 0")
+         .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+           .form-group
+             label.form-label Saldo Customer
+             input.form-input(type="text", ng-model="customerData.saldo", placeholder="Saldo Customer", readonly)
+         .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+           .form-group
+             label.form-label Saldo yg ingin digunakan
+             input.form-input(type="text", ng-model="paymentData.saldo", placeholder="Saldo yg ingin digunakan", ng-keyup="calculateTotalAfterSaldoChaged(paymentData.saldo)" ng-focus="copySaldo(paymentData.saldo)" currency-input)
+            
+      .row
+         .col-lg-6.col-md-6.col-sm-6.col-xs-12.pd-right-15
+            .form-group
+               label.form-label Total Pelunasan
+               input.form-input(type="text", ng-model="paymentData.total_should_pay", placeholder="Total Pelunasan", readonly)
+            .form-group
+               label.form-label Jumlah yg Harus Dibayar Customer
+               input.form-input(type="text" ng-model="paymentData.total", placeholder="Jumlah Pelunasan", readonly)
+            .form-group
+               label.form-label Jumlah Uang yg Dibayar Customer
+               input.form-input(type="text", ng-model="paymentData.actually_pay", currency-input)
+            .form-group
+               label.form-label Metode Pembayaran
+               payment-method(data="paymentData")
+            .form-group(ng-show="paymentData.selectedPaymentMethod.id > 1")
+               label.form-label Bank Customer
+               input.form-input(type="text", ng-model="paymentData.customer_bank", placeholder="Bank Customer", ng-required="paymentData.selectedPaymentMethod.id > 1")
+            .form-group(ng-show="paymentData.selectedPaymentMethod.id > 1")
+               label.form-label Tgl Jatuh Tempo
+               datepicker(date-format="yyyy-MM-dd")
+                 input.form-input(type="text", ng-model="paymentData.due_date", placeholder="Tgl Jatuh Tempo", ng-required="paymentData.selectedPaymentMethod.id > 1")
+            .form-group(ng-show="paymentData.selectedPaymentMethod.id > 0")
+               label.form-label Bank
+               bank(data="paymentData")
+            .form-group(ng-show="paymentData.selectedPaymentMethod.id > 0")
+               label.form-label No Bukti Pembayaran
+               input.form-input(type="text", ng-model="paymentData.proof", placeholder="No Bukti Pembayaran", ng-required="paymentData.selectedPaymentMethod.id > 1")
+            .form-group
+               label.form-label No Tanda Terima
+               input.form-input(type="text" ng-model="paymentData.tanda_terima" placeholder="No TT Lebih Bayar")
+               
+      .flex-row.flex-end
+        button.button.button--base.button--primary(type="submit") 
+          i.fa.fa-floppy-o.icon.icon--regular
+          | Simpan 

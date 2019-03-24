@@ -1,0 +1,5 @@
+ui-select(ng-model="selectedWarehouse" on-select="changeWarehouse($item)" style="width: 100%;")
+  ui-select-match
+    span(ng-bind="$select.selected.name")
+  ui-select-choices(repeat="warehouse in (warehouseList | filter: $select.search) track by $index")
+    span(ng-bind="warehouse.name")
