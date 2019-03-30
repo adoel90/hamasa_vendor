@@ -25,13 +25,14 @@
     "gulp-sass": "^3.1.0",
     "gulp-uglify": "^3.0.0",
     "node-sass": "^4.5.3",
-    "pug": "^2.0.0-rc.2",
+    "pug": "^2.0.3",
     "run-sequence": "^2.2.0",
     "underscore": "^1.8.3"
   },
   "dependencies": {
     "angular-momentjs": "^0.2.2",
     "angularjs-datepicker": "^2.1.23",
+    "gulp-build": "^0.5.3",
     "npm": "^6.4.1"
   }
 }

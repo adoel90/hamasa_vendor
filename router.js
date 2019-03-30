@@ -57,7 +57,7 @@ module.exports = (function(){
 	app.get('/purchasing/po', redirect, require(__dirname+'/router/purchasing/po'));
 	app.get('/purchasing/po/createnewpo', redirect, require(__dirname+'/router/purchasing/createnewpo'));
 	app.get('/purchasing/po/createpoforsofactory/:id', redirect, require(__dirname + '/router/purchasing/createpoforsofactory'));
-	
+
 	app.get('/purchasing/supplier', redirect, require(__dirname+'/router/purchasing/supplier'));
 	app.get('/purchasing/supplier/createnewsupplier', redirect, require(__dirname+'/router/purchasing/createnewsupplier'));
 	app.get('/purchasing/supplier/editsupplier/:id', redirect, require(__dirname+'/router/purchasing/editsupplier'));
@@ -68,8 +68,8 @@ module.exports = (function(){
 	//*Bukti Pengambilan Barang
 	app.get('/purchasing/bpb', redirect, require(__dirname+'/router/purchasing/purchasingbuktiambilbarang'));
 	app.get('/purchasing/bpb/createnewbpb', redirect, require(__dirname+'/router/purchasing/createnewbpb'));
-	
-	
+
+
 	//	Inventory
 	app.get('/inventory', redirect, require(__dirname+'/router/inventory/inventory'));
 	app.get('/inventory/itemmaster', redirect, require(__dirname+'/router/inventory/itemmaster'));
@@ -146,7 +146,7 @@ module.exports = (function(){
 	app.get('/salesreport/itemsold', redirect, require(__dirname + '/router/report/sales/itemsoldreport'));
 	app.get('/salesreport/selling', redirect, require(__dirname + '/router/report/sales/sellingreport'));
 	app.get('/salesreport/customersaldo', redirect, require(__dirname + '/router/report/sales/customersaldoreport'));
-	
+
 	app.get('/purchasingreport', redirect, require(__dirname + '/router/report/purchasing/purchasingmodule' ));
 	app.get('/purchasingreport/purchasingcontract', redirect, require(__dirname + '/router/report/purchasing/purchasingcontractreport'));
 	app.get('/purchasingreport/warehousereorder', redirect, require(__dirname + '/router/report/purchasing/warehousereorderreport'));
@@ -170,6 +170,7 @@ module.exports = (function(){
 	app.get('/financereport/agingpiutang', redirect, require(__dirname + '/router/report/finance/agingpiutangreport'));
 	app.get('/financereport/giroduedate', redirect, require(__dirname+ '/router/report/finance/giroduedatereport'));
 	app.get('/financereport/accountreceivablesdailyreport', redirect, require(__dirname+ '/router/report/finance/accountreceivablesdailyreport'));
+	app.get('/financereport/debtreport', redirect, require(__dirname+ '/router/report/finance/debtreport'));
 
 	//settings
 	app.get('/user/settings', redirect, require(__dirname+'/router/settings'));
