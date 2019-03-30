@@ -7,7 +7,8 @@ distributionApp.controller('financeModuleReportController', function($scope, $ro
     // {name: "Analisa Umur Piutang Customer", link: "/financereport/customercreditanalysis"},
     {name: "Laporan Pencairan Cek / Giro", link: "/financereport/paymentdisbursement"},
     {name: "Laporan Jatuh Tempo Cek / Grio", link: "/financereport/giroduedate"},
-    {name: "Laporan Pelunasan Piutang Harian", link: "/financereport/accountreceivablesdailyreport"}
+    {name: "Laporan Pelunasan Piutang Harian", link: "/financereport/accountreceivablesdailyreport"},
+    {name: "Laporan Hutang", link: "/financereport/debtreport"}
   ];
 
   setTimeout(function() {
